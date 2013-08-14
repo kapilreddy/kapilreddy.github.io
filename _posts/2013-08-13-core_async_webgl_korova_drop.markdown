@@ -5,7 +5,7 @@ date:   2013-08-13 00:22:09
 categories: cljs core.async
 ---
 
-korova-drop is an audio visualization project using cljs, core.async, HTML5 and webGL.
+korova-drop is an audio visualization project built using cljs, core.async, HTML5 and webGL.
 
 Try out the demo [here](/examples/korova_drop/). The source code is available [here](https://github.com/kapilreddy/korova-drop).
 

@@ -226,7 +226,7 @@ function main () {
   (init-file-handling (fn [files]
                         (let [file (aget files 0)
                               drop-zone-wrapper (by-id "drop_zone_wrapper")]
-                          (add-class drop-zone-wrapper "loadding")
+                          (add-class drop-zone-wrapper "loading")
                           (load-sound file (fn [buffer]
                                              (remove-class drop-zone-wrapper "loading")
                                              (add-class drop-zone-wrapper "corner")
@@ -296,15 +296,15 @@ use to vizualize audio.
          (sound-+>analyzer source-node)
          (recur source-node))))))
 ```
-I create an anlyzer node. Right now I don't do anything with it. Later
-on I'll use it to render audio specturm data.
+I create an analyzer node. Right now I don't do anything with it. Later
+on I'll use it to render audio spectrum data.
 
 ## Rendering stuff
-Mordern browsers provide an API for UI loop called 'requestAnimationFrame'.
+Modern browsers provide an API for UI loop called 'requestAnimationFrame'.
 I'll create a UI channel to read available frames.
 
 'render-stuff' is just a generic function which gets audio data to
-render the specturm data.
+render the spectrum data.
 
 {% highlight clojure %}
 (defn animloop

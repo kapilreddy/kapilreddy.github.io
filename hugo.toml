@@ -3,3 +3,4 @@ languageCode = 'en-us'
 title = 'Mugencode'
 
 BookMenuBundle = '/menu'
+theme = 'book'

@@ -9,6 +9,7 @@ next: /tutorials/github-pages-blog
 prev: /tutorials/automated-deployments
 title: "LLM for product managers : Part 1 - Why"
 weight: 10
+draft: true
 
 ---
 

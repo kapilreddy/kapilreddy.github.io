@@ -1,7 +1,7 @@
 ---
 date: 2014-09-28
 title:  "core.async + WebGL = korova-drop"
-
+draft: true
 ---
 
 korova-drop is an audio visualization project built using cljs, core.async, HTML5 and webGL.

@@ -1,7 +1,6 @@
 ---
 date: 2014-09-28
 title:  "core.async + WebGL = korova-drop"
-draft: true
 ---
 
 korova-drop is an audio visualization project built using cljs, core.async, HTML5 and webGL.
@@ -307,7 +306,7 @@ I'll create a UI channel to read available frames.
 'render-stuff' is just a generic function which gets audio data to
 render the spectrum data.
 
-{% highlight clojure %}
+```clojure
 (defn animloop
   [ui-chan ts]
   (.requestAnimationFrame js/window (partial animloop ui-chan))
@@ -350,7 +349,7 @@ render the spectrum data.
                                      (aget arr i))]
                     (recur (render-stuff audio-data prev-data)))))
               (recur prev-data)))))))
-{% endhighlight %}
+```
 
 ## Conclusion
 

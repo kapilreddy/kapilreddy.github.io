@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html class="dark" lang="{{ default .Site.Language.Lang .Site.LanguageCode  }}" dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
+<head>
+  {{ partial "docs/html-head" . }}
+  {{ partial "docs/inject/head" . }}
+</head>
+<body dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
+
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+
+  {{ template "menu" . }} <!-- Left menu Content -->
+
+  <header class="book-header-landing">
+    {{ template "header" . }} <!-- Mobile layout header -->
+  </header>
+
+  <main class="container flex justify-center parent-container">
+    <div class="book-page">
+
+      <main class="flex container justify-center">
+{{ if and (default true (default .Site.Params.BookToC .Params.BookToC)) (.TableOfContents | strings.Count "<li>") }}
+
+
+	<div class="book-toc ">
+	  <div class="book-toc-content">
+	    {{ template "toc" . }} <!-- Table of Contents -->
+	  </div>
+	</div>
+	{{ end }}
+	<main class="main-content ">
+	  {{ partial "docs/inject/content-before" . }}
+	  {{ template "main" . }} <!-- Page Content -->
+	  {{ partial "docs/inject/content-after" . }}
+	</main>
+      </div>
+      <footer class="book-footer">
+        {{ template "footer" . }} <!-- Footer under page content -->
+        {{ partial "docs/inject/footer" . }}
+      </footer>
+
+      {{ template "comments" . }} <!-- Comments block -->
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+
+  </main>
+  <div class="container flex">
+    <div class="flex">
+    {{ partial "docs/inject/body" . }}
+    </div>
+  </div>
+  <header class="book-header-mobile">
+    {{ template "header" . }} <!-- Mobile layout header -->
+  </header>
+</body>
+</html>
+
+{{ define "menu" }}
+  {{ partial "docs/menu" . }}
+{{ end }}
+
+{{ define "header" }}
+  {{ partial "docs/header" . }}
+
+  {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
+  <aside class="hidden clearfix">
+    {{ template "toc" . }}
+  </aside>
+  {{ end }}
+{{ end }}
+
+{{ define "footer" }}
+  {{ partial "docs/footer" . }}
+{{ end }}
+
+{{ define "comments" }}
+  {{ if and .Content (default true (default .Site.Params.BookComments .Params.BookComments)) }}
+  <div class="book-comments">
+    {{- partial "docs/comments" . -}}
+  </div>
+  {{ end }}
+{{ end }}
+
+{{ define "main" }}
+  <article class="markdown book-article">
+    {{- .Content -}}
+  </article>
+{{ end }}
+
+{{ define "toc" }}
+  {{ partial "docs/toc" . }}
+{{ end }}
+
+

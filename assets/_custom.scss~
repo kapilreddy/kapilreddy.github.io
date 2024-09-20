@@ -1,0 +1,139 @@
+/* Base styles */
+
+:root {
+  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-headings: 'Arial', sans-serif;
+
+  /* Light mode colors - softer palette */
+  --color-bg: #f4f4f4;  /* Light gray background */
+  --color-text: #333333;
+  --color-heading: #0066cc;
+  --color-link: #4a90e2;
+  --color-accent: #e0e0e0;  /* Slightly darker accent for contrast */
+}
+
+body {
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+.book-menu {
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headings);
+  color: var(--color-heading);
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+h1 { font-size: 2.2em; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.5em; }
+h4 { font-size: 1.3em; }
+h5 { font-size: 1.1em; }
+h6 { font-size: 1em; }
+
+p {
+  margin-bottom: 1.2em;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Subtle accents */
+.accent-bg {
+  background-color: var(--color-accent);
+  padding: 0.5em;
+  border-radius: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  h1 { font-size: 2em; }
+  h2 { font-size: 1.6em; }
+  h3 { font-size: 1.4em; }
+  h4 { font-size: 1.2em; }
+  h5 { font-size: 1.1em; }
+  h6 { font-size: 1em; }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1a1a1a;
+    --color-text: #e0e0e0;
+    --color-heading: #4a90e2;
+    --color-link: #6aafff;
+    --color-accent: #333333;
+  }
+}
+
+/* Dark mode toggle (if using JavaScript) */
+body.dark-mode {
+  --color-bg: #1a1a1a;
+  --color-text: #e0e0e0;
+  --color-heading: #4a90e2;
+  --color-link: #6aafff;
+  --color-accent: #333333;
+}
+
+/* Additional typography enhancements */
+.post-meta {
+  font-size: 0.9em;
+  color: #666;
+}
+
+blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1em;
+  margin-left: 0;
+  font-style: italic;
+  color: #555;
+}
+
+code {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: var(--color-accent);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+/* Minimal layout adjustments */
+.container {
+  padding: 0 15px;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 30px;
+  }
+}

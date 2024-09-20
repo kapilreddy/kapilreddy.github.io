@@ -1,0 +1,40 @@
+<nav class="fullscreen-nav">
+  <div class="nav-header">
+    <div class="logo">
+      <!-- Insert your logo SVG or image here -->
+      <svg viewBox="0 0 100 100" width="30" height="30">
+        <path d="M10,50 Q50,10 90,50 T90,50" fill="none" stroke="white" stroke-width="8"/>
+      </svg>
+    </div>
+    <button class="close-btn">&#x2715;</button>
+  </div>
+
+
+  <!-- {{ partial "docs/brand" . }} -->
+  <!-- {{ partial "docs/search" . }} -->
+  {{ if hugo.IsMultilingual }}
+  {{ partial "docs/languages" . }}
+  {{ end }}
+
+  {{ $currentPage := . }}
+  <ul class="nav-items">
+    {{ range .Site.Menus.main }}
+    <li>
+      <a class="sidebar-nav-item{{if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active{{end}}" href="{{.URL}}">{{ .Name }}</a>
+    </li>
+    {{ end }}
+  </ul>
+  <!-- {{ if .Site.Params.BookMenuBundle }} -->
+  <!-- {{ partial "docs/menu-bundle" . }} -->
+  <!-- {{ else }} -->
+  <!-- {{ partial "docs/menu-filetree" . }} -->
+  <!-- {{ end }} -->
+
+
+</nav>
+
+<!-- Restore menu position as soon as possible to avoid flickering -->
+{{ $script := resources.Get "menu-reset.js" | resources.Minify }}
+{{ with $script.Content }}
+<script>{{ . | safeJS }}</script>
+{{ end }}

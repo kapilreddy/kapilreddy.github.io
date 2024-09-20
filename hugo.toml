@@ -2,11 +2,31 @@ baseURL = 'https://example.org/'
 languageCode = 'en-us'
 title = 'Mugencode'
 
-BookMenuBundle = '/menu'
-theme = 'hugo-book'
+theme = 'mugencode'
+
+
+[menus]
+  [[menus.main]]
+    name = 'About'
+    URL = '/docs/about'
+    weight = 10
+  [[menus.main]]
+    name = 'Posts'
+    URL = '/posts/'
+    weight = 20
+
+[params]
+  BookToC = true
+  BookLogo = "/images/logo.png"
 
 [outputs]
   home = ['html', 'rss']
   section = ['html', 'rss']
   taxonomy = ['html']
   term = ['html']
+
+[markup]
+  [markup.tableOfContents]
+    endLevel = 3
+    ordered = false
+    startLevel = 1

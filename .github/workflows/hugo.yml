@@ -22,7 +22,7 @@ jobs:
         extended: true    # If you're using SCSS/SASS, set this to true
 
     - name: Build
-      run: hugo --minify --theme mugencode
+      run: hugo --minify --theme mugencode --ignoreCache --noChmod --noTimes
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3

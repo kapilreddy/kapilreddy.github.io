@@ -2,9 +2,9 @@ name: Build and Deploy Hugo Site
 
 on:
   push:
-    branches: [ main ]  # Trigger the workflow on push to main branch
+    branches: [ master ]  # Trigger the workflow on push to main branch
   pull_request:
-    branches: [ main ]  # Trigger the workflow on pull requests to main branch
+    branches: [ master ]  # Trigger the workflow on pull requests to main branch
 
 jobs:
   build-and-deploy:

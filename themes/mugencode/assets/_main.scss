@@ -228,7 +228,20 @@ body[dir="rtl"] .book-menu {
   div.dark { display: none; }
 }
 
+img.dark {
+    display:block;
+}
+img.light {
+    display:none;
+}
+
 .dark {
+    img.light {
+	display:block;
+    }
+    img.dark {
+	display:none;
+    }
   .theme-toggle {
     div.light { display: none; }
     div.dark { display: block; margin: 0 1em; height: $button-height; }
@@ -240,6 +253,8 @@ body[dir="rtl"] .book-menu {
   width: 20%;
   font-size: $font-size-12;
   padding: 0;
+  padding-top: $padding-16;
+
   position: sticky;
   height: calc(100vh - 60px);
   top: 60px;

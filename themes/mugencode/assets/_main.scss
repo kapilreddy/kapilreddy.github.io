@@ -1,5 +1,4 @@
-// Theme variables
-
+// Variables and mixins should be defined at the top
 
 html {
   font-size: $font-size-base;
@@ -8,7 +7,7 @@ html {
 }
 
 body {
-    width: 100%;
+  width: 100%;
   min-width: $body-min-width;
   color: var(--body-font-color);
   background: var(--body-background);
@@ -19,29 +18,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
 
-  * {
-    box-sizing: inherit;
-  }
+  * { box-sizing: inherit; }
 }
 
-h1, h2, h3, h4, h5 {
-  font-weight: $body-font-weight;
-}
+h1, h2, h3, h4, h5 { font-weight: $body-font-weight; }
 
 a {
   text-decoration: none;
   color: var(--color-link);
 }
 
-img {
-  vertical-align: baseline;
-}
+img { vertical-align: baseline; }
 
-:focus {
-  @include outline;
-}
+:focus { @include outline; }
 
-aside nav ul {
+// Navigation styles
+nav ul {
   padding: 0;
   margin: 0;
   list-style: none;
@@ -53,66 +45,52 @@ aside nav ul {
 
   a {
     display: block;
-    &:hover {
-      opacity: 0.5;
-    }
+    &:hover { opacity: 0.5; }
   }
 
-  ul {
-    padding-inline-start: $padding-16;
-  }
+  ul { padding-inline-start: $padding-16; }
 }
 
-ul.pagination {
+.pagination {
   display: flex;
   justify-content: center;
   list-style-type: none;
   padding-inline-start: 0;
 
-  .page-item a {
-    padding: $padding-16;
-  }
+  .page-item a { padding: $padding-16; }
 }
 
-.container {
-  max-width: $container-max-width;
-  margin: 0 auto;
-}
+// Container and branding
+.container { max-width: $container-max-width; margin: 0 auto; }
 
-.book-icon {
-  filter: var(--icon-filter);
-}
+.book-icon { filter: var(--icon-filter); }
 
 .book-brand {
   margin: 0;
   a {
-      color: var(--body-font-color);
-      font-size: 1em;
+    color: var(--body-font-color);
+    font-size: 0.9em;
   }
-
   img {
-    height: 1.5em;
-
+    height: 1.2em;
     margin-inline-end: $padding-8;
   }
 }
 
+// Fullscreen navigation
 .fullscreen-nav {
   display: none;
-  z-index: 10000;
-  background-color: #111;
-  color: white;
-
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background-color: #111;
+  color: white;
   padding: 2rem;
+  z-index: 10000;
 
-  &.active {
-    display: block;
-  }
+  &.active { display: block; }
 
   .nav-header {
     display: flex;
@@ -133,10 +111,7 @@ ul.pagination {
     list-style-type: none;
     padding: 0;
 
-    li {
-      border-bottom: 1px solid #333;
-      padding: 1rem 0;
-    }
+    li { border-bottom: 1px solid #333; padding: 1rem 0; }
 
     a {
       color: white;
@@ -154,6 +129,7 @@ ul.pagination {
   }
 }
 
+// Book menu and sections
 .book-menu {
   flex: 0 0 $menu-width;
   font-size: $font-size-14;
@@ -171,77 +147,49 @@ ul.pagination {
     word-wrap: break-word;
   }
 
-  a.active {
-    color: var(--color-link);
-  }
+  a.active { color: var(--color-link); }
 
-  input.toggle + label + ul {
-    display: none;
-  }
-
-  input.toggle:checked + label + ul {
-    display: block;
-  }
-
-  input.toggle + label::after {
-    content: "▸";
-  }
-
-  input.toggle:checked + label::after {
-    content: "▾";
+  input.toggle {
+    & + label + ul { display: none; }
+    &:checked + label + ul { display: block; }
+    & + label::after { content: "▸"; }
+    &:checked + label::after { content: "▾"; }
   }
 }
 
+// RTL support
 body[dir="rtl"] .book-menu {
-  input.toggle + label::after {
-    content: "◂";
-  }
-
-  input.toggle:checked + label::after {
-    content: "▾";
+  input.toggle {
+    & + label::after { content: "◂"; }
+    &:checked + label::after { content: "▾"; }
   }
 }
 
+// Book sections and pages
 .book-section-flat {
   margin: $padding-16 * 2 0;
 
-  > a, > span, > label {
-    font-weight: bolder;
-  }
-
-  > ul {
-    padding-inline-start: 0;
-  }
+  > a, > span, > label { font-weight: bolder; }
+  > ul { padding-inline-start: 0; }
 }
 
-.book-page {
-  min-width: 100%;
-  flex-grow: 1;
-}
+.book-page { min-width: 100%; flex-grow: 1; }
 
-.book-post {
-  margin-bottom: $padding-16 * 3;
-}
+.book-post { margin-bottom: $padding-16 * 3; }
 
-.book-header-mobile {
-    display: none;
-}
+// Headers
 .book-header {
-  display: none;
   margin-bottom: $padding-16;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 
-  label {
-    line-height: 0;
-  }
-
-  img.book-icon {
-    height: 1.5em;
-    width: 1.5em;
-  }
+  label { line-height: 0; }
+  img.book-icon { height: 1.5em; width: 1.5em; }
 }
 
+.book-header-mobile { display: none; }
+
+// Search
 .book-search {
   position: relative;
   margin: $padding-16 0;
@@ -255,9 +203,7 @@ body[dir="rtl"] .book-menu {
     background: var(--gray-100);
     color: var(--body-font-color);
 
-    &:required + .book-search-spinner {
-      display: block;
-    }
+    &:required + .book-search-spinner { display: block; }
   }
 
   .book-search-spinner {
@@ -273,69 +219,50 @@ body[dir="rtl"] .book-menu {
     @include spin(1s);
   }
 
-  small {
-    opacity: 0.5;
-  }
+  small { opacity: 0.5; }
 }
 
-.theme-toggle div.light {
-  margin: 0 1em;
-  height: $button-height;
-}
-
-.theme-toggle div.dark {
-    display: none;
+// Theme toggle
+.theme-toggle {
+  div.light { margin: 0 1em; height: $button-height; }
+  div.dark { display: none; }
 }
 
 .dark {
-    .theme-toggle div.light {
-	display:none;
-    }
-
-    .theme-toggle div.dark {
-	display: block;
-	margin: 0 1em;
-	height: $button-height;
-    }
+  .theme-toggle {
+    div.light { display: none; }
+    div.dark { display: block; margin: 0 1em; height: $button-height; }
+  }
 }
 
+// Table of contents
 .book-toc {
-  width: $toc-width;
-  font-size: $font-size-16;
+  width: 20%;
+  font-size: $font-size-12;
   padding: 0;
   position: sticky;
   height: calc(100vh - 60px);
   top: 60px;
   left: 0;
 
-  ul {
-    padding: 0;
-  }
+  ul { padding: 0; }
 
   li {
-    padding: $padding-8;
+    padding: 0 $padding-8;
     list-style-type: none;
     cursor: pointer;
 
-    &.active {
-      box-shadow: -5px 0px 0px 0px var(--color-link);
-    }
+    &.active { box-shadow: -5px 0px 0px 0px var(--color-link); }
   }
 
-  .book-toc-content {
-    width: $toc-width;
-  }
+  .book-toc-content { width: $toc-width; }
 
-  img {
-    height: 1em;
-    width: 1em;
-  }
+  img { height: 1em; width: 1em; }
 
-  nav > ul > li:first-child {
-    margin-top: 0;
-  }
+  nav > ul > li:first-child { margin-top: 0; }
 }
 
+// Footer and comments
 .book-footer {
   padding-top: $padding-16;
   font-size: $font-size-14;
@@ -347,10 +274,9 @@ body[dir="rtl"] .book-menu {
   }
 }
 
-.book-comments {
-  margin-top: $padding-16;
-}
+.book-comments { margin-top: $padding-16; }
 
+// Languages
 .book-languages {
   margin-block-end: $padding-16 * 2;
 
@@ -360,11 +286,10 @@ body[dir="rtl"] .book-menu {
     margin-inline-end: .5em;
   }
 
-  ul {
-    padding-inline-start: 1.5em;
-  }
+  ul { padding-inline-start: 1.5em; }
 }
 
+// Transitions
 .book-menu-content,
 .book-toc-content,
 .book-page,
@@ -375,11 +300,9 @@ body[dir="rtl"] .book-menu {
   will-change: transform, margin, opacity;
 }
 
+// Media queries
 @media screen {
-  #menu-control,
-  #toc-control {
-    display: inline;
-  }
+  #menu-control, #toc-control { display: inline; }
 
   .book-menu {
     visibility: hidden;
@@ -388,93 +311,77 @@ body[dir="rtl"] .book-menu {
   }
 
   .book-header {
-      padding: $padding-16;
+    padding: $padding-16;
     display: block;
     background-color: var(--card-background);
   }
 
-  #menu-control:focus ~ main label[for="menu-control"] {
-    @include outline;
-  }
-
-  #toc-control:focus ~ main label[for="toc-control"] {
-    @include outline;
-  }
-
-  #toc-control:checked ~ main .book-header aside {
-    display: block;
-  }
+  #menu-control:focus ~ main label[for="menu-control"] { @include outline; }
+  #toc-control:focus ~ main label[for="toc-control"] { @include outline; }
+  #toc-control:checked ~ main .book-header aside { display: block; }
 
   body[dir="rtl"] #menu-control:checked ~ main .book-menu .book-menu-content {
     transform: translateX(-$menu-width);
   }
 }
 
+.book-post, .book-article { width: 100%; }
 
+.parent-container { width: 80%; }
 
-.book-post {
-    width: 100%;
-}
-
-.book-article {
-    width: 100%;
-}
-
-.parent-container {
-    width: 60%;
-}
 .book-header-landing {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 80%;
+  color: white;
+  padding: $padding-16;
+  z-index: 1000;
+  background-color: var(--card-background);
+  transform: translate(-50%);
+}
+
+.main-content { 
+    padding: $padding-16; 
+    width: 80%; 
+}
+
+@media screen and (max-width: $container-max-width) {
+  .book-toc, .book-header, .book-header-landing { display: none; }
+
+  .parent-container { width: 100%; }
+
+  .book-header-mobile {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     display: block;
     position: fixed;
-    top: 0;
-    left: 50%;
+    left: 0;
+    bottom: 0;
     width: 100%;
     color: white;
     padding: $padding-16;
     z-index: 1000;
     background-color: var(--card-background);
-    width: 60%;
-    transform: translate(-50%);
+  }
+
+  .main-content { 
+      padding: $padding-16; 
+      width: 100%; 
+  }
 }
 
 
-
-@media screen and (max-width: $container-max-width) {
-  .book-toc {
-    display: none;
-  }
-  .parent-container {
-      width: 100%;
-  }
-  .book-header {
-      display:none;
-  }
-  .book-header-landing{
-      display: none;
-  }
-  .book-header-mobile {
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-
-      display: block;
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      color: white;
-      padding: $padding-16;
-      z-index: 1000;
-      background-color: var(--card-background);
-  }
-
-}
-
-.main-content {
-    padding: $padding-16;
-    width: 100%;
+@media screen and (min-width:80rem) and (max-width: 90rem) {
+    .main-content { 
+	padding: $padding-16; 
+	width: 70%; 
+    }
 }
 
 
+.intro-container .content div { padding: $padding-16; }
 

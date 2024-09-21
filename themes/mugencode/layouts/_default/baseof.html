@@ -18,7 +18,7 @@
         {{ template "header" . }} <!-- Mobile layout header -->
       </header>
 
-      <main class="flex container justify-center">
+      <main class="flex container justify-between">
 {{ if and (default true (default .Site.Params.BookToC .Params.BookToC)) (.TableOfContents | strings.Count "<li>") }}
 
 

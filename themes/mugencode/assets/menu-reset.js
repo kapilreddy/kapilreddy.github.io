@@ -6,10 +6,16 @@
 
     // Function to toggle the theme
     function toggleTheme() {
-	
 	if (localStorage.getItem('theme') === 'dark') {
 	    setTheme('light');
+	    if(switchThreeTheme){
+		switchThreeTheme("light");
+	    }
+	    
 	} else {
+	    if(switchThreeTheme) {
+		switchThreeTheme("dark");
+	    }
 	    setTheme('dark');
 	}
 	document.documentElement.classList.toggle('dark');

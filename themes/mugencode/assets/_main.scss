@@ -76,6 +76,11 @@ nav ul {
     margin-inline-end: $padding-8;
   }
 }
+.fullscreen-nav {
+    img {
+	height: 3em;
+    }
+}
 
 // Fullscreen navigation
 .fullscreen-nav {
@@ -235,7 +240,22 @@ img.light {
     display:none;
 }
 
+svg.light {
+    display:block;
+}
+
+svg.dark {
+    display:none;
+}
+
 .dark {
+    svg.light {
+	display:none;
+    }
+
+    svg.dark {
+	display:block;
+    }
     img.light {
 	display:block;
     }

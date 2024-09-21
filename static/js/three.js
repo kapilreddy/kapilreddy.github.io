@@ -1,3 +1,5 @@
+let PARTICLE_COLOR = 0xD9C2FF;
+let BG_COLOR = 0x323232;
 let scene, camera, renderer, particleSystem, trailSystem;
 let currentSection = 0;
 let targetSection = 0;
@@ -6,7 +8,7 @@ let debugMode = false;
 let isAutoScrolling = false;
 const clock = new THREE.Clock();
 
-const bgColor = new THREE.Color( 0x323232 );
+
 const PARTICLE_COUNT = 2000;
 let TRAIL_LENGTH = 20;
 let SPEED_MULTIPLIER = 0.02;
@@ -30,40 +32,53 @@ function createRiverFlowPositions(particleCount) {
     return positions;
 }
 
+function switchThreeTheme (theme) {
+    if(theme == "dark") {
+	PARTICLE_COLOR = 0xD9C2FF;
+	BG_COLOR = 0x323232;
+    } else {
+	PARTICLE_COLOR = 0x064647;
+	BG_COLOR = 0xFFFBF5;
+    }
 
-function init() {
-    document.body.innerHTML += "<div id='scene-container'></div>";
+    threeJSINIT();
+}
+
+function threeJSINIT() {
+    if(scene) {
+	delete scene;
+    }
 
     scene = new THREE.Scene();
+    const bgColor = new THREE.Color( BG_COLOR );
     scene.background = bgColor;
-
 
     riverFlowPositions = createRiverFlowPositions(PARTICLE_COUNT);
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = Math.min(window.innerWidth, window.innerHeight) * 0.7;
     camera.position.z = 50;
+    camera.lookAt(0, 0, 0);
+    createParticlesAndTrails();
 
+}
+
+function init() {
+    threeJSINIT();
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     document.getElementById('scene-container').appendChild(renderer.domElement);
-
-
-    camera.lookAt(0, 0, 0);
-
-    createParticlesAndTrails();
     animate();
-
-
 }
 
 function createParticlesAndTrails() {
     const sphereGeometry = new THREE.SphereGeometry(0.15, 8, 8);
     const sphereMaterial = new THREE.MeshBasicMaterial({
-	color: 0xD9C2FF,
+	color: PARTICLE_COLOR,
 	transparent: true,
-	opacity: 0.05		      });
+	opacity: 0.05	
+    });
 
     // Create particles
     particleSystem = new THREE.InstancedMesh(sphereGeometry, sphereMaterial, PARTICLE_COUNT);
@@ -355,9 +370,8 @@ function updateNavDots(index) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    document.body.innerHTML += "<div id='scene-container'></div>";
     init();
-
-
     const container = document.querySelector('.container');
     // document.addEventListener('scroll', handleScroll);
 

@@ -385,3 +385,22 @@ body[dir="rtl"] .book-menu {
 
 .intro-container .content div { padding: $padding-16; }
 
+
+.nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--body-font-color);
+    margin: 10px 0;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.nav-dot.active {
+    background-color: var(--color-visited-link);
+    transform: scale(1.4);
+}
+
+.main-container {
+    background-color: var(--card-background);
+}

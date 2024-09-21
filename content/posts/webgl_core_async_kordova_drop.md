@@ -306,6 +306,7 @@ I'll create a UI channel to read available frames.
 'render-stuff' is just a generic function which gets audio data to
 render the spectrum data.
 
+
 ```clojure
 (defn animloop
   [ui-chan ts]

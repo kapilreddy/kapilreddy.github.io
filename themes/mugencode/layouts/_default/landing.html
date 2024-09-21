@@ -1,11 +1,21 @@
 <!DOCTYPE html>
 <html class="dark" lang="{{ default .Site.Language.Lang .Site.LanguageCode  }}" dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
+<style>
+  html {
+  scroll-snap-type: y mandatory;
+  }
+</style>
 <head>
   {{ partial "docs/html-head" . }}
   {{ partial "docs/inject/head" . }}
 </head>
 <body dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
-
+<div class="navigation">
+  <div class="nav-dot" data-section="about"></div>
+  <div class="nav-dot" data-section="skills"></div>
+  <div class="nav-dot" data-section="projects"></div>
+  <div class="nav-dot" data-section="interests"></div>
+</div>
   <input type="checkbox" class="hidden toggle" id="menu-control" />
   <input type="checkbox" class="hidden toggle" id="toc-control" />
 

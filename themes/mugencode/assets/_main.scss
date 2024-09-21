@@ -330,9 +330,9 @@ svg.dark {
 .book-page,
 .book-header aside,
 .markdown {
-  transition: 0.2s ease-in-out;
-  transition-property: transform, margin, opacity, visibility;
-  will-change: transform, margin, opacity;
+  // transition: 0.2s ease-in-out;
+  // transition-property: transform, margin, opacity, visibility;
+  // will-change: transform, margin, opacity;
 }
 
 // Media queries
@@ -386,7 +386,7 @@ svg.dark {
 
 @media screen and (max-width: $container-max-width) {
   .book-toc, .book-header, .book-header-landing { display: none; }
-
+  
   .parent-container { width: 100%; }
 
   .book-header-mobile {
@@ -404,8 +404,9 @@ svg.dark {
   }
 
   .main-content { 
-      padding: $padding-16; 
+      padding: $padding-4; 
       width: 100%; 
+      font-size: $font-size-12;
   }
 }
 
@@ -439,3 +440,4 @@ svg.dark {
 .main-container {
     background-color: var(--card-background);
 }
+

@@ -8,7 +8,7 @@ theme = 'mugencode'
 [menus]
   [[menus.main]]
     name = 'About'
-    URL = '/docs/about'
+    URL = '/'
     weight = 10
   [[menus.main]]
     name = 'Posts'

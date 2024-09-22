@@ -2,9 +2,9 @@ name: Build and Deploy Hugo Site
 
 on:
   push:
-    branches: [ master ]  # Trigger the workflow on push to main branch
+    branches: [ master ] 
   pull_request:
-    branches: [ master ]  # Trigger the workflow on pull requests to main branch
+    branches: [ master ] 
 
 jobs:
   build-and-deploy:
@@ -26,7 +26,7 @@ jobs:
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/main'  # Only deploy on push to main branch
+      if: github.ref == 'refs/heads/master'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public  # Hugo's default output directory

@@ -1,0 +1,268 @@
+<!doctype html><html class=dark lang=en-us dir=ltr><head><meta name=viewport content="initial-scale=.25"><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="korova-drop is an audio visualization project built using cljs, core.async, HTML5 and webGL.
+Try out the demo here. The source code is available here.
+For this project I have used three.js (which is an awesome library), webGL and Audio API.
+This will only work on Chrome for now.
+I won&rsquo;t talk about how I have used three.js with cljs in this post.
+This post mostly concentrates on how core.async makes handling events a whole lot easier."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://example.org/posts/webgl_core_async_kordova_drop/"><meta property="og:site_name" content="Mugencode"><meta property="og:title" content="core.async + WebGL = korova-drop"><meta property="og:description" content="korova-drop is an audio visualization project built using cljs, core.async, HTML5 and webGL.
+Try out the demo here. The source code is available here.
+For this project I have used three.js (which is an awesome library), webGL and Audio API. This will only work on Chrome for now.
+I won’t talk about how I have used three.js with cljs in this post. This post mostly concentrates on how core.async makes handling events a whole lot easier."><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2014-09-28T00:00:00+00:00"><meta property="article:modified_time" content="2014-09-28T00:00:00+00:00"><title>core.async + WebGL = korova-drop | Mugencode</title>
+<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=canonical href=https://example.org/posts/webgl_core_async_kordova_drop/><link rel=stylesheet href=/book.min.a68a5da63f93c542995802a3fc7742ca72f65eea324e661d2937dc383c90e5df.css integrity="sha256-popdpj+TxUKZWAKj/HdCynL2XuoyTmYdKTfcODyQ5d8=" crossorigin=anonymous><script defer src=/fuse.min.js></script><script defer src=/en.search.min.35386f2c8fdbc47d86a697e81a6ddff56e1acac68b6d19e182d5a9f75ff69e59.js integrity="sha256-NThvLI/bxH2GppfoGm3f9W4aysaLbRnhgtWp91/2nlk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><nav class=fullscreen-nav><div class=nav-header><div class=logo><img src=/images/logo.png alt=Logo></div><button class=close-btn>&#x2715;</button></div><ul class=nav-items><li><a class=sidebar-nav-item href=/>About</a></li><li><a class=sidebar-nav-item href=/posts/>Posts</a></li></ul></nav><script>(function(){function e(e){localStorage.setItem("theme",e)}function n(){localStorage.getItem("theme")==="dark"?(e("light"),switchThreeTheme&&switchThreeTheme("light")):(switchThreeTheme&&switchThreeTheme("dark"),e("dark")),document.documentElement.classList.toggle("dark")}document.addEventListener("DOMContentLoaded",function(){var e,s=document.querySelectorAll(".menu-toggle");Array.from(s).forEach(e=>{e.addEventListener("click",function(){document.querySelector(".fullscreen-nav").classList.add("active")})}),e=document.querySelector(".close-btn"),e.addEventListener("click",function(){document.querySelector(".fullscreen-nav").classList.remove("active")});const t=document.querySelectorAll(".theme-toggle");console.log(t),Array.from(t).forEach(e=>{e.addEventListener("click",()=>{n()})})},!1);function t(){const t=window.location.hash.slice(1),e=document.getElementsByTagName("a");for(let n=0;n<e.length;n++){const s=e[n];s.getAttribute("href")==="#"+t?s.parentNode.classList.add("active"):s.parentNode.classList.remove("active")}}document.addEventListener("DOMContentLoaded",t),window.addEventListener("hashchange",t)})()</script><main class="container flex justify-center parent-container"><div class=book-page><header class=book-header><div class="flex align-center justify-between"><div><h2 class=book-brand><a class="flex align-center" href=/><img class=light src=/images/logo.png alt=Logo>
+<img class=dark src=/images/logo_dark.png alt=Logo>
+<span>Mugencode</span></a></h2></div><div class="flex align-center justify-between"><div class=theme-toggle><div class=light><svg viewBox="0 0 256 256" focusable="false" color="#000" style="user-select:none;width:100%;height:100%;display:inline-block;fill:#000;color:#000;flex-shrink:0"><g color="#000" weight="regular"><path d="M120 40V16a8 8 0 0116 0V40a8 8 0 01-16 0zm72 88a64 64 0 11-64-64 64.07 64.07.0 0164 64zm-16 0a48 48 0 10-48 48 48.05 48.05.0 0048-48zM58.34 69.66A8 8 0 0069.66 58.34l-16-16A8 8 0 0042.34 53.66zm0 116.68-16 16a8 8 0 0011.32 11.32l16-16a8 8 0 00-11.32-11.32zM192 72a8 8 0 005.66-2.34l16-16a8 8 0 00-11.32-11.32l-16 16A8 8 0 00192 72zm5.66 114.34a8 8 0 00-11.32 11.32l16 16a8 8 0 0011.32-11.32zM48 128a8 8 0 00-8-8H16a8 8 0 000 16H40a8 8 0 008-8zm80 80a8 8 0 00-8 8v24a8 8 0 0016 0V216a8 8 0 00-8-8zm112-88H216a8 8 0 000 16h24a8 8 0 000-16z"/></g></svg></div><div class=dark><svg viewBox="0 0 256 256" focusable="false" color="#fff" style="user-select:none;width:100%;height:100%;display:inline-block;fill:#fff;color:#fff;flex-shrink:0"><g color="#fff" weight="regular"><path d="M233.54 142.23a8 8 0 00-8-2 88.08 88.08.0 01-109.8-109.8 8 8 0 00-10-10 104.84 104.84.0 00-52.91 37A104 104 0 00136 224a103.09 103.09.0 0062.52-20.88 104.84 104.84.0 0037-52.91A8 8 0 00233.54 142.23zM188.9 190.34A88 88 0 0165.66 67.11a89 89 0 0131.4-26A106 106 0 0096 56 104.11 104.11.0 002e2 160a106 106 0 0014.92-1.06 89 89 0 01-26.02 31.4z"/></g></svg></div></div><label class=menu-toggle for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label></div></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><a href=#workflow>Workflow</a></li><li><a href=#getting-mp3-in-browser>Getting Mp3 in browser</a></li><li><a href=#playing-audio>Playing audio</a></li><li><a href=#bringing-it-all-together>Bringing it all together</a></li><li><a href=#analyzing-audio-data>Analyzing audio data</a></li><li><a href=#rendering-stuff>Rendering stuff</a></li><li><a href=#conclusion>Conclusion</a></li><li><a href=#resources-and-further-reading>Resources and further reading.</a></li></ul></li></ul></nav></aside></header><main class="flex main-container container justify-between"><div class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#workflow>Workflow</a></li><li><a href=#getting-mp3-in-browser>Getting Mp3 in browser</a></li><li><a href=#playing-audio>Playing audio</a></li><li><a href=#bringing-it-all-together>Bringing it all together</a></li><li><a href=#analyzing-audio-data>Analyzing audio data</a></li><li><a href=#rendering-stuff>Rendering stuff</a></li><li><a href=#conclusion>Conclusion</a></li><li><a href=#resources-and-further-reading>Resources and further reading.</a></li></ul></li></ul></nav></div></div><main class=main-content><article class="markdown book-post"><h1><a href=/posts/webgl_core_async_kordova_drop/>core.async + WebGL = korova-drop</a></h1><h5>September 28, 2014</h5><p>korova-drop is an audio visualization project built using cljs, core.async, HTML5 and webGL.</p><p>Try out the demo <a href=/examples/korova_drop/>here</a>. The source code is available <a href=https://github.com/kapilreddy/korova-drop>here</a>.</p><p>For this project I have used three.js (which is an awesome library), webGL and Audio API.
+This will only work on Chrome for now.</p><p>I won&rsquo;t talk about how I have used three.js with cljs in this post.
+This post mostly concentrates on how core.async makes handling events a whole lot easier.</p><h2 id=workflow>Workflow
+<a class=anchor href=#workflow>#</a></h2><p>Since I had never used clojurescript before this project, I spent some
+time exploring the tools and setting up a basic workflow for cljs.</p><p>I used the following tools for my cljs workflow.</p><ul><li><p><a href=https://github.com/emezeske/lein-cljsbuild>lein-cljsbuild</a> is a very
+useful leiningen plugin that takes care of building cljs files into
+javascript outputs.</p></li><li><p><a href=https://github.com/cemerick/piggieback>Piggieback</a> is a cljs repl that
+runs on nrepl. I cannot stress enough how much it improved my workflow
+after discovering it halfway through working on my project.</p></li></ul><p><a href=https://github.com/kapilreddy/dotemacs/blob/master/configurations/cljs-config.el>Here</a> is some emacs config I use to quickly start off with piggieback.</p><h2 id=getting-mp3-in-browser>Getting Mp3 in browser
+<a class=anchor href=#getting-mp3-in-browser>#</a></h2><p>I&rsquo;ll try to compare js, cljs and cljs + core.async. Observe the
+difference that core.async makes to the whole structure of the code.</p><p>Let&rsquo;s start with the code that handles file drag and drop. All it does
+is add a couple of event handlers to a drop zone DOM element and provide a
+way to process files.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>init_file_handling</span> (<span style=color:#a6e22e>callback</span>) {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>drop_zone</span> <span style=color:#f92672>=</span> document.<span style=color:#a6e22e>getElementById</span> (<span style=color:#e6db74>&#34;drop_zone&#34;</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>drop_zone</span>.<span style=color:#a6e22e>addEventListener</span> (<span style=color:#e6db74>&#34;dragover&#34;</span>, <span style=color:#66d9ef>function</span> (<span style=color:#a6e22e>e</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>e</span>.<span style=color:#a6e22e>stopPropagation</span> ();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>e</span>.<span style=color:#a6e22e>preventDefault</span> ();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>e</span>.<span style=color:#a6e22e>dataTransfer</span>.<span style=color:#a6e22e>dropEffect</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;copy&#34;</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>  });
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>drop_zone</span>.<span style=color:#a6e22e>addEventListener</span> (<span style=color:#e6db74>&#34;drop&#34;</span>, <span style=color:#66d9ef>function</span> (<span style=color:#a6e22e>e</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>e</span>.<span style=color:#a6e22e>stopPropagation</span> ();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>e</span>.<span style=color:#a6e22e>preventDefault</span> ();
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>callback</span> (<span style=color:#a6e22e>e</span>.<span style=color:#a6e22e>dataTransfer</span>.<span style=color:#a6e22e>files</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>  });
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>A plain cljs version.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-clj data-lang=clj><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>init-file-handling
+</span></span><span style=display:flex><span>  [callback]
+</span></span><span style=display:flex><span>  (<span style=color:#66d9ef>let </span>[drop-zone (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone&#34;</span>)
+</span></span><span style=display:flex><span>        files-chan (<span style=color:#a6e22e>chan</span>)]
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.addEventListener</span> drop-zone
+</span></span><span style=display:flex><span>                       <span style=color:#e6db74>&#34;dragover&#34;</span>
+</span></span><span style=display:flex><span>                       (<span style=color:#66d9ef>fn </span>[e]
+</span></span><span style=display:flex><span>                         (<span style=color:#a6e22e>.stopPropagation</span> e)
+</span></span><span style=display:flex><span>                         (<span style=color:#a6e22e>.preventDefault</span> e)
+</span></span><span style=display:flex><span>                         (aset e <span style=color:#e6db74>&#34;dropEffect&#34;</span> <span style=color:#e6db74>&#34;dataTransfer&#34;</span> <span style=color:#e6db74>&#34;copy&#34;</span>))
+</span></span><span style=display:flex><span>                       false)
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.addEventListener</span> drop-zone
+</span></span><span style=display:flex><span>                       <span style=color:#e6db74>&#34;drop&#34;</span>
+</span></span><span style=display:flex><span>                       (<span style=color:#66d9ef>fn </span>[e]
+</span></span><span style=display:flex><span>                         (<span style=color:#a6e22e>.stopPropagation</span> e)
+</span></span><span style=display:flex><span>                         (<span style=color:#a6e22e>.preventDefault</span> e)
+</span></span><span style=display:flex><span>                         (<span style=color:#a6e22e>callback</span> (aget e <span style=color:#e6db74>&#34;dataTransfer&#34;</span> <span style=color:#e6db74>&#34;files&#34;</span>)))
+</span></span><span style=display:flex><span>                       false)))
+</span></span></code></pre></div><p>In following example, the function is just returning a files channel
+instead of accepting callback to process on files.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-clj data-lang=clj><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>init-file-handling
+</span></span><span style=display:flex><span>  []
+</span></span><span style=display:flex><span>  (<span style=color:#66d9ef>let </span>[drop-zone (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone&#34;</span>)
+</span></span><span style=display:flex><span>        files-chan (<span style=color:#a6e22e>chan</span>)]
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.addEventListener</span> drop-zone
+</span></span><span style=display:flex><span>                       <span style=color:#e6db74>&#34;dragover&#34;</span>
+</span></span><span style=display:flex><span>                       (<span style=color:#66d9ef>fn </span>[e]
+</span></span><span style=display:flex><span>                         (<span style=color:#a6e22e>.stopPropagation</span> e)
+</span></span><span style=display:flex><span>                         (<span style=color:#a6e22e>.preventDefault</span> e)
+</span></span><span style=display:flex><span>                         (aset e <span style=color:#e6db74>&#34;dropEffect&#34;</span> <span style=color:#e6db74>&#34;dataTransfer&#34;</span> <span style=color:#e6db74>&#34;copy&#34;</span>))
+</span></span><span style=display:flex><span>                       false)
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.addEventListener</span> drop-zone
+</span></span><span style=display:flex><span>                       <span style=color:#e6db74>&#34;drop&#34;</span>
+</span></span><span style=display:flex><span>                       (<span style=color:#66d9ef>fn </span>[e]
+</span></span><span style=display:flex><span>                         (<span style=color:#a6e22e>.stopPropagation</span> e)
+</span></span><span style=display:flex><span>                         (<span style=color:#a6e22e>.preventDefault</span> e)
+</span></span><span style=display:flex><span>                         (<span style=color:#a6e22e>put!</span> files-chan
+</span></span><span style=display:flex><span>                               (aget e <span style=color:#e6db74>&#34;dataTransfer&#34;</span> <span style=color:#e6db74>&#34;files&#34;</span>)))
+</span></span><span style=display:flex><span>                       false)
+</span></span><span style=display:flex><span>    files-chan))
+</span></span></code></pre></div><p>Nothing impressive right? But I&rsquo;ll get there soon.</p><h2 id=playing-audio>Playing audio
+<a class=anchor href=#playing-audio>#</a></h2><p>Now I can process the files to play the audio</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span>window.<span style=color:#a6e22e>AudioContext</span> <span style=color:#f92672>=</span> window.<span style=color:#a6e22e>AudioContext</span> <span style=color:#f92672>||</span> window.<span style=color:#a6e22e>webkitAudioContext</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>context</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>AudioContext</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>loadSound</span>(<span style=color:#a6e22e>file</span>, <span style=color:#a6e22e>callback</span>) {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>reader</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>FileReader</span>();
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>reader</span>.<span style=color:#a6e22e>onload</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>function</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>context</span>.<span style=color:#a6e22e>decodeAudioData</span>(<span style=color:#a6e22e>reader</span>.<span style=color:#a6e22e>result</span>, <span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>buffer</span>) {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>callback</span> (<span style=color:#a6e22e>buffer</span>);
+</span></span><span style=display:flex><span>    }, <span style=color:#a6e22e>onError</span>);
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>reader</span>.<span style=color:#a6e22e>readArrayBuffer</span>(<span style=color:#a6e22e>file</span>);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>playSound</span>(<span style=color:#a6e22e>buffer</span>) {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>source</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>context</span>.<span style=color:#a6e22e>createBufferSource</span>();
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>source</span>.<span style=color:#a6e22e>buffer</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>buffer</span>;
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>source</span>.<span style=color:#a6e22e>connect</span>(<span style=color:#a6e22e>context</span>.<span style=color:#a6e22e>destination</span>);
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>source</span>.<span style=color:#a6e22e>start</span>(<span style=color:#ae81ff>0</span>);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Lets convert this example to plain cljs</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-clj data-lang=clj><span style=display:flex><span>(<span style=color:#66d9ef>def </span>audio-context (<span style=color:#66d9ef>if </span>window/webkitAudioContext
+</span></span><span style=display:flex><span>                     (<span style=color:#66d9ef>new </span>window/webkitAudioContext)
+</span></span><span style=display:flex><span>                     window/AudioContext))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>play-sound
+</span></span><span style=display:flex><span>  [buffer]
+</span></span><span style=display:flex><span>  (<span style=color:#66d9ef>let </span>[source (<span style=color:#a6e22e>.createBufferSource</span> source)]
+</span></span><span style=display:flex><span>    (aset source <span style=color:#e6db74>&#34;buffer&#34;</span> buffer)
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.connect</span> source (aget audio-context <span style=color:#e6db74>&#34;destination&#34;</span>))
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.start</span> source <span style=color:#ae81ff>0</span>)))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>load-sound
+</span></span><span style=display:flex><span>  [file callback]
+</span></span><span style=display:flex><span>  (<span style=color:#66d9ef>let </span>[reader (<span style=color:#a6e22e>FileReader.</span>)]
+</span></span><span style=display:flex><span>    (aset reader <span style=color:#e6db74>&#34;onload&#34;</span> (<span style=color:#66d9ef>fn </span>[]
+</span></span><span style=display:flex><span>                             (<span style=color:#a6e22e>.decodeAudioData</span> audio-context
+</span></span><span style=display:flex><span>                                               (aget reader <span style=color:#e6db74>&#34;result&#34;</span>)
+</span></span><span style=display:flex><span>                                               (<span style=color:#66d9ef>fn </span>[buffer]
+</span></span><span style=display:flex><span>                                                 (<span style=color:#a6e22e>callback</span> buffer)))))
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.readAsArrayBuffer</span> reader file)))
+</span></span></code></pre></div><p>And now using core.async</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-clj data-lang=clj><span style=display:flex><span>(<span style=color:#66d9ef>def </span>audio-context (<span style=color:#66d9ef>if </span>window/webkitAudioContext
+</span></span><span style=display:flex><span>                     (<span style=color:#66d9ef>new </span>window/webkitAudioContext)
+</span></span><span style=display:flex><span>                     window/AudioContext))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>play-sound
+</span></span><span style=display:flex><span>  [buffer]
+</span></span><span style=display:flex><span>  (<span style=color:#66d9ef>let </span>[source (<span style=color:#a6e22e>.createBufferSource</span> source)]
+</span></span><span style=display:flex><span>    (aset source <span style=color:#e6db74>&#34;buffer&#34;</span> buffer)
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.connect</span> source (aget audio-context <span style=color:#e6db74>&#34;destination&#34;</span>))
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.start</span> source <span style=color:#ae81ff>0</span>)))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>local-file-&gt;chan
+</span></span><span style=display:flex><span>  [file]
+</span></span><span style=display:flex><span>  (<span style=color:#66d9ef>let </span>[reader (<span style=color:#66d9ef>new </span>window/FileReader)
+</span></span><span style=display:flex><span>        resp-c (<span style=color:#a6e22e>chan</span>)
+</span></span><span style=display:flex><span>        c (<span style=color:#a6e22e>chan</span>)]
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>set!</span> (<span style=color:#a6e22e>.-onload</span> reader) (<span style=color:#66d9ef>fn </span>[]
+</span></span><span style=display:flex><span>                              (<span style=color:#a6e22e>put!</span> resp-c (<span style=color:#a6e22e>.-result</span> reader))))
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.readAsArrayBuffer</span> reader file)
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>go-loop</span> (<span style=color:#66d9ef>let </span>[resp (<span style=color:#a6e22e>&lt;!</span> resp-c)]
+</span></span><span style=display:flex><span>               (<span style=color:#a6e22e>.decodeAudioData</span> audio-context
+</span></span><span style=display:flex><span>                                 resp
+</span></span><span style=display:flex><span>                                 <span style=color:#f92672>#</span>(<span style=color:#a6e22e>put!</span> c %))))
+</span></span><span style=display:flex><span>    c))
+</span></span></code></pre></div><p>There is not much of difference in any of these examples. I am just
+pushing the results to a channel and returning the channel instead
+of relying on a callback function for further processing. Why would
+I go through all this trouble just to play some audio file?</p><p>Let&rsquo;s get to that bit now.</p><h2 id=bringing-it-all-together>Bringing it all together
+<a class=anchor href=#bringing-it-all-together>#</a></h2><p>Let&rsquo;s use previous functions and write basic code to handle playing
+audio from a file dropped in drop zone.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=display:flex><span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>main</span> () {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>init_file_handling</span> (<span style=color:#66d9ef>function</span> (<span style=color:#a6e22e>files</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>file</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>files</span> [<span style=color:#ae81ff>0</span>];
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>var</span> <span style=color:#a6e22e>drop_zone_wrapper</span> <span style=color:#f92672>=</span> document.<span style=color:#a6e22e>getElementById</span> (<span style=color:#e6db74>&#34;drop_zone_wrapper&#34;</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>drop_zone_wrapper</span>.<span style=color:#a6e22e>addClass</span> (<span style=color:#e6db74>&#34;loading&#34;</span>);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>loadSound</span> (<span style=color:#a6e22e>file</span>, <span style=color:#66d9ef>function</span> (<span style=color:#a6e22e>buffer</span>) {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>drop_zone_wrapper</span>.<span style=color:#a6e22e>removeClass</span> (<span style=color:#e6db74>&#34;loading&#34;</span>);
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>drop_zone_wrapper</span>.<span style=color:#a6e22e>addClass</span> (<span style=color:#e6db74>&#34;corner&#34;</span>);
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>playSound</span> (<span style=color:#a6e22e>buffer</span>);
+</span></span><span style=display:flex><span>    });
+</span></span><span style=display:flex><span>  });
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-clj data-lang=clj><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>-main
+</span></span><span style=display:flex><span>  []
+</span></span><span style=display:flex><span>  (<span style=color:#a6e22e>init-file-handling</span> (<span style=color:#66d9ef>fn </span>[files]
+</span></span><span style=display:flex><span>                        (<span style=color:#66d9ef>let </span>[file (aget files <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>                              drop-zone-wrapper (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone_wrapper&#34;</span>)]
+</span></span><span style=display:flex><span>                          (<span style=color:#a6e22e>add-class</span> drop-zone-wrapper <span style=color:#e6db74>&#34;loading&#34;</span>)
+</span></span><span style=display:flex><span>                          (<span style=color:#a6e22e>load-sound</span> file (<span style=color:#66d9ef>fn </span>[buffer]
+</span></span><span style=display:flex><span>                                             (<span style=color:#a6e22e>remove-class</span> drop-zone-wrapper <span style=color:#e6db74>&#34;loading&#34;</span>)
+</span></span><span style=display:flex><span>                                             (<span style=color:#a6e22e>add-class</span> drop-zone-wrapper <span style=color:#e6db74>&#34;corner&#34;</span>)
+</span></span><span style=display:flex><span>                                             (<span style=color:#a6e22e>play-sound</span> buffer)))))))
+</span></span></code></pre></div><p>In both examples it&rsquo;s very hard to read and comprehend what is
+happening and in what order (well not for a javascripter).</p><p>Instead of explaining what I am trying to do I am just going to
+add code written using core.async.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-clj data-lang=clj><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>-main
+</span></span><span style=display:flex><span>  []
+</span></span><span style=display:flex><span>  (<span style=color:#66d9ef>let </span>[files-chan (<span style=color:#a6e22e>init-file-handling</span>)]
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>go-loop</span> (<span style=color:#66d9ef>let </span>[files (<span style=color:#a6e22e>&lt;!</span> files-chan)
+</span></span><span style=display:flex><span>                   file (aget files <span style=color:#ae81ff>0</span>)]
+</span></span><span style=display:flex><span>               (<span style=color:#a6e22e>add-class</span> (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone_wrapper&#34;</span>) <span style=color:#e6db74>&#34;loading&#34;</span>)
+</span></span><span style=display:flex><span>               (<span style=color:#66d9ef>let </span>[audio (<span style=color:#a6e22e>&lt;!</span> (<span style=color:#a6e22e>local-file-&gt;chan</span> file))]
+</span></span><span style=display:flex><span>                 (<span style=color:#a6e22e>remove-class</span> (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone_wrapper&#34;</span>) <span style=color:#e6db74>&#34;loading&#34;</span>)
+</span></span><span style=display:flex><span>                 (<span style=color:#a6e22e>add-class</span> (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone_wrapper&#34;</span>) <span style=color:#e6db74>&#34;corner&#34;</span>)
+</span></span><span style=display:flex><span>                 (<span style=color:#a6e22e>play-sound</span> audio))))))
+</span></span></code></pre></div><p>Pretty clear right? Get the file from the &lsquo;files-chan&rsquo;, get the audio
+from the file and play the sound.</p><p>Let&rsquo;s get to the fun part now.</p><p>From now on I&rsquo;ll just add code written using cljs + core.async.</p><h2 id=analyzing-audio-data>Analyzing audio data
+<a class=anchor href=#analyzing-audio-data>#</a></h2><p>Audio api provides audio analyzers which I am going to
+use to vizualize audio.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-clj data-lang=clj><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>sound-+&gt;analyzer
+</span></span><span style=display:flex><span>  [source-node]
+</span></span><span style=display:flex><span>  (<span style=color:#66d9ef>let </span>[analyzer (<span style=color:#a6e22e>.createAnalyser</span> audio-context)]
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>set!</span> (<span style=color:#a6e22e>.-fftSize</span> analyzer) <span style=color:#ae81ff>1024</span>)
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>set!</span> (<span style=color:#a6e22e>.-smoothingTimeConstant</span> analyzer) <span style=color:#ae81ff>0.7</span>)
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.connect</span> source-node analyzer)
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>.connect</span> analyzer (<span style=color:#a6e22e>.-destination</span> audio-context))
+</span></span><span style=display:flex><span>    analyzer))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>-main
+</span></span><span style=display:flex><span>  []
+</span></span><span style=display:flex><span>  (<span style=color:#66d9ef>let </span>[files-chan (<span style=color:#a6e22e>init-file-handling</span>)
+</span></span><span style=display:flex><span>        audio-chan (<span style=color:#a6e22e>chan</span>)]
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>go-loop</span> (<span style=color:#66d9ef>let </span>[files (<span style=color:#a6e22e>&lt;!</span> files-chan)
+</span></span><span style=display:flex><span>                   file (aget files <span style=color:#ae81ff>0</span>)]
+</span></span><span style=display:flex><span>               (<span style=color:#a6e22e>add-class</span> (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone_wrapper&#34;</span>) <span style=color:#e6db74>&#34;loading&#34;</span>)
+</span></span><span style=display:flex><span>               (<span style=color:#66d9ef>let </span>[audio (<span style=color:#a6e22e>&lt;!</span> (<span style=color:#a6e22e>local-file-&gt;chan</span> file))]
+</span></span><span style=display:flex><span>                 (<span style=color:#a6e22e>remove-class</span> (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone_wrapper&#34;</span>) <span style=color:#e6db74>&#34;loading&#34;</span>)
+</span></span><span style=display:flex><span>                 (<span style=color:#a6e22e>add-class</span> (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone_wrapper&#34;</span>) <span style=color:#e6db74>&#34;corner&#34;</span>)
+</span></span><span style=display:flex><span>                 (<span style=color:#a6e22e>remove-class</span> (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;progress-bar-wrapper&#34;</span>) <span style=color:#e6db74>&#34;hidden&#34;</span>)
+</span></span><span style=display:flex><span>                 (aset (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;progress&#34;</span>) <span style=color:#e6db74>&#34;style&#34;</span> <span style=color:#e6db74>&#34;0%&#34;</span>)
+</span></span><span style=display:flex><span>                 (<span style=color:#a6e22e>put!</span> audio-chan audio))))
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>go</span>
+</span></span><span style=display:flex><span>     (<span style=color:#66d9ef>loop </span>[audio-source nil]
+</span></span><span style=display:flex><span>       (<span style=color:#66d9ef>let </span>[buff (<span style=color:#a6e22e>&lt;!</span> audio-chan)
+</span></span><span style=display:flex><span>             source-node (<span style=color:#a6e22e>play-sound-buff</span> buff)]
+</span></span><span style=display:flex><span>         (when audio-source
+</span></span><span style=display:flex><span>           (<span style=color:#a6e22e>.noteOff</span> audio-source <span style=color:#ae81ff>0</span>))
+</span></span><span style=display:flex><span>         (<span style=color:#a6e22e>sound-+&gt;analyzer</span> source-node)
+</span></span><span style=display:flex><span>         (<span style=color:#a6e22e>recur</span> source-node))))))
+</span></span></code></pre></div><p>I create an analyzer node. Right now I don&rsquo;t do anything with it. Later
+on I&rsquo;ll use it to render audio spectrum data.</p><h2 id=rendering-stuff>Rendering stuff
+<a class=anchor href=#rendering-stuff>#</a></h2><p>Modern browsers provide an API for UI loop called &lsquo;requestAnimationFrame&rsquo;.
+I&rsquo;ll create a UI channel to read available frames.</p><p>&lsquo;render-stuff&rsquo; is just a generic function which gets audio data to
+render the spectrum data.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-clojure data-lang=clojure><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>animloop
+</span></span><span style=display:flex><span>  [ui-chan ts]
+</span></span><span style=display:flex><span>  (<span style=color:#a6e22e>.requestAnimationFrame</span> js/window (partial animloop ui-chan))
+</span></span><span style=display:flex><span>  (<span style=color:#a6e22e>put!</span> ui-chan ts))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>(<span style=color:#66d9ef>defn </span>-main
+</span></span><span style=display:flex><span>  []
+</span></span><span style=display:flex><span>  (<span style=color:#66d9ef>let </span>[files-chan (<span style=color:#a6e22e>init-file-handling</span>)
+</span></span><span style=display:flex><span>        audio-chan (<span style=color:#a6e22e>chan</span>)
+</span></span><span style=display:flex><span>        ui-chan (<span style=color:#a6e22e>chan</span>)
+</span></span><span style=display:flex><span>        analyzer (<span style=color:#a6e22e>atom</span> nil)]
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>animloop</span> ui-chan <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>go-loop</span> (<span style=color:#66d9ef>let </span>[files (<span style=color:#a6e22e>&lt;!</span> files-chan)
+</span></span><span style=display:flex><span>                   file (aget files <span style=color:#ae81ff>0</span>)]
+</span></span><span style=display:flex><span>               (<span style=color:#a6e22e>add-class</span> (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone_wrapper&#34;</span>) <span style=color:#e6db74>&#34;loading&#34;</span>)
+</span></span><span style=display:flex><span>               (<span style=color:#66d9ef>let </span>[audio (<span style=color:#a6e22e>&lt;!</span> (<span style=color:#a6e22e>local-file-&gt;chan</span> file))]
+</span></span><span style=display:flex><span>                 (<span style=color:#a6e22e>remove-class</span> (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone_wrapper&#34;</span>) <span style=color:#e6db74>&#34;loading&#34;</span>)
+</span></span><span style=display:flex><span>                 (<span style=color:#a6e22e>add-class</span> (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;drop_zone_wrapper&#34;</span>) <span style=color:#e6db74>&#34;corner&#34;</span>)
+</span></span><span style=display:flex><span>                 (<span style=color:#a6e22e>remove-class</span> (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;progress-bar-wrapper&#34;</span>) <span style=color:#e6db74>&#34;hidden&#34;</span>)
+</span></span><span style=display:flex><span>                 (aset (<span style=color:#a6e22e>by-id</span> <span style=color:#e6db74>&#34;progress&#34;</span>) <span style=color:#e6db74>&#34;style&#34;</span> <span style=color:#e6db74>&#34;0%&#34;</span>)
+</span></span><span style=display:flex><span>                 (<span style=color:#a6e22e>put!</span> audio-chan audio))))
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>go</span>
+</span></span><span style=display:flex><span>     (<span style=color:#66d9ef>loop </span>[audio-source nil]
+</span></span><span style=display:flex><span>       (<span style=color:#66d9ef>let </span>[buff (<span style=color:#a6e22e>&lt;!</span> audio-chan)
+</span></span><span style=display:flex><span>             source-node (<span style=color:#a6e22e>play-sound-buff</span> buff)]
+</span></span><span style=display:flex><span>         (<span style=color:#a6e22e>put!</span> progress-chan {<span style=color:#e6db74>:type</span> <span style=color:#e6db74>:duration</span>
+</span></span><span style=display:flex><span>                              <span style=color:#e6db74>:val</span> (aget buff <span style=color:#e6db74>&#34;duration&#34;</span>)})
+</span></span><span style=display:flex><span>         (when audio-source
+</span></span><span style=display:flex><span>           (<span style=color:#a6e22e>.noteOff</span> audio-source <span style=color:#ae81ff>0</span>))
+</span></span><span style=display:flex><span>         (<span style=color:#a6e22e>reset!</span> analyzer (<span style=color:#a6e22e>sound-+&gt;analyzer</span> source-node))
+</span></span><span style=display:flex><span>         (<span style=color:#a6e22e>recur</span> source-node))))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    (<span style=color:#a6e22e>go</span> (<span style=color:#66d9ef>loop </span>[prev-data nil]
+</span></span><span style=display:flex><span>          (<span style=color:#66d9ef>let </span>[frame-time (<span style=color:#a6e22e>&lt;!</span> ui-chan)]
+</span></span><span style=display:flex><span>            (<span style=color:#66d9ef>if </span><span style=color:#f92672>@</span>analyzer
+</span></span><span style=display:flex><span>              (<span style=color:#a6e22e>do</span>
+</span></span><span style=display:flex><span>                (<span style=color:#66d9ef>let </span>[arr (<span style=color:#66d9ef>new </span>window/Uint8Array (<span style=color:#a6e22e>.-innerWidth</span> js/window))]
+</span></span><span style=display:flex><span>                  (<span style=color:#a6e22e>.getByteFrequencyData</span> <span style=color:#f92672>@</span>analyzer arr)
+</span></span><span style=display:flex><span>                  (<span style=color:#66d9ef>let </span>[audio-data (for [i (range (<span style=color:#a6e22e>.-length</span> arr))]
+</span></span><span style=display:flex><span>                                     (aget arr i))]
+</span></span><span style=display:flex><span>                    (<span style=color:#a6e22e>recur</span> (<span style=color:#a6e22e>render-stuff</span> audio-data prev-data)))))
+</span></span><span style=display:flex><span>              (<span style=color:#a6e22e>recur</span> prev-data)))))))
+</span></span></code></pre></div><h2 id=conclusion>Conclusion
+<a class=anchor href=#conclusion>#</a></h2><p>core.async makes code structure readable and hence easy to manage.</p><p>Please comment for suggestions on github or send a pull request.</p><h2 id=resources-and-further-reading>Resources and further reading.
+<a class=anchor href=#resources-and-further-reading>#</a></h2><ul><li><a href=http://clojure.github.io/core.async/>Core.async documentation</a></li><li><a href=https://github.com/swannodette/async-tests>Core.async examples by David Nolen</a></li><li><a href=http://rigsomelight.com/2013/08/12/clojurescript-core-async-dots-game.html>Awesome Dots game by Bruce Hauman</a></li><li><a href=https://github.com/kapilreddy/korova-drop>korova-drop Source</a></li></ul></article></main></div><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div></main><div class="container flex"><div class=flex></div></div><header class=book-header-mobile><div class="flex align-center justify-between"><div><h2 class=book-brand><a class="flex align-center" href=/><img class=light src=/images/logo.png alt=Logo>
+<img class=dark src=/images/logo_dark.png alt=Logo>
+<span>Mugencode</span></a></h2></div><div class="flex align-center justify-between"><div class=theme-toggle><div class=light><svg viewBox="0 0 256 256" focusable="false" color="#000" style="user-select:none;width:100%;height:100%;display:inline-block;fill:#000;color:#000;flex-shrink:0"><g color="#000" weight="regular"><path d="M120 40V16a8 8 0 0116 0V40a8 8 0 01-16 0zm72 88a64 64 0 11-64-64 64.07 64.07.0 0164 64zm-16 0a48 48 0 10-48 48 48.05 48.05.0 0048-48zM58.34 69.66A8 8 0 0069.66 58.34l-16-16A8 8 0 0042.34 53.66zm0 116.68-16 16a8 8 0 0011.32 11.32l16-16a8 8 0 00-11.32-11.32zM192 72a8 8 0 005.66-2.34l16-16a8 8 0 00-11.32-11.32l-16 16A8 8 0 00192 72zm5.66 114.34a8 8 0 00-11.32 11.32l16 16a8 8 0 0011.32-11.32zM48 128a8 8 0 00-8-8H16a8 8 0 000 16H40a8 8 0 008-8zm80 80a8 8 0 00-8 8v24a8 8 0 0016 0V216a8 8 0 00-8-8zm112-88H216a8 8 0 000 16h24a8 8 0 000-16z"/></g></svg></div><div class=dark><svg viewBox="0 0 256 256" focusable="false" color="#fff" style="user-select:none;width:100%;height:100%;display:inline-block;fill:#fff;color:#fff;flex-shrink:0"><g color="#fff" weight="regular"><path d="M233.54 142.23a8 8 0 00-8-2 88.08 88.08.0 01-109.8-109.8 8 8 0 00-10-10 104.84 104.84.0 00-52.91 37A104 104 0 00136 224a103.09 103.09.0 0062.52-20.88 104.84 104.84.0 0037-52.91A8 8 0 00233.54 142.23zM188.9 190.34A88 88 0 0165.66 67.11a89 89 0 0131.4-26A106 106 0 0096 56 104.11 104.11.0 002e2 160a106 106 0 0014.92-1.06 89 89 0 01-26.02 31.4z"/></g></svg></div></div><label class=menu-toggle for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label></div></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><a href=#workflow>Workflow</a></li><li><a href=#getting-mp3-in-browser>Getting Mp3 in browser</a></li><li><a href=#playing-audio>Playing audio</a></li><li><a href=#bringing-it-all-together>Bringing it all together</a></li><li><a href=#analyzing-audio-data>Analyzing audio data</a></li><li><a href=#rendering-stuff>Rendering stuff</a></li><li><a href=#conclusion>Conclusion</a></li><li><a href=#resources-and-further-reading>Resources and further reading.</a></li></ul></li></ul></nav></aside></header></body></html>

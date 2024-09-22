@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Mugencode</title><link>https://example.org/docs/</link><description>Recent content on Mugencode</description><generator>Hugo</generator><language>en-us</language><atom:link href="https://example.org/docs/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>https://example.org/docs/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.org/docs/about/</guid><description>&lt;p>I am Kapil Reddy. I am a builder and storyteller.\&lt;/p>
+&lt;p>I started my journey as a Javascripter. Hacked a bunch of POCs some of which survived as production code.
+At Helpshift, I also built a core-infra team from 2 engineers to 20 engineers. I have built planet scale (2 Bn devices) distributed systems in Clojure and Python.&lt;/p>
+&lt;p>Fractional leadership: Tech&lt;/p>
+&lt;p>The hacker years, I started my journey as a JS + PHP developer. Later, I joined Infinitelybeta where I learnt to build things with Clojure and Python.
+Infinitelybeta a product studio narrowed down on building Helphshift. I continued building quick POCs like a co-browsing experience to Android SDKs. Some of them survived to be part of the product even to this day.&lt;/p></description></item><item><title>Speaking</title><link>https://example.org/docs/speaking/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.org/docs/speaking/</guid><description>&lt;p>Hello welcome to Mugencode! &lt;br>
+&lt;br>
+I am Kapil.&lt;br>
+&lt;br>
+I write about,&lt;/p>
+&lt;ul>
+&lt;li>Tech leadership in orgs&lt;/li>
+&lt;li>War stories and lessons from building things at scale&lt;/li>
+&lt;li>Musings about future of tech&lt;/li>
+&lt;li>Journals of building micro products&lt;/li>
+&lt;/ul></description></item></channel></rss>

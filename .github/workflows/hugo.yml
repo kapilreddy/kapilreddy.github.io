@@ -55,9 +55,13 @@ jobs:
           HUGO_ENV: production
         run: |
           hugo \
-	    --theme mugencode \
-            --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+               --theme mugencode \
+               --ignoreCache \
+               --cleanDestinationDir \
+               --noChmod \
+                --noTimes \
+               --minify \
+               --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

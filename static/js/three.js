@@ -32,13 +32,16 @@ function createRiverFlowPositions(particleCount) {
     return positions;
 }
 
+PARTICLE_COLOR = 0x8673A4;
+BG_COLOR = 0x323232;
+
 function switchThreeTheme (theme) {
-    if(theme == "dark") {
-	PARTICLE_COLOR = 0xD9C2FF;
-	BG_COLOR = 0x323232;
+    if (theme == "dark") {
+        PARTICLE_COLOR = 0x8673A4;
+        BG_COLOR = 0x323232;
     } else {
-	PARTICLE_COLOR = 0x064647;
-	BG_COLOR = 0xFFFBF5;
+	PARTICLE_COLOR = 0x68A8A9;
+	BG_COLOR = 0xDDDDDD;
     }
 
     threeJSINIT();

@@ -67,6 +67,7 @@
 
     }
     .content-card-wide {
+        opacity: 0.78;
 	max-width: 850px;
 	width: 770px;
 	min-height: 500px;
@@ -99,20 +100,19 @@
     }
 
     @media screen and (max-width: 768px) {
-
 	.content-card-wide {
-    padding: 0 1rem;
+            padding: 0 1.5rem;
 	    max-width: 500px;
 	    width: 100%;
 	    max-height: 600px;
 	    min-height: 300px;
 	}
-    .content-card-wide div.flex div{
-    padding-top: 0;
-    }
-	 .content-card-wide img {
-	     width: 100px;
-	 }
+        .content-card-wide div.flex div{
+            padding-top: 0;
+        }
+	.content-card-wide img {
+	    width: 100px;
+	}
 
 	#about div.intro{
 	    display:block;
@@ -167,12 +167,12 @@
   </style>
 </head>
 <body dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
-<div class="navigation">
-  <div class="nav-dot" data-section="about"></div>
-  <div class="nav-dot" data-section="skills"></div>
-  <div class="nav-dot" data-section="projects"></div>
-  <div class="nav-dot" data-section="interests"></div>
-</div>
+  <div class="navigation">
+    <div class="nav-dot" data-section="about"></div>
+    <div class="nav-dot" data-section="skills"></div>
+    <div class="nav-dot" data-section="projects"></div>
+    <div class="nav-dot" data-section="interests"></div>
+  </div>
   <input type="checkbox" class="hidden toggle" id="menu-control" />
   <input type="checkbox" class="hidden toggle" id="toc-control" />
 
@@ -186,97 +186,100 @@
     <div class="book-page">
 
       <main class="flex container justify-center">
-{{ if and (default true (default .Site.Params.BookToC .Params.BookToC)) (.TableOfContents | strings.Count "<li>") }}
+        {{ if and (default true (default .Site.Params.BookToC .Params.BookToC)) (.TableOfContents | strings.Count "<li>") }}
 
 
-	<div class="book-toc ">
-	  <div class="book-toc-content">
-	    {{ template "toc" . }} <!-- Table of Contents -->
+	  <div class="book-toc ">
+	    <div class="book-toc-content">
+	      {{ template "toc" . }} <!-- Table of Contents -->
+	    </div>
 	  </div>
-	</div>
-	{{ end }}
-	<main class="main-content ">
-	  {{ partial "docs/inject/content-before" . }}
+	  {{ end }}
+	  <main class="main-content ">
+	    {{ partial "docs/inject/content-before" . }}
 
-	  <div class="intro-container">
-	    <section id="about">
-	      <div class="content content-card-wide">
-		<div class="flex align-center intro">
-		  <div>
-		    <h2>Hello! I am Kapil</h2>
-		    <p>Business first software generalist.
-		    <p>Builder of things & teller of stories.</p>
-		    <p>Curious educator.</p>
-		    <p>I love to code on server, client and everything between!</p> 
+	    <div class="intro-container">
+	      <section id="about">
+	        <div class="content content-card-wide">
+		  <div class="flex align-center intro">
+		    <div>
+		      <h2>Hello! I am Kapil</h2>
+		      <p>Business first software generalist.
+		      <p>Builder of things & teller of stories.</p>
+		      <p>Curious educator.</p>
+		      <p>I love to code on server, client and everything between!</p> 
+		    </div>
+		    <div>
+		      <img src="/images/profile.jpeg"/>
+		    </div>
+
 		  </div>
-		  <div>
-		    <img src="/images/profile.jpeg"/>
+		  <div class="social-links flex justify-center">
+		    <div><a href="https://github.com/kapilreddy" target="_blank"><svg class="dark" width="50"  role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path fill="#ffffff" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg><svg class="light" width="50"  role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path fill="#000000" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a></div>
+		    <div> <a href="https://twitter.com/kapilreddy" target="_blank"><svg  class="dark" width="50" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>X</title><path fill="#ffffff" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg><svg  class="light" width="50" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>X</title><path fill="#000000" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a></div>
 		  </div>
 
-		</div>
-		<div class="social-links flex justify-center">
-		  <div><a href="https://github.com/kapilreddy" target="_blank"><svg class="dark" width="50"  role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path fill="#ffffff" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg><svg class="light" width="50"  role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path fill="#000000" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a></div>
-		  <div> <a href="https://twitter.com/kapilreddy" target="_blank"><svg  class="dark" width="50" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>X</title><path fill="#ffffff" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg><svg  class="light" width="50" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>X</title><path fill="#000000" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a></div>
-		</div>
-
-	      </div>
-	    </section>
-	    <section id="skills">
-	      <div class="content content-card-wide">
-		<h2>Things I obsses over in no particular order</h2>
-		<div>
-		  <ul class="skill-list">
-		    <li>Clojure and functional programming</li>
-		    <li>Search databases</li>
-		    <li>Messaging systems</li>
-		    <li>Migrations of any flavours</li>
-		    <li>Leading technical platform teams</li>
-		    <li>Computer graphics and interactive techniques</li>
-		</div>
-		</ul>
-	      </div>
-	    </section>
-	    <section id="projects">
-	      <div class="content content-card-wide">
-		<h2>Some of my recent tech side projects</h2>
-		<div>
-		  <ul class="project-list">
-		    <li><a href="https://unrealcards.net">Unrealcards</a> - A multiplayer card game written in Clojurescript</li>
-		    <li><a href="https://github.com/kapilreddy/senju">Senju</a> - An ESP32 and Rust based humidity sensing setup</li>
-		    <li><a href="https://github.com/kapilreddy/instructor-clj">Instructor-clj</a> - A Clojure implementation of Instructor library. Get structured output and validations from LLMs.</li>
+	        </div>
+	      </section>
+	      <section id="skills">
+	        <div class="content content-card-wide">
+		  <h2>Things I obsses over in no particular order</h2>
+		  <div>
+		    <ul class="skill-list">
+		      <li>Clojure and functional programming</li>
+		      <li>Search databases</li>
+		      <li>Messaging systems</li>
+		      <li>Migrations of any flavours</li>
+		      <li>Leading technical platform teams</li>
+		      <li>Computer graphics and interactive techniques</li>
+		  </div>
 		  </ul>
-		</div>
-	      </div>
-	    </section>
-	    <section id="interests">
-	      <div class="content content-card-wide">
-		<h2>Other things</h2>
-		<p>I keep trying out new things. Here are some hobbies that have stuck with me for a while now.</p>
-		<p>
-		<p>I make short films. Here are a few that actually made it to final cut, 
-                  <ul style="list-style:none">
-                    <li>
-                      <a href="https://drive.google.com/file/d/1cOMoMH4JqMOEb-wNwA_rrkkhA0ZiC6jf/view?usp=drive_link">Last Move</a>
-                    </li>
-                    <li> 
-                      <a href="https://www.youtube.com/watch?v=fWBaYeTWvwk">Data Breach</a>
-                    </li>
+	        </div>
+	      </section>
+	      <section id="projects">
+	        <div class="content content-card-wide">
+		  <h2>Some of my recent tech side projects</h2>
+		  <div>
+		    <ul class="project-list">
+		      <li><a href="https://unrealcards.net">Unrealcards</a> - A multiplayer card game written in Clojurescript</li>
+		      <li><a href="https://github.com/kapilreddy/senju">Senju</a> - An ESP32 and Rust based humidity sensing setup</li>
+		      <li><a href="https://github.com/kapilreddy/instructor-clj">Instructor-clj</a> - A Clojure implementation of Instructor library. Get structured output and validations from LLMs.</li>
+		    </ul>
+		  </div>
+	        </div>
+	      </section>
+	      <section id="interests">
+	        <div class="content content-card-wide">
+		  <h2>Other things</h2>
+		  <p>I keep trying out new things. Here are some hobbies that have stuck with me for a while now.</p>
+		  <p>
+		  <p>I make short films. Here are a few that actually made it to final cut, 
+                    <ul style="list-style:none; padding-left:0px;">
+                      <li>
+                        <a href="https://drive.google.com/file/d/1cOMoMH4JqMOEb-wNwA_rrkkhA0ZiC6jf/view?usp=drive_link">Last Move</a>
+                      </li>
+                      <li> 
+                        <a href="https://open.spotify.com/show/0MjrN8Oyh4PyS02fW5iH8A">Arranged Lock</a>
+                      </li>
+                      <li> 
+                        <a href="https://www.youtube.com/watch?v=fWBaYeTWvwk">Data Breach</a>
+                      </li>
                     </ul>
-                  I mostly write screenplays now. Best movies incept new ideas, thoughts and emotions in the audience. Incepting an idea in someone's head is programming in hardest mode. :D</p>
-		<!-- <p>We have a family farm where we are growing Avocados and Edamame. This has made me appriciate programming and management even more. Everything you do in a farm, the feedback cycles are long and they are always one-way door decisions.</p> -->
-		</p>
-	      </div>
-	    </section>
-	  </div>
+                    I mostly write screenplays now. Best movies incept new ideas, thoughts and emotions in the audience. Incepting an idea in someone's head is programming in hardest mode. :D</p>
+		  <!-- <p>We have a family farm where we are growing Avocados and Edamame. This has made me appriciate programming and management even more. Everything you do in a farm, the feedback cycles are long and they are always one-way door decisions.</p> -->
+		  </p>
+	        </div>
+	      </section>
+	    </div>
 
 
 
-	  <div id="fps-counter">FPS: 0</div>
+	    <div id="fps-counter">FPS: 0</div>
 
 
 
-	  {{ partial "docs/inject/content-after" . }}
-	</main>
+	    {{ partial "docs/inject/content-after" . }}
+	  </main>
     </div>
     <footer class="book-footer">
       {{ template "footer" . }} <!-- Footer under page content -->

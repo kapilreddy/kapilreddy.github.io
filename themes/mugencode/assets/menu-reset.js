@@ -4,22 +4,39 @@
 	localStorage.setItem('theme', themeName);
     }
 
+    function getCurrentTheme () {
+        let currentTheme = "dark",
+            storedTheme = localStorage.getItem('theme');
+        if (storedTheme !== "undefined") {
+            currentTheme = storedTheme;
+        } else {
+            if (document.documentElement.classList.contains('dark')) {
+                currentTheme = "dark";
+            } else {
+                currentTheme = "light";
+            }
+        }
+        return currentTheme;
+    }
+
     // Function to toggle the theme
     function toggleTheme() {
-	if (localStorage.getItem('theme') === 'dark') {
-	    setTheme('light');
-	    if(switchThreeTheme){
-		switchThreeTheme("light");
-	    }
-	    
-	} else {
-	    if(switchThreeTheme) {
-		switchThreeTheme("dark");
-	    }
+        let currentTheme = getCurrentTheme();
+        if (currentTheme === "light") {
 	    setTheme('dark');
+            if (switchThreeTheme !== "undefined") {  
+		switchThreeTheme("dark");
+            }
+	} 
+        console.log(currentTheme);
+        if (currentTheme === "dark") { 
+            if (switchThreeTheme !== "undefined") {  
+		switchThreeTheme("light");
+            }
+	    setTheme('light');
 	}
-	document.documentElement.classList.toggle('dark');
 
+	document.documentElement.classList.toggle('dark');
     }
 
 
@@ -49,8 +66,6 @@
 	    });
 	});
 
-
-
     }, false);
 
 
@@ -73,6 +88,18 @@
 		link.parentNode.classList.remove('active');
 	    }
 	}
+
+        let currentTheme = getCurrentTheme();
+        setTheme(currentTheme);
+        console.log(currentTheme);
+        if (currentTheme === "dark") {
+            document.documentElement.classList.add('dark');
+	    switchThreeTheme("dark");
+        } else {
+            document.documentElement.classList.remove('dark');
+	    switchThreeTheme("light");
+        }
+        
     }
 
     // Call the function when the DOM is fully loaded
@@ -80,6 +107,7 @@
 
     // Call the function every time the hash changes
     window.addEventListener('hashchange', highlightMatchingLink);    
+
 
 
 })();

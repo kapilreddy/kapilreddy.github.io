@@ -94,10 +94,15 @@
         console.log(currentTheme);
         if (currentTheme === "dark") {
             document.documentElement.classList.add('dark');
-	    switchThreeTheme("dark");
+            if (switchThreeTheme !== undefined ) {
+                switchThreeTheme("dark");
+            }
+	    
         } else {
             document.documentElement.classList.remove('dark');
-	    switchThreeTheme("light");
+            if (switchThreeTheme !== undefined ) {
+	        switchThreeTheme("light");
+            }
         }
         
     }
@@ -111,3 +116,4 @@
 
 
 })();
+

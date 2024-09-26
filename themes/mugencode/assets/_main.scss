@@ -182,6 +182,11 @@ body[dir="rtl"] .book-menu {
 
 .book-post { margin-bottom: $padding-16 * 3; }
 
+.main-content > .post-list-item {
+    margin: $padding-16;
+}
+
+
 // Headers
 .book-header {
   margin-bottom: $padding-16;
@@ -419,7 +424,10 @@ svg.dark {
 }
 
 
-.intro-container .content div { padding: $padding-16; }
+.intro-container .content > div { 
+    padding: 0 $padding-16; 
+}
+
 
 
 .nav-dot {

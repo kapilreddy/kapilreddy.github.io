@@ -4,6 +4,8 @@ title = 'Mugencode'
 
 theme = 'mugencode'
 
+cleanDestinationDir = true
+
 
 [menus]
   [[menus.main]]

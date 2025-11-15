@@ -238,12 +238,6 @@ const posts = (await getCollection('blog', ({ data }) => {
 					gap: 1.2rem;
 				}
 
-				.blog-header h1 {
-					font-size: 2rem;
-				}
-				.blog-header p {
-					font-size: 1rem;
-				}
 			}
 		</style>
 	</head>
@@ -251,9 +245,6 @@ const posts = (await getCollection('blog', ({ data }) => {
 		<Header />
 		<main>
 			<section>
-				<div class="blog-header">
-					<p>Experiences, fleeting notes, big idess, and linkblog on programming, AI, and wherever curiosity leads</p>
-				</div>
 				<BlogFilter currentType={currentType} />
 				<ul>
 					{posts.map((post) => <BlogEntry post={post} />)}

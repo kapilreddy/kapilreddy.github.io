@@ -79,16 +79,29 @@ h3 {
 }
 
 a {
-	color: var(--accent);
-	text-decoration: none;
+	color: #1A1A1A;
+	text-decoration: underline;
+	text-decoration-color: var(--accent);
+	text-decoration-thickness: 2px;
+	text-underline-offset: 3px;
 	transition: var(--transition);
 	position: relative;
 	font-weight: 700;
 }
 
 a:hover {
+	color: var(--accent);
+	text-decoration-color: var(--accent-secondary);
+}
+
+body.dark-mode a {
+	color: var(--accent);
+	text-decoration-color: var(--accent-dark);
+}
+
+body.dark-mode a:hover {
 	color: var(--accent-secondary);
-	text-decoration: underline;
+	text-decoration-color: var(--accent-secondary);
 }
 
 p {

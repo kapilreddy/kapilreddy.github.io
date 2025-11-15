@@ -4,52 +4,135 @@ const today = new Date();
 
 <footer>
 	<div class="footer-content">
-		<p>© {today.getFullYear()}, Kapil Reddy. All content licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>, except where noted otherwise.</p>
+		<div class="footer-inner">
+			<p class="copyright">© {today.getFullYear()} <strong>Kapil Reddy</strong></p>
+			<p class="license">
+				All content licensed 
+				<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>, 
+				except where noted otherwise.
+			</p>
+		</div>
 	</div>
 </footer>
 <style>
 	footer {
-		margin: 0;
-		padding: 1em;
-		background: var(--card-bg-light);
-		border-top: 3px solid var(--border-light);
-		box-shadow: var(--box-shadow-light);
+		margin: 3rem 0 0 0;
+		padding: 0;
+		background: var(--accent-secondary);
+		border-top: 6px solid var(--border-light);
+		box-shadow: 0px -5px 0px 0px rgba(26, 26, 26, 1);
 		transition: var(--transition);
-		text-align: center;
+		position: relative;
 	}
 
 	body.dark-mode footer {
-		background: var(--card-bg-dark);
-		border-top: 3px solid var(--border-dark);
-		box-shadow: var(--box-shadow-dark);
+		background: var(--accent-dark);
+		border-top: 6px solid var(--border-dark);
+		box-shadow: 0px -5px 0px 0px rgba(246, 246, 246, 1);
 	}
 
 	.footer-content {
-		max-width: 1200px;
+		max-width: 1100px;
 		margin: 0 auto;
+		padding: 2.5rem 1.5rem;
+	}
+
+	.footer-inner {
+		text-align: center;
+		padding: 1.5rem;
+		background: var(--card-bg-light);
+		border: 3px solid var(--border-light);
+		box-shadow: var(--box-shadow-light);
+	}
+
+	body.dark-mode .footer-inner {
+		background: var(--card-bg-dark);
+		border: 3px solid var(--border-dark);
+		box-shadow: var(--box-shadow-dark);
 	}
 
 	p {
-		margin: 0;
+		margin: 0.5rem 0;
 		color: var(--text-light);
-		font-size: 0.9em;
+		font-size: 0.95rem;
+		line-height: 1.8;
 	}
 
 	body.dark-mode p {
 		color: var(--text-dark);
 	}
 
+	.copyright {
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		margin-bottom: 0.75rem;
+	}
+
+	.copyright strong {
+		color: var(--text-light);
+		font-weight: 900;
+	}
+
+	body.dark-mode .copyright strong {
+		color: var(--text-dark);
+	}
+
+	.license {
+		font-size: 0.85rem;
+		opacity: 0.9;
+	}
+
 	a {
 		color: var(--accent);
 		text-decoration: none;
 		transition: var(--transition);
+		font-weight: 900;
+		padding: 0.1em 0.3em;
+		border-bottom: 2px solid var(--accent);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		font-size: 0.9em;
 	}
 
 	body.dark-mode a {
-		color: var(--accent-dark);
+		color: var(--text-dark);
+		background: var(--accent-secondary-dark);
+		border-bottom: 2px solid var(--border-dark);
 	}
 
 	a:hover {
-		text-decoration: underline;
+		background: var(--accent);
+		color: var(--text-light);
+		transform: translateY(-1px);
+		box-shadow: 2px 2px 0px 0px rgba(26, 26, 26, 1);
+	}
+
+	body.dark-mode a:hover {
+		background: var(--accent-dark);
+		color: #000000;
+		box-shadow: 2px 2px 0px 0px rgba(246, 246, 246, 1);
+	}
+
+	@media (max-width: 768px) {
+		footer {
+			margin: 2rem 0 0 0;
+		}
+
+		.footer-content {
+			padding: 1.5rem 1rem;
+		}
+
+		.footer-inner {
+			padding: 1rem;
+		}
+
+		p {
+			font-size: 0.85rem;
+		}
+
+		.license {
+			font-size: 0.8rem;
+		}
 	}
 </style>

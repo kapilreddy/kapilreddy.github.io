@@ -1,0 +1,331 @@
+/*
+  Updated CSS for a Neobrutalism aesthetic for 2025.
+  Features raw, unpolished design with high contrast, bold typography, and a minimalist yet impactful look.
+  Uses user-specified color scheme for a unique, readable design.
+*/
+
+:root {
+	--background-light: #F6F6F6; /* Light gray for primary background */
+	--background-dark: #1A1A1A; /* Near black for dark mode background */
+	--accent: #99DDCC; /* Muted teal for primary accent */
+	--accent-secondary: #FFE2E2; /* Light pink as secondary accent */
+	--accent-dark: #66BBAA; /* Darker teal for dark mode */
+	--accent-secondary-dark: #FF9999; /* Darker pink for dark mode */
+	--card-bg-light: #F6F6F6; /* Light gray for cards */
+	--card-bg-dark: #2A2A2A; /* Dark gray for cards in dark mode */
+	--text-light: #1A1A1A; /* Near black for high readability in light mode */
+	--text-dark: #F6F6F6; /* Light gray for high readability in dark mode */
+	--border-light: #1A1A1A; /* Dark border for brutalist contrast in light mode */
+	--border-dark: #F6F6F6; /* Light border for brutalist contrast in dark mode */
+	--gray-light: 180, 180, 180;
+	--gray-dark: 80, 80, 80;
+	--box-shadow-light: 5px 5px 0px 0px rgba(26, 26, 26, 1);
+	--box-shadow-dark: 5px 5px 0px 0px rgba(246, 246, 246, 1);
+	--transition: all 0.2s ease;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	background-color: var(--background-light);
+	color: var(--text-light);
+	font-size: 18px;
+	line-height: 1.6;
+	transition: var(--transition);
+	overflow-x: hidden;
+}
+
+body.dark-mode {
+	background-color: var(--background-dark);
+	color: var(--text-dark);
+}
+
+main {
+	width: 90%;
+	max-width: 1100px;
+	margin: 1.5em auto;
+	padding: 0em 1em;
+	position: relative;
+	z-index: 1;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0 0 0.5rem 0;
+	color: var(--text-light);
+	line-height: 1.2;
+	font-weight: 900;
+	transition: var(--transition);
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 {
+	color: var(--text-dark);
+}
+
+h1 {
+	font-size: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+h2 {
+	font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+}
+
+h3 {
+	font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+}
+
+a {
+	color: var(--accent);
+	text-decoration: none;
+	transition: var(--transition);
+	position: relative;
+	font-weight: 700;
+}
+
+a:hover {
+	color: var(--accent-secondary);
+	text-decoration: underline;
+}
+
+p {
+	margin-bottom: 1.2em;
+}
+
+strong, b {
+	font-weight: 900;
+	color: var(--accent);
+}
+
+body.dark-mode strong, body.dark-mode b {
+	color: var(--accent);
+}
+
+.card {
+	background: var(--card-bg-light);
+	border: 3px solid var(--border-light);
+	border-radius: 0px;
+	padding: 1.5rem;
+	box-shadow: var(--box-shadow-light);
+	transition: var(--transition);
+	position: relative;
+	overflow: hidden;
+}
+
+body.dark-mode .card {
+	background: var(--card-bg-dark);
+	border: 3px solid var(--border-dark);
+	box-shadow: var(--box-shadow-dark);
+}
+
+.glass {
+	background: rgba(246, 246, 246, 0.5);
+	border: 3px solid var(--border-light);
+	box-shadow: var(--box-shadow-light);
+	transition: var(--transition);
+}
+
+body.dark-mode .glass {
+	background: rgba(80, 80, 80, 0.5);
+	border: 3px solid var(--border-dark);
+	box-shadow: var(--box-shadow-dark);
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 0px;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	border: 3px solid var(--border-light);
+}
+
+img:hover {
+	transform: scale(1.02);
+	box-shadow: 5px 5px 0px 0px rgba(26, 26, 26, 1);
+}
+
+body.dark-mode img {
+	border: 3px solid var(--border-dark);
+}
+
+body.dark-mode img:hover {
+	box-shadow: 5px 5px 0px 0px rgba(240, 240, 240, 1);
+}
+
+code {
+	padding: 0.2em 0.4em;
+	background-color: var(--accent-secondary);
+	border-radius: 0px;
+	font-family: monospace;
+	border: 2px solid var(--border-light);
+}
+
+body.dark-mode code {
+	background-color: var(--accent-dark);
+	border: 2px solid var(--border-dark);
+	color: #000000;
+}
+
+pre {
+	padding: 1.5em;
+	border-radius: 0px;
+	background-color: var(--accent-secondary);
+	overflow-x: auto;
+	border: 3px solid var(--border-light);
+}
+
+body.dark-mode pre {
+	background-color: var(--accent-dark);
+	border: 3px solid var(--border-dark);
+}
+
+pre > code {
+	all: unset;
+	color: var(--text-light);
+}
+
+body.dark-mode pre > code {
+	color: #000000;
+}
+
+blockquote {
+	border-left: 6px solid var(--accent);
+	padding: 0.5em 0 0.5em 1.5em;
+	margin: 1em 0;
+	font-style: normal;
+	font-weight: bold;
+	background: var(--accent-secondary);
+	border-radius: 0;
+}
+
+body.dark-mode blockquote {
+	background: var(--accent-dark);
+	border-left: 6px solid var(--accent-secondary-dark);
+	color: #000000;
+}
+
+hr {
+	border: none;
+	border-top: 4px solid var(--border-light);
+	margin: 2em 0;
+	background: transparent;
+}
+
+body.dark-mode hr {
+	border-top: 4px solid var(--border-dark);
+}
+
+button, .btn {
+	background: var(--accent);
+	color: var(--text-light);
+	border: 3px solid var(--border-light);
+	padding: 0.8em 1.5em;
+	border-radius: 0px;
+	cursor: pointer;
+	font-weight: 900;
+	transition: var(--transition);
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	box-shadow: var(--box-shadow-light);
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+button:hover, .btn:hover {
+	background: var(--accent-secondary);
+	transform: translateY(-2px) translateX(2px);
+	box-shadow: 7px 7px 0px 0px rgba(26, 26, 26, 1);
+}
+
+body.dark-mode button, body.dark-mode .btn {
+	color: var(--text-dark);
+	border: 3px solid var(--border-dark);
+	box-shadow: var(--box-shadow-dark);
+}
+
+body.dark-mode button:hover, body.dark-mode .btn:hover {
+	box-shadow: 7px 7px 0px 0px rgba(240, 240, 240, 1);
+}
+
+@media (max-width: 768px) {
+	body {
+		font-size: 16px;
+	}
+	main {
+		padding: 1em 0.5em;
+		width: 95%;
+		margin: 0 auto;
+	}
+	h1 {
+		font-size: 2.2rem;
+	}
+	h2 {
+		font-size: 1.8rem;
+	}
+	h3 {
+		font-size: 1.5rem;
+	}
+}
+
+.sr-only {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	clip: rect(1px 1px 1px 1px);
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* Dark mode toggle */
+.dark-mode-toggle {
+	position: fixed;
+	top: 1.5rem;
+	right: 1.5rem;
+	z-index: 1000;
+	background: var(--accent);
+	border: 3px solid var(--border-light);
+	border-radius: 0px;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: var(--transition);
+	box-shadow: var(--box-shadow-light);
+}
+
+body.dark-mode .dark-mode-toggle {
+	background: var(--accent-secondary-dark);
+	border: 3px solid var(--border-dark);
+	box-shadow: var(--box-shadow-dark);
+}
+
+.dark-mode-toggle:hover {
+	transform: scale(1.05) translate(2px, -2px);
+	box-shadow: 5px 5px 0px 0px rgba(26, 26, 26, 1);
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+	box-shadow: 5px 5px 0px 0px rgba(246, 246, 246, 1);
+}
+
+.dark-mode-toggle svg {
+	width: 24px;
+	height: 24px;
+	color: #000000;
+	transition: var(--transition);
+}
+
+body.dark-mode .dark-mode-toggle svg {
+	color: #000000;
+}

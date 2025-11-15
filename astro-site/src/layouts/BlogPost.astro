@@ -1,0 +1,250 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage, type = 'post', link_url, link_source, time, tags } = Astro.props;
+const isFullPost = type === 'post';
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: 90%;
+				max-width: 900px;
+				margin: 3em auto;
+				padding: 2em 1em;
+			}
+			
+			article {
+				background: var(--card-bg-light);
+				border: 3px solid var(--border-light);
+				box-shadow: var(--box-shadow-light);
+				transition: var(--transition);
+			}
+
+			body.dark-mode article {
+				background: var(--card-bg-dark);
+				border: 3px solid var(--border-dark);
+				box-shadow: var(--box-shadow-dark);
+			}
+
+			.hero-image {
+				width: 100%;
+				border-bottom: 3px solid var(--border-light);
+			}
+
+			body.dark-mode .hero-image {
+				border-bottom: 3px solid var(--border-dark);
+			}
+
+			.hero-image img {
+				display: block;
+				width: 100%;
+				height: auto;
+				border-radius: 0px;
+				box-shadow: none;
+			}
+
+			.prose {
+				max-width: 100%;
+				margin: 0;
+				padding: 3rem;
+				color: var(--text-light);
+			}
+
+			body.dark-mode .prose {
+				color: var(--text-dark);
+			}
+
+			.title {
+				margin-bottom: 2rem;
+				padding: 0 0 2rem 0;
+				text-align: center;
+				line-height: 1.2;
+				border-bottom: 6px solid var(--accent);
+			}
+
+			body.dark-mode .title {
+				border-bottom-color: var(--accent-dark);
+			}
+
+			.title h1 {
+				margin: 0 0 1rem 0;
+				font-size: clamp(2rem, 4vw, 3rem);
+				color: var(--text-light);
+			}
+
+			body.dark-mode .title h1 {
+				color: var(--text-dark);
+			}
+
+			.date {
+				margin-bottom: 1rem;
+				color: var(--text-light);
+				opacity: 0.8;
+				font-weight: 600;
+			}
+
+			body.dark-mode .date {
+				color: var(--text-dark);
+			}
+
+			.last-updated-on {
+				font-style: italic;
+				opacity: 0.7;
+			}
+
+			.time {
+				color: var(--text-light);
+				opacity: 0.8;
+			}
+
+			body.dark-mode .time {
+				color: var(--text-dark);
+			}
+
+			.link-title {
+				color: var(--accent);
+				text-decoration: none;
+				transition: var(--transition);
+			}
+
+			body.dark-mode .link-title {
+				color: var(--accent-dark);
+			}
+
+			.link-title:hover {
+				color: var(--accent-secondary);
+				text-decoration: underline;
+			}
+
+			body.dark-mode .link-title:hover {
+				color: var(--accent-secondary-dark);
+			}
+
+			.link-source {
+				margin: 1rem 0;
+				color: var(--text-light);
+				font-size: 0.95rem;
+				font-style: italic;
+				opacity: 0.8;
+			}
+
+			body.dark-mode .link-source {
+				color: var(--text-dark);
+			}
+
+			.tags {
+				display: flex;
+				gap: 0.75rem;
+				justify-content: center;
+				flex-wrap: wrap;
+				margin: 1.5rem 0;
+			}
+
+			.tag {
+				display: inline-block;
+				padding: 0.5rem 1rem;
+				background: var(--accent);
+				border: 2px solid var(--border-light);
+				border-radius: 0px;
+				font-size: 0.85rem;
+				color: #000000;
+				text-decoration: none;
+				font-weight: 700;
+				transition: var(--transition);
+			}
+
+			body.dark-mode .tag {
+				background: var(--accent-dark);
+				border: 2px solid var(--border-dark);
+			}
+
+			.tag:hover {
+				transform: scale(1.05) translate(2px, -2px);
+				box-shadow: 3px 3px 0px 0px rgba(26, 26, 26, 1);
+			}
+
+			body.dark-mode .tag:hover {
+				box-shadow: 3px 3px 0px 0px rgba(246, 246, 246, 1);
+			}
+
+			.title hr {
+				border: none;
+				border-top: 3px solid var(--accent);
+				margin: 2rem 0 0 0;
+				background: transparent;
+			}
+
+			body.dark-mode .title hr {
+				border-top-color: var(--accent-dark);
+			}
+
+			@media (max-width: 768px) {
+				.prose {
+					padding: 2rem 1.5rem;
+				}
+
+				.title h1 {
+					font-size: 2rem;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				{isFullPost && heroImage && (
+					<div class="hero-image">
+						<Image width={1020} height={510} src={heroImage} alt="" />
+					</div>
+				)}
+				<div class="prose">
+					<div class="title">
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{time && <span class="time"> / {time}</span>}
+							{
+								updatedDate && (
+									<div class="last-updated-on">
+										Last updated on <FormattedDate date={updatedDate} />
+									</div>
+								)
+							}
+						</div>
+						{type === 'link' && link_url ? (
+							<h1>
+								<a href={link_url} target="_blank" rel="noopener noreferrer" class="link-title">
+									{title}
+								</a>
+							</h1>
+						) : (
+							<h1>{title}</h1>
+						)}
+						{link_source && <p class="link-source">{link_source}</p>}
+						{tags && tags.length > 0 && (
+							<div class="tags">
+								{tags.map((tag) => (
+									<span class="tag">{tag}</span>
+								))}
+							</div>
+						)}
+						<hr />
+					</div>
+					<slot />
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>

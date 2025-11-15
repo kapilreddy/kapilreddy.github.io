@@ -1,0 +1,194 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`About | ${SITE_TITLE}`} description="About Kapil Reddy" />
+		<style>
+			main {
+				width: 90%;
+				max-width: 900px;
+				margin: 3em auto;
+				padding: 2em 1em;
+			}
+
+			article {
+				background: var(--card-bg-light);
+				border: 3px solid var(--border-light);
+				box-shadow: var(--box-shadow-light);
+				padding: 3rem;
+				transition: var(--transition);
+			}
+
+			body.dark-mode article {
+				background: var(--card-bg-dark);
+				border: 3px solid var(--border-dark);
+				box-shadow: var(--box-shadow-dark);
+			}
+
+			h1 {
+				font-size: clamp(2.5rem, 5vw, 3.5rem);
+				margin-bottom: 2rem;
+				color: var(--text-light);
+				text-align: center;
+				padding-bottom: 1rem;
+				border-bottom: 6px solid var(--accent);
+			}
+
+			body.dark-mode h1 {
+				color: var(--text-dark);
+				border-bottom-color: var(--accent-dark);
+			}
+
+			h3 {
+				font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+				margin: 2rem 0 1rem;
+				color: var(--text-light);
+				border-left: 6px solid var(--accent);
+				padding-left: 1rem;
+			}
+
+			body.dark-mode h3 {
+				color: var(--text-dark);
+				border-left-color: var(--accent-dark);
+			}
+
+			p {
+				margin-bottom: 1.5rem;
+				line-height: 1.8;
+				font-size: 1.1rem;
+			}
+
+			strong {
+				color: var(--accent);
+				font-weight: 900;
+			}
+
+			body.dark-mode strong {
+				color: var(--accent-dark);
+			}
+
+			img {
+				display: block;
+				margin: 2rem auto;
+				max-width: 300px;
+				border: 3px solid var(--border-light);
+				border-radius: 0px;
+				box-shadow: 7px 7px 0px 0px rgba(26, 26, 26, 1);
+				transition: var(--transition);
+			}
+
+			body.dark-mode img {
+				border: 3px solid var(--border-dark);
+				box-shadow: 7px 7px 0px 0px rgba(246, 246, 246, 1);
+			}
+
+			img:hover {
+				transform: translate(2px, -2px);
+				box-shadow: 10px 10px 0px 0px rgba(26, 26, 26, 1);
+			}
+
+			body.dark-mode img:hover {
+				box-shadow: 10px 10px 0px 0px rgba(246, 246, 246, 1);
+			}
+
+			ul {
+				list-style: none;
+				padding: 0;
+				margin: 1.5rem 0;
+			}
+
+			ul li {
+				padding: 1rem;
+				margin-bottom: 0.8rem;
+				background: var(--accent-secondary);
+				border-left: 6px solid var(--accent);
+				transition: var(--transition);
+				color: #000000;
+			}
+
+			body.dark-mode ul li {
+				background: var(--accent-dark);
+				color: #000000;
+			}
+
+			ul li:hover {
+				transform: translateX(5px);
+				background: var(--accent);
+			}
+
+			body.dark-mode ul li:hover {
+				background: var(--accent-secondary-dark);
+			}
+
+			ul li a {
+				color: #000000;
+				text-decoration: none;
+				font-weight: 700;
+				transition: var(--transition);
+			}
+
+			ul li a:hover {
+				text-decoration: underline;
+			}
+
+			@media (max-width: 768px) {
+				article {
+					padding: 2rem 1.5rem;
+				}
+
+				h1 {
+					font-size: 2rem;
+				}
+
+				img {
+					max-width: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<article>
+				<h1>About</h1>
+				
+				<p>I am Kapil Reddy. I am a builder and storyteller.</p>
+
+				<p>I started my journey as a Javascripter. Hacked a bunch of POCs some of which survived as production code. At Helpshift, I also built a core-infra team from 2 engineers to 20 engineers. I have built planet scale (2 Bn devices) distributed systems in Clojure and Python.</p>
+
+				<p><strong>Fractional leadership: Tech</strong></p>
+
+				<p>The hacker years, I started my journey as a JS + PHP developer. Later, I joined Infinitelybeta where I learnt to build things with Clojure and Python. Infinitelybeta a product studio narrowed down on building Helphshift. I continued building quick POCs like a co-browsing experience to Android SDKs. Some of them survived to be part of the product even to this day.</p>
+
+				<p>The engineering years, The POCs I built worked for a while Helpshift hit PMF. We were on a rocketship. But some of the POCs were not built for this.</p>
+
+				<img src="/images/profile.jpeg" alt="Kapil Reddy" />
+
+				<p><strong>What I do now. Unravel.</strong></p>
+
+				<h3>Presentations</h3>
+				<ul>
+					<li><a href="https://www.youtube.com/watch?v=PLOtpbdqDxY" target="_blank">Belaying growth</a></li>
+					<li><a href="https://www.youtube.com/watch?v=FGxjqxXucsM&t=6s" target="_blank">Clojure North - Concurrency workshop</a></li>
+					<li><a href="https://www.youtube.com/watch?v=sxxcDNbvCNE" target="_blank">Build scalable and reliable services in Clojure - Clojure North</a></li>
+				</ul>
+
+				<h3>What I write about</h3>
+				<ul>
+					<li>Leadership for tech and craft based work</li>
+					<li>War stories and lessons from building things at scale</li>
+					<li>Musings about future of tech</li>
+					<li>Journals of building things</li>
+					<li>Visual storytelling</li>
+				</ul>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>

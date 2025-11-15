@@ -1,0 +1,464 @@
+---
+import { Image } from 'astro:assets';
+import FormattedDate from './FormattedDate.astro';
+
+const { post } = Astro.props;
+const type = post.data.type || 'post';
+const isFullPost = type === 'post';
+---
+
+{isFullPost ? (
+	<!-- Full blog post - card layout -->
+	<li class="entry-post">
+		<a href={`/blog/${post.id}/`}>
+			{post.data.heroImage && (
+				<Image width={720} height={360} src={post.data.heroImage} alt="" />
+			)}
+			<h4 class="title">{post.data.title}</h4>
+			<p class="date">
+				<FormattedDate date={post.data.pubDate} />
+				{post.data.time && <span class="time"> / {post.data.time}</span>}
+			</p>
+		</a>
+	</li>
+) : type === 'link' ? (
+	<!-- Link entry - compact format -->
+	<li class="entry-link">
+		<div class="link-header">
+			<a href={`/blog/${post.id}/`} class="link-title">
+				<strong>{post.data.title}</strong>
+			</a>
+		</div>
+		{post.data.description && <p class="link-description">{post.data.description}</p>}
+		<p class="meta">
+			<FormattedDate date={post.data.pubDate} />
+			{post.data.time && <span class="time"> / {post.data.time}</span>}
+			{post.data.link_source && <span class="source"> ({post.data.link_source})</span>}
+			{post.data.tags && post.data.tags.length > 0 && (
+				<span class="tags">
+					{post.data.tags.map((tag) => (
+						<span class="tag">{tag}</span>
+					))}
+				</span>
+			)}
+		</p>
+	</li>
+) : type === 'note' ? (
+	<!-- Note entry - simple text block -->
+	<li class="entry-note">
+		<a href={`/blog/${post.id}/`} class="note-content">
+			<p class="note-title">{post.data.title}</p>
+			{post.data.description && <p class="note-description">{post.data.description}</p>}
+		</a>
+		<p class="meta">
+			<FormattedDate date={post.data.pubDate} />
+			{post.data.time && <span class="time"> / {post.data.time}</span>}
+			<a href={`/blog/${post.id}/`} class="permalink" aria-label="Permalink">#</a>
+		</p>
+	</li>
+) : (
+	<!-- Quote entry -->
+	<li class="entry-quote">
+		<a href={`/blog/${post.id}/`}>
+			<blockquote class="quote-content">
+				{post.data.title}
+			</blockquote>
+			{post.data.description && <p class="quote-attribution">— {post.data.description}</p>}
+		</a>
+		<p class="meta">
+			<FormattedDate date={post.data.pubDate} />
+			{post.data.time && <span class="time"> / {post.data.time}</span>}
+			<a href={`/blog/${post.id}/`} class="permalink" aria-label="Permalink">#</a>
+		</p>
+	</li>
+)}
+
+<style>
+	/* Full post entries */
+	.entry-post {
+		position: relative;
+		transition: var(--transition);
+		background: var(--card-bg-light);
+		border: 3px solid var(--border-light);
+		border-radius: 0px;
+		overflow: hidden;
+		box-shadow: var(--box-shadow-light);
+		z-index: 1;
+	}
+
+	body.dark-mode .entry-post {
+		background: var(--card-bg-dark);
+		border: 3px solid var(--border-dark);
+		box-shadow: var(--box-shadow-dark);
+	}
+
+	.entry-post:hover {
+		transform: translate(2px, -2px);
+		box-shadow: 7px 7px 0px 0px rgba(26, 26, 26, 1);
+		z-index: 5;
+	}
+
+	body.dark-mode .entry-post:hover {
+		box-shadow: 7px 7px 0px 0px rgba(240, 240, 240, 1);
+	}
+
+	.entry-post img {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+		margin-bottom: 1rem;
+		border-radius: 0px;
+		box-shadow: none;
+		transition: transform 0.2s ease;
+		border-bottom: 3px solid var(--border-light);
+	}
+
+	body.dark-mode .entry-post img {
+		border-bottom: 3px solid var(--border-dark);
+	}
+
+	.entry-post a {
+		display: block;
+		text-decoration: none;
+		transition: var(--transition);
+		color: var(--text-light);
+		padding: 0 1.5rem 1.5rem;
+	}
+
+	body.dark-mode .entry-post a {
+		color: var(--text-dark);
+	}
+
+	.entry-post a:hover .title {
+		color: var(--accent);
+	}
+
+	.entry-post a:hover .date {
+		color: var(--accent);
+		opacity: 1;
+	}
+
+	.entry-post a:hover img {
+		transform: scale(1.02);
+		box-shadow: 5px 5px 0px 0px rgba(26, 26, 26, 1);
+	}
+
+	body.dark-mode .entry-post a:hover img {
+		box-shadow: 5px 5px 0px 0px rgba(240, 240, 240, 1);
+	}
+
+	/* Link entries - compact, full width */
+	.entry-link {
+		position: relative;
+		padding: 1.2rem 1.5rem;
+		margin-bottom: 1.2rem;
+		background: var(--card-bg-light);
+		border: 3px solid var(--border-light);
+		border-radius: 0px;
+		box-shadow: var(--box-shadow-light);
+		transition: var(--transition);
+		overflow: hidden;
+		z-index: 1;
+	}
+
+	body.dark-mode .entry-link {
+		background: var(--card-bg-dark);
+		border: 3px solid var(--border-dark);
+		box-shadow: var(--box-shadow-dark);
+	}
+
+	.entry-link:hover {
+		transform: translate(2px, -2px);
+		box-shadow: 7px 7px 0px 0px rgba(26, 26, 26, 1);
+		z-index: 5;
+	}
+
+	body.dark-mode .entry-link:hover {
+		box-shadow: 7px 7px 0px 0px rgba(240, 240, 240, 1);
+	}
+
+	.link-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.5rem;
+		margin-bottom: 0.6rem;
+	}
+
+	.link-title {
+		color: var(--text-light);
+		text-decoration: none;
+		font-size: 1.1rem;
+		font-weight: 900;
+		transition: var(--transition);
+	}
+
+	body.dark-mode .link-title {
+		color: var(--text-dark);
+	}
+
+	.link-title:hover {
+		color: var(--accent);
+	}
+
+	.permalink {
+		color: var(--text-light);
+		text-decoration: none;
+		font-size: 0.9rem;
+		opacity: 0.5;
+		transition: var(--transition);
+	}
+
+	body.dark-mode .permalink {
+		color: var(--text-dark);
+	}
+
+	.permalink:hover {
+		opacity: 1;
+		color: var(--accent);
+		transform: scale(1.05) translate(2px, -2px);
+	}
+
+	.link-description {
+		margin: 0.6rem 0;
+		color: var(--text-light);
+		line-height: 1.6;
+		opacity: 0.9;
+	}
+
+	body.dark-mode .link-description {
+		color: var(--text-dark);
+	}
+
+	/* Note entries - simple, full width */
+	.entry-note {
+		position: relative;
+		padding: 1.2rem 1.5rem;
+		margin-bottom: 1.2rem;
+		background: var(--card-bg-light);
+		border: 3px solid var(--border-light);
+		border-radius: 0px;
+		box-shadow: var(--box-shadow-light);
+		transition: var(--transition);
+		overflow: hidden;
+		z-index: 1;
+	}
+
+	body.dark-mode .entry-note {
+		background: var(--card-bg-dark);
+		border: 3px solid var(--border-dark);
+		box-shadow: var(--box-shadow-dark);
+	}
+
+	.entry-note:hover {
+		transform: translate(2px, -2px);
+		box-shadow: 7px 7px 0px 0px rgba(26, 26, 26, 1);
+		z-index: 5;
+	}
+
+	body.dark-mode .entry-note:hover {
+		box-shadow: 7px 7px 0px 0px rgba(240, 240, 240, 1);
+	}
+
+	.note-content {
+		display: block;
+		text-decoration: none;
+		color: var(--text-light);
+		margin-bottom: 0.6rem;
+		transition: var(--transition);
+	}
+
+	body.dark-mode .note-content {
+		color: var(--text-dark);
+	}
+
+	.note-content:hover {
+		color: var(--accent);
+	}
+
+	.note-title {
+		margin: 0 0 0.5rem 0;
+		font-size: 1.05rem;
+		font-weight: 900;
+	}
+
+	.note-description {
+		margin: 0.3rem 0 0;
+		color: var(--text-light);
+		line-height: 1.6;
+		opacity: 0.9;
+	}
+
+	body.dark-mode .note-description {
+		color: var(--text-dark);
+	}
+
+	/* Quote entries */
+	.entry-quote {
+		position: relative;
+		padding: 1.2rem 1.5rem;
+		margin-bottom: 1.2rem;
+		background: var(--card-bg-light);
+		border: 3px solid var(--border-light);
+		border-radius: 0px;
+		box-shadow: var(--box-shadow-light);
+		transition: var(--transition);
+		overflow: hidden;
+		z-index: 1;
+	}
+
+	body.dark-mode .entry-quote {
+		background: var(--card-bg-dark);
+		border: 3px solid var(--border-dark);
+		box-shadow: var(--box-shadow-dark);
+	}
+
+	.entry-quote:hover {
+		transform: translate(2px, -2px);
+		box-shadow: 7px 7px 0px 0px rgba(26, 26, 26, 1);
+		z-index: 5;
+	}
+
+	body.dark-mode .entry-quote:hover {
+		box-shadow: 7px 7px 0px 0px rgba(240, 240, 240, 1);
+	}
+
+	.entry-quote a {
+		display: block;
+		text-decoration: none;
+		color: var(--text-light);
+		margin-bottom: 0.6rem;
+		transition: var(--transition);
+	}
+
+	body.dark-mode .entry-quote a {
+		color: var(--text-dark);
+	}
+
+	.entry-quote a:hover {
+		color: var(--accent);
+	}
+
+	.quote-content {
+		margin: 0 0 0.6rem 0;
+		padding-left: 1.5rem;
+		border-left: 6px solid var(--accent);
+		font-style: normal;
+		font-weight: bold;
+		color: var(--text-light);
+		line-height: 1.6;
+		font-size: 1.1rem;
+		background: var(--accent-secondary);
+		padding: 0.8rem 1.5rem 0.8rem 1.8rem;
+		border-radius: 0;
+	}
+
+	body.dark-mode .quote-content {
+		color: var(--text-dark);
+		background: var(--accent);
+	}
+
+	.quote-attribution {
+		margin: 0.5rem 0 0 1.5rem;
+		font-size: 0.9rem;
+		color: var(--text-light);
+		opacity: 0.8;
+	}
+
+	body.dark-mode .quote-attribution {
+		color: var(--text-dark);
+	}
+
+	/* Shared styles */
+	.title {
+		margin: 0 0 0.3rem;
+		color: var(--text-light);
+		line-height: 1.2;
+		font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+	}
+
+	body.dark-mode .title {
+		color: var(--text-dark);
+	}
+
+	.date,
+	.meta {
+		margin: 0;
+		color: var(--text-light);
+		font-size: 0.9rem;
+		opacity: 0.7;
+	}
+
+	body.dark-mode .date,
+	body.dark-mode .meta {
+		color: var(--text-dark);
+	}
+
+	.time,
+	.source {
+		color: var(--text-light);
+		opacity: 0.7;
+	}
+
+	body.dark-mode .time,
+	body.dark-mode .source {
+		color: var(--text-dark);
+	}
+
+	.tags {
+		margin-left: 0.5rem;
+	}
+
+	.tag {
+		display: inline-block;
+		margin-left: 0.5rem;
+		padding: 0.2rem 0.6rem;
+		background: var(--accent);
+		border-radius: 0px;
+		font-size: 0.8rem;
+		color: var(--text-light);
+		transition: var(--transition);
+		border: 2px solid var(--border-light);
+	}
+
+	body.dark-mode .tag {
+		background: var(--accent-secondary);
+		color: var(--text-dark);
+		border: 2px solid var(--border-dark);
+	}
+
+	.tag:hover {
+		background: var(--accent-secondary);
+		color: var(--text-light);
+		transform: scale(1.05) translate(2px, -2px);
+		box-shadow: 3px 3px 0px 0px rgba(26, 26, 26, 1);
+	}
+
+	body.dark-mode .tag:hover {
+		background: var(--accent);
+		color: var(--text-dark);
+		box-shadow: 3px 3px 0px 0px rgba(240, 240, 240, 1);
+	}
+
+	@media (max-width: 900px) {
+		.entry-post img {
+			height: 180px;
+		}
+	}
+
+	@media (max-width: 500px) {
+		.entry-post {
+			text-align: center;
+		}
+
+		.entry-post img {
+			height: 160px;
+		}
+
+		.entry-link,
+		.entry-note,
+		.entry-quote {
+			padding: 1rem;
+		}
+	}
+</style>

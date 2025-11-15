@@ -1,0 +1,276 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import BlogEntry from '../../components/BlogEntry.astro';
+import BlogFilter from '../../components/BlogFilter.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const currentType = 'all';
+
+// Get all posts
+const posts = (await getCollection('blog', ({ data }) => {
+	// Hide drafts in both development and production
+	return !data.draft;
+})).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 90%;
+				max-width: 1100px;
+				margin: 3em auto;
+				padding: 2em 1em;
+				position: relative;
+				z-index: 1;
+			}
+			.blog-header {
+				text-align: center;
+				margin-bottom: 2rem;
+				position: relative;
+				z-index: 2;
+			}
+			.blog-header h1 {
+				font-size: clamp(2rem, 5vw, 3.2rem);
+				margin-bottom: 0.5rem;
+				color: var(--text-light);
+				letter-spacing: 1px;
+				text-transform: uppercase;
+			}
+			body.dark-mode .blog-header h1 {
+				color: var(--text-dark);
+			}
+			.blog-header p {
+				font-size: clamp(1rem, 2vw, 1.2rem);
+				color: var(--text-light);
+				opacity: 0.8;
+				margin-bottom: 1.5rem;
+				font-weight: 600;
+			}
+			body.dark-mode .blog-header p {
+				color: var(--text-dark);
+			}
+			ul {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+				gap: 1.5rem;
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+			}
+			ul li {
+				position: relative;
+				transition: var(--transition);
+				background: var(--card-bg-light);
+				border: 3px solid var(--border-light);
+				border-radius: 0px;
+				overflow: hidden;
+				box-shadow: var(--box-shadow-light);
+				z-index: 1;
+			}
+			body.dark-mode ul li {
+				background: var(--card-bg-dark);
+				border: 3px solid var(--border-dark);
+				box-shadow: var(--box-shadow-dark);
+			}
+			ul li:hover {
+				transform: translate(2px, -2px);
+				box-shadow: 7px 7px 0px 0px rgba(26, 26, 26, 1);
+				z-index: 5;
+			}
+			body.dark-mode ul li:hover {
+				box-shadow: 7px 7px 0px 0px rgba(240, 240, 240, 1);
+			}
+			ul li * {
+				text-decoration: none;
+				transition: var(--transition);
+			}
+			ul li:first-child {
+				grid-column: 1 / -1;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				margin-bottom: 1rem;
+				background: var(--accent);
+				color: var(--text-light);
+				padding-right: 0;
+				overflow: hidden;
+				border: 3px solid var(--border-light);
+				box-shadow: var(--box-shadow-light);
+			}
+			body.dark-mode ul li:first-child {
+				background: var(--accent);
+				color: var(--text-dark);
+				border: 3px solid var(--border-dark);
+				box-shadow: var(--box-shadow-dark);
+			}
+			ul li:first-child img {
+				width: 40%;
+				height: 300px;
+				object-fit: cover;
+				margin: 0;
+				border-radius: 0;
+				box-shadow: none;
+				border-right: 3px solid var(--border-light);
+			}
+			body.dark-mode ul li:first-child img {
+				border-right: 3px solid var(--border-dark);
+			}
+			ul li:first-child .blog-entry-content {
+				padding: 2rem;
+				width: 60%;
+				text-align: left;
+			}
+			ul li:first-child .title {
+				font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+				color: var(--text-light);
+			}
+			body.dark-mode ul li:first-child .title {
+				color: var(--text-dark);
+			}
+			ul li:first-child .date {
+				color: var(--text-light);
+				font-size: 1rem;
+				opacity: 0.8;
+			}
+			body.dark-mode ul li:first-child .date {
+				color: var(--text-dark);
+			}
+			ul li:first-child .description {
+				color: var(--text-light);
+				margin: 1rem 0;
+				font-size: 1.1rem;
+				opacity: 0.9;
+			}
+			body.dark-mode ul li:first-child .description {
+				color: var(--text-dark);
+			}
+			ul li img {
+				width: 100%;
+				height: 200px;
+				object-fit: cover;
+				margin-bottom: 1rem;
+				border-radius: 0px;
+				box-shadow: none;
+				border-bottom: 3px solid var(--border-light);
+			}
+			body.dark-mode ul li img {
+				border-bottom: 3px solid var(--border-dark);
+			}
+			ul li a {
+				display: block;
+				color: var(--text-light);
+				padding: 0 1.5rem 1.5rem;
+			}
+			body.dark-mode ul li a {
+				color: var(--text-dark);
+			}
+			.blog-entry-content {
+				padding: 0 1.5rem 1.5rem;
+			}
+			.title {
+				margin: 0 0 0.3rem;
+				color: var(--text-light);
+				line-height: 1.2;
+				font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+			}
+			body.dark-mode .title {
+				color: var(--text-dark);
+			}
+			.date {
+				margin: 0 0 0.8rem;
+				color: var(--text-light);
+				opacity: 0.7;
+				font-size: 0.9rem;
+			}
+			body.dark-mode .date {
+				color: var(--text-dark);
+			}
+			.description {
+				margin: 0.8rem 0 0;
+				font-size: 0.95rem;
+				color: var(--text-light);
+				opacity: 0.9;
+				line-height: 1.5;
+			}
+			body.dark-mode .description {
+				color: var(--text-dark);
+			}
+			ul li a:hover .title {
+				color: var(--accent);
+			}
+			ul li a:hover .date {
+				color: var(--accent);
+				opacity: 1;
+			}
+			ul a:hover img {
+				transform: scale(1.02);
+				box-shadow: 5px 5px 0px 0px rgba(26, 26, 26, 1);
+			}
+			body.dark-mode ul a:hover img {
+				box-shadow: 5px 5px 0px 0px rgba(240, 240, 240, 1);
+			}
+			@media (max-width: 900px) {
+				ul {
+					grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+					gap: 1.5rem;
+				}
+				ul li:first-child {
+					flex-direction: column;
+					text-align: center;
+				}
+				ul li:first-child img {
+					width: 100%;
+					height: 250px;
+					border-right: none;
+					border-bottom: 3px solid var(--border-light);
+				}
+				body.dark-mode ul li:first-child img {
+					border-bottom: 3px solid var(--border-dark);
+				}
+				ul li:first-child .blog-entry-content {
+					width: 100%;
+					padding: 1.5rem;
+				}
+			}
+			@media (max-width: 500px) {
+				ul {
+					grid-template-columns: 1fr;
+					gap: 1.2rem;
+				}
+				main {
+					padding: 1.5em 0.5em;
+				}
+				.blog-header h1 {
+					font-size: 2rem;
+				}
+				.blog-header p {
+					font-size: 1rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section>
+				<div class="blog-header">
+					<h1>My Blog</h1>
+					<p>Thoughts, ideas, and stories on technology, creativity, and beyond.</p>
+				</div>
+				<BlogFilter currentType={currentType} />
+				<ul>
+					{posts.map((post) => <BlogEntry post={post} />)}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

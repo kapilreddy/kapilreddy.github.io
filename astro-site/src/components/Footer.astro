@@ -1,0 +1,55 @@
+---
+const today = new Date();
+---
+
+<footer>
+	<div class="footer-content">
+		<p>© {today.getFullYear()}, Kapil Reddy. All content licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>, except where noted otherwise.</p>
+	</div>
+</footer>
+<style>
+	footer {
+		margin: 0;
+		padding: 1em;
+		background: var(--card-bg-light);
+		border-top: 3px solid var(--border-light);
+		box-shadow: var(--box-shadow-light);
+		transition: var(--transition);
+		text-align: center;
+	}
+
+	body.dark-mode footer {
+		background: var(--card-bg-dark);
+		border-top: 3px solid var(--border-dark);
+		box-shadow: var(--box-shadow-dark);
+	}
+
+	.footer-content {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+
+	p {
+		margin: 0;
+		color: var(--text-light);
+		font-size: 0.9em;
+	}
+
+	body.dark-mode p {
+		color: var(--text-dark);
+	}
+
+	a {
+		color: var(--accent);
+		text-decoration: none;
+		transition: var(--transition);
+	}
+
+	body.dark-mode a {
+		color: var(--accent-dark);
+	}
+
+	a:hover {
+		text-decoration: underline;
+	}
+</style>

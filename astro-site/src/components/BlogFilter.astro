@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+
+const { currentType } = Astro.props;
+
+// Get all posts to count each type
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+
+const typeCounts = {
+	all: allPosts.length,
+	post: allPosts.filter((p) => p.data.type === 'post').length,
+	link: allPosts.filter((p) => p.data.type === 'link').length,
+	note: allPosts.filter((p) => p.data.type === 'note').length,
+	quote: allPosts.filter((p) => p.data.type === 'quote').length,
+};
+
+const filters = [
+	{ label: 'All', value: 'all', count: typeCounts.all, href: '/blog' },
+	{ label: 'Posts', value: 'post', count: typeCounts.post, href: '/blog/posts' },
+	{ label: 'Links', value: 'link', count: typeCounts.link, href: '/blog/links' },
+	{ label: 'Notes', value: 'note', count: typeCounts.note, href: '/blog/notes' },
+	{ label: 'Quotes', value: 'quote', count: typeCounts.quote, href: '/blog/quotes' },
+];
+---
+
+<nav class="blog-filter">
+	{
+		filters.map((filter) => {
+			const isActive = currentType === filter.value;
+			return (
+				<a href={filter.href} class:list={['filter-link', { active: isActive }]}>
+					{filter.label} ({filter.count})
+				</a>
+			);
+		})
+	}
+</nav>
+
+<style>
+	.blog-filter {
+		display: flex;
+		gap: 1.5rem;
+		margin-bottom: 2rem;
+		padding-bottom: 1rem;
+		border-bottom: 2px solid rgb(var(--gray-light));
+		flex-wrap: wrap;
+	}
+
+	.filter-link {
+		color: rgb(var(--gray));
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.2s ease;
+		padding: 0.25rem 0;
+	}
+
+	.filter-link:hover {
+		color: rgb(var(--accent));
+	}
+
+	.filter-link.active {
+		color: rgb(var(--black));
+		border-bottom: 2px solid rgb(var(--accent));
+		font-weight: 700;
+	}
+
+	@media (max-width: 720px) {
+		.blog-filter {
+			gap: 1rem;
+			font-size: 0.9rem;
+		}
+	}
+</style>

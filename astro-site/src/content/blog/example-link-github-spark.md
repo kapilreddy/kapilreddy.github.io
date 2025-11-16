@@ -7,7 +7,7 @@ link_url: "https://simonwillison.net/2024/Jul/24/github-spark/"
 link_source: "via Simon Willison"
 tags: ["ai", "github", "meta"]
 description: "Simon Willison uses GitHub's new AI-powered app builder to understand how GitHub Spark itself works. Meta-programming at its finest!"
-draft: false
+draft: true
 ---
 
 This is such a clever approach - using an AI tool to reverse engineer and understand the AI tool itself. The meta nature of this is fascinating.

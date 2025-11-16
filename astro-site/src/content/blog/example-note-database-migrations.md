@@ -5,7 +5,7 @@ time: "2:30 pm"
 type: "note"
 tags: ["databases", "architecture", "migrations"]
 description: "The best teams I've worked with treat database migrations as sacred. If a migration is painful, it's usually a sign that the architecture needs rethinking. The pain is the signal, not the problem."
-draft: false
+draft: true
 ---
 
 The best teams I've worked with treat database migrations as sacred. If a migration is painful, it's usually a sign that the architecture needs rethinking. The pain is the signal, not the problem.

@@ -5,7 +5,7 @@ time: "10:15 am"
 type: "quote"
 tags: ["programming", "wisdom"]
 description: "Kent Beck"
-draft: false
+draft: true
 ---
 
 "Make it work, make it right, make it fast" - Kent Beck

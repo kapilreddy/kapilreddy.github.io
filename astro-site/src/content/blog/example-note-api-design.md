@@ -5,7 +5,7 @@ time: "4:45 pm"
 type: "note"
 tags: ["api", "design", "architecture"]
 description: "Every API you expose is a promise you have to keep forever. The fewer promises, the more freedom to evolve."
-draft: false
+draft: true
 ---
 
 Every API you expose is a promise you have to keep forever. Or at least until you want to break your users' code.

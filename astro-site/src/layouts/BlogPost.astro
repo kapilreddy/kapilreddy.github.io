@@ -24,25 +24,30 @@ const isFullPost = type === 'post';
 			}
 			
 			article {
-				background: var(--card-bg-light);
-				border: 3px solid var(--border-light);
+				background: var(--card-bg);
+				border: 4px solid var(--border);
 				box-shadow: var(--box-shadow-light);
 				transition: var(--transition);
+				position: relative;
 			}
 
 			body.dark-mode article {
-				background: var(--card-bg-dark);
-				border: 3px solid var(--border-dark);
 				box-shadow: var(--box-shadow-dark);
+			}
+
+			article::before {
+				content: "◑";
+				position: absolute;
+				top: -20px;
+				right: 2rem;
+				font-size: 4rem;
+				color: var(--primary);
+				z-index: 10;
 			}
 
 			.hero-image {
 				width: 100%;
-				border-bottom: 3px solid var(--border-light);
-			}
-
-			body.dark-mode .hero-image {
-				border-bottom: 3px solid var(--border-dark);
+				border-bottom: 4px solid var(--border);
 			}
 
 			.hero-image img {
@@ -51,17 +56,14 @@ const isFullPost = type === 'post';
 				height: auto;
 				border-radius: 0px;
 				box-shadow: none;
+				border: none;
 			}
 
 			.prose {
 				max-width: 100%;
 				margin: 0;
 				padding: 3rem;
-				color: var(--text-light);
-			}
-
-			body.dark-mode .prose {
-				color: var(--text-dark);
+				color: var(--text-primary);
 			}
 
 			.title {
@@ -69,82 +71,76 @@ const isFullPost = type === 'post';
 				padding: 0 0 2rem 0;
 				text-align: center;
 				line-height: 1.2;
-				border-bottom: 6px solid var(--accent);
+				border-bottom: 6px solid var(--accent-1);
+				position: relative;
 			}
 
-			body.dark-mode .title {
-				border-bottom-color: var(--accent-dark);
+			.title::before {
+				content: "▰▱▰";
+				position: absolute;
+				bottom: -25px;
+				left: 50%;
+				transform: translateX(-50%);
+				font-size: 1.5rem;
+				color: var(--accent-2);
+				letter-spacing: 0.5rem;
 			}
 
 			.title h1 {
 				margin: 0 0 1rem 0;
 				font-size: clamp(2rem, 4vw, 3rem);
-				color: var(--text-light);
-			}
-
-			body.dark-mode .title h1 {
-				color: var(--text-dark);
+				color: var(--text-primary);
+				font-family: var(--font-heading);
+				font-weight: 900;
+				text-transform: uppercase;
+				letter-spacing: -1px;
 			}
 
 			.date {
 				margin-bottom: 1rem;
-				color: var(--text-light);
-				opacity: 0.8;
+				color: var(--text-secondary);
+				opacity: 0.9;
 				font-weight: 600;
-			}
-
-			body.dark-mode .date {
-				color: var(--text-dark);
+				font-family: var(--font-body);
 			}
 
 			.last-updated-on {
 				font-style: italic;
-				opacity: 0.7;
+				opacity: 0.8;
+				font-size: 0.9rem;
 			}
 
 			.time {
-				color: var(--text-light);
-				opacity: 0.8;
-			}
-
-			body.dark-mode .time {
-				color: var(--text-dark);
+				color: var(--text-secondary);
+				opacity: 0.9;
 			}
 
 			.link-title {
-				color: var(--accent);
+				color: var(--accent-1);
 				text-decoration: none;
 				transition: var(--transition);
-			}
-
-			body.dark-mode .link-title {
-				color: var(--accent-dark);
+				font-family: var(--font-heading);
+				font-weight: 900;
+				text-transform: uppercase;
 			}
 
 			.link-title:hover {
-				color: var(--accent-secondary);
+				color: var(--accent-2);
 				text-decoration: underline;
-			}
-
-			body.dark-mode .link-title:hover {
-				color: var(--accent-secondary-dark);
+				text-decoration-thickness: 3px;
 			}
 
 			.link-source {
 				margin: 1rem 0;
-				color: var(--text-light);
+				color: var(--text-secondary);
 				font-size: 0.95rem;
 				font-style: italic;
-				opacity: 0.8;
-			}
-
-			body.dark-mode .link-source {
-				color: var(--text-dark);
+				opacity: 0.9;
 			}
 
 			.tags {
 				display: flex;
-				gap: 0.75rem;
+				gap: 1rem;
 				justify-content: center;
 				flex-wrap: wrap;
 				margin: 1.5rem 0;
@@ -153,39 +149,31 @@ const isFullPost = type === 'post';
 			.tag {
 				display: inline-block;
 				padding: 0.5rem 1rem;
-				background: var(--accent);
-				border: 2px solid var(--border-light);
+				background: var(--primary);
+				border: 3px solid var(--border);
 				border-radius: 0px;
 				font-size: 0.85rem;
-				color: #000000;
+				color: var(--border);
 				text-decoration: none;
-				font-weight: 700;
+				font-weight: 900;
+				font-family: var(--font-heading);
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
 				transition: var(--transition);
-			}
-
-			body.dark-mode .tag {
-				background: var(--accent-dark);
-				border: 2px solid var(--border-dark);
+				box-shadow: 3px 3px 0px 0px var(--border);
 			}
 
 			.tag:hover {
-				transform: scale(1.05) translate(2px, -2px);
-				box-shadow: 3px 3px 0px 0px rgba(26, 26, 26, 1);
-			}
-
-			body.dark-mode .tag:hover {
-				box-shadow: 3px 3px 0px 0px rgba(246, 246, 246, 1);
+				background: var(--accent-2);
+				transform: translate(-2px, -2px);
+				box-shadow: 5px 5px 0px 0px var(--border);
 			}
 
 			.title hr {
 				border: none;
-				border-top: 3px solid var(--accent);
+				border-top: 4px solid var(--accent-1);
 				margin: 2rem 0 0 0;
 				background: transparent;
-			}
-
-			body.dark-mode .title hr {
-				border-top-color: var(--accent-dark);
 			}
 
 			@media (max-width: 768px) {
@@ -195,6 +183,12 @@ const isFullPost = type === 'post';
 
 				.title h1 {
 					font-size: 2rem;
+				}
+
+				article::before {
+					font-size: 3rem;
+					top: -15px;
+					right: 1rem;
 				}
 			}
 		</style>

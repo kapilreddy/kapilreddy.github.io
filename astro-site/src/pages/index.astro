@@ -13,7 +13,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 			main {
 				display: grid;
 				grid-template-columns: 1fr 2fr;
-				gap: 1.5rem;
+				gap: 2rem;
 				padding: 2rem 1rem;
 				position: relative;
 				z-index: 2;
@@ -22,101 +22,107 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 			.sidebar {
 				grid-column: 1;
 				min-width: 200px;
-				padding: 1.5rem;
+				padding: 2rem;
 				border-radius: 0px;
 				box-shadow: var(--box-shadow-light);
-				background: var(--card-bg-light);
-				border: 3px solid var(--border-light);
+				background: var(--primary);
+				border: 4px solid var(--border);
 				position: sticky;
 				top: 2rem;
 				height: fit-content;
 				transition: var(--transition);
 				overflow: hidden;
 				z-index: 3;
+				transform: rotate(-1deg);
 			}
 
 			body.dark-mode .sidebar {
-				background: var(--card-bg-dark);
-				border: 3px solid var(--border-dark);
 				box-shadow: var(--box-shadow-dark);
+			}
+
+			.sidebar:hover {
+				transform: rotate(0deg) translate(-2px, -2px);
+				box-shadow: 10px 10px 0px 0px var(--border);
 			}
 
 			.sidebar h2 {
 				font-size: 1.6rem;
-				margin-bottom: 1rem;
-				color: var(--accent);
+				margin-bottom: 1.5rem;
+				color: var(--border);
 				text-align: center;
 				text-transform: uppercase;
 				letter-spacing: 1px;
+				font-family: var(--font-heading);
+				font-weight: 900;
 			}
 
-			body.dark-mode .sidebar h2 {
-				color: var(--accent-dark);
+			.sidebar h2::before {
+				content: "◐";
+				display: block;
+				font-size: 2rem;
+				margin-bottom: 0.5rem;
 			}
 
 			.profile-img {
-				width: 140px;
-				height: 140px;
+				width: 150px;
+				height: 150px;
 				border-radius: 0px;
 				object-fit: cover;
 				display: block;
-				margin: 0 auto 1.2rem;
-				box-shadow: 5px 5px 0 var(--accent);
+				margin: 0 auto 1.5rem;
+				box-shadow: 6px 6px 0 var(--border);
 				transition: transform 0.2s ease;
-				border: 3px solid var(--border-light);
-			}
-
-			body.dark-mode .profile-img {
-				border: 3px solid var(--border-dark);
+				border: 4px solid var(--border);
 			}
 
 			.profile-img:hover {
-				transform: scale(1.02) translate(2px, -2px);
+				transform: translate(-2px, -2px) rotate(2deg);
+				box-shadow: 8px 8px 0 var(--border);
 			}
 
 			.sidebar p {
 				font-size: 0.95rem;
 				margin: 0.6rem 0;
 				text-align: center;
-				font-weight: 600;
+				font-weight: 700;
+				color: var(--border);
+				font-family: var(--font-heading);
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
 			}
 
 			.social-links {
 				display: flex;
 				justify-content: center;
 				gap: 1rem;
-				margin-top: 1.2rem;
+				margin-top: 1.5rem;
 			}
 
 			.social-links a {
-				color: #000000;
+				color: var(--primary);
 				text-decoration: none;
 				transition: var(--transition);
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				width: 36px;
-				height: 36px;
+				width: 42px;
+				height: 42px;
 				border-radius: 0px;
-				background: var(--accent);
-				border: 2px solid var(--border-light);
-			}
-
-			body.dark-mode .social-links a {
-				color: #000000;
-				background: var(--accent-dark);
-				border: 2px solid var(--border-dark);
+				background: var(--border);
+				border: 3px solid var(--border);
+				box-shadow: 3px 3px 0px 0px var(--border);
 			}
 
 			.social-links a:hover {
-				color: #000000;
-				transform: scale(1.05) translate(2px, -2px);
-				box-shadow: 5px 5px 0px 0px rgba(26, 26, 26, 1);
+				background: var(--accent-2);
+				color: var(--border);
+				transform: translate(-2px, -2px);
+				box-shadow: 5px 5px 0px 0px var(--border);
 			}
 
-			body.dark-mode .social-links a:hover {
-				color: #000000;
-				box-shadow: 5px 5px 0px 0px rgba(246, 246, 246, 1);
+			.social-links a:active {
+				transform: translate(1px, 1px);
+				box-shadow: 2px 2px 0px 0px var(--border);
 			}
 
 			.content {
@@ -129,23 +135,31 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 			.hero {
 				position: relative;
-				background: var(--accent);
-				color: #000000;
-				padding: 3rem 2rem;
+				background: var(--primary);
+				color: var(--border);
+				padding: 4rem 2rem;
 				border-radius: 0px;
-				margin-bottom: 1.5rem;
+				margin-bottom: 2rem;
 				text-align: center;
 				overflow: hidden;
 				box-shadow: var(--box-shadow-light);
-				border: 3px solid var(--border-light);
+				border: 4px solid var(--border);
 				z-index: 1;
 			}
 
 			body.dark-mode .hero {
-				background: var(--accent-dark);
-				color: #000000;
-				border: 3px solid var(--border-dark);
 				box-shadow: var(--box-shadow-dark);
+			}
+
+			.hero::after {
+				content: "◒";
+				position: absolute;
+				right: 2rem;
+				bottom: 1rem;
+				font-size: 6rem;
+				color: var(--accent-2);
+				opacity: 0.3;
+				transform: rotate(15deg);
 			}
 
 			.hero > * {
@@ -154,58 +168,58 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 			}
 
 			.hero h1 {
-				font-size: clamp(2rem, 5vw, 3rem);
-				margin-bottom: 0.8rem;
-				letter-spacing: 1px;
-				color: #000000;
+				font-size: clamp(2.5rem, 5vw, 3.5rem);
+				margin-bottom: 1rem;
+				letter-spacing: -2px;
+				color: var(--border);
+				font-family: var(--font-heading);
+				font-weight: 900;
 			}
 
 			.hero p {
-				font-size: clamp(1rem, 2vw, 1.2rem);
-				margin-bottom: 1.8rem;
+				font-size: clamp(1.1rem, 2vw, 1.3rem);
+				margin-bottom: 2rem;
 				font-weight: 600;
-				color: #000000;
+				color: var(--border);
+				max-width: 600px;
+				margin-left: auto;
+				margin-right: auto;
 			}
 
 			.hero a {
-				background: var(--accent-secondary);
-				border: 3px solid var(--border-light);
-				color: #000000;
-				padding: 0.8rem 2rem;
+				background: var(--border);
+				border: 3px solid var(--border);
+				color: var(--primary);
+				padding: 1rem 2.5rem;
 				border-radius: 0px;
 				font-weight: 900;
+				font-family: var(--font-heading);
 				transition: var(--transition);
-				box-shadow: var(--box-shadow-light);
+				box-shadow: 6px 6px 0px 0px var(--border);
 				text-transform: uppercase;
 				letter-spacing: 1px;
+				display: inline-block;
 			}
 
 			.hero a:hover {
-				background: #000000;
-				transform: translateY(-2px) translateX(2px);
-				box-shadow: 7px 7px 0px 0px rgba(26, 26, 26, 1);
-				color: #FFFFFF;
+				background: var(--accent-2);
+				border-color: var(--border);
+				color: var(--border);
+				transform: translate(-2px, -2px);
+				box-shadow: 8px 8px 0px 0px var(--border);
 				text-decoration: none;
 			}
 
-			body.dark-mode .hero a {
-				background: var(--accent-secondary-dark);
-				color: #000000;
-				border: 3px solid var(--border-dark);
-				box-shadow: var(--box-shadow-dark);
-			}
-
-			body.dark-mode .hero a:hover {
-				background: #F6F6F6;
-				box-shadow: 7px 7px 0px 0px rgba(246, 246, 246, 1);
-				color: #000000;
+			.hero a:active {
+				transform: translate(1px, 1px);
+				box-shadow: 4px 4px 0px 0px var(--border);
 			}
 
 			section {
-				margin-bottom: 1.5rem;
-				background: var(--card-bg-light);
-				border: 3px solid var(--border-light);
-				padding: 2rem;
+				margin-bottom: 2rem;
+				background: var(--card-bg);
+				border: 3px solid var(--border);
+				padding: 2.5rem;
 				border-radius: 0px;
 				box-shadow: var(--box-shadow-light);
 				transition: var(--transition);
@@ -215,43 +229,36 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 			}
 
 			body.dark-mode section {
-				background: var(--card-bg-dark);
-				border: 3px solid var(--border-dark);
 				box-shadow: var(--box-shadow-dark);
 			}
 
 			section:hover {
-				transform: translate(2px, -2px);
+				transform: translate(-2px, -2px) rotate(0.5deg);
+				box-shadow: 10px 10px 0px 0px var(--border);
 				z-index: 5;
 			}
 
 			section h2 {
 				font-size: clamp(1.5rem, 3vw, 2rem);
-				margin-bottom: 1rem;
-				color: var(--text-light);
+				margin-bottom: 1.5rem;
+				color: var(--text-primary);
 				position: relative;
 				display: inline-block;
-				letter-spacing: 1px;
+				letter-spacing: 0.5px;
+				font-family: var(--font-heading);
+				font-weight: 900;
+				text-transform: uppercase;
+				background: var(--primary);
+				padding: 0.5rem 1rem;
+				border: 3px solid var(--border);
+				box-shadow: 4px 4px 0px 0px var(--border);
+				color: var(--border);
 			}
 
-			body.dark-mode section h2 {
-				color: var(--text-dark);
-			}
-
-			section h2::after {
-				content: '';
-				position: absolute;
-				width: 60px;
-				height: 6px;
-				background: var(--accent);
-				bottom: -8px;
-				left: 0;
-				border-radius: 0;
-				border: 2px solid var(--border-light);
-			}
-
-			body.dark-mode section h2::after {
-				border: 2px solid var(--border-dark);
+			section h2::before {
+				content: "▶";
+				margin-right: 0.5rem;
+				color: var(--accent-2);
 			}
 
 			ul {
@@ -260,52 +267,33 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				margin: 0;
 			}
 
-			ul li {
-				padding: 0.8rem 0;
-				line-height: 1.6;
-				border-left: 6px solid var(--accent);
-				padding-left: 1.2rem;
-				margin-bottom: 0.5rem;
-				transition: var(--transition);
-				background: var(--accent-secondary);
-				border-radius: 0;
-				color: #000000;
-			}
+		ul li {
+			padding: 0.8rem 1.2rem;
+			line-height: 1.6;
+			border-left: 4px solid var(--primary);
+			margin-bottom: 0.6rem;
+			transition: var(--transition);
+			background: transparent;
+		}
 
-			body.dark-mode ul li {
-				background: var(--accent-dark);
-				color: #000000;
-			}
+		ul li:hover {
+			background: var(--card-bg);
+			border-left-color: var(--accent-1);
+			padding-left: 1.5rem;
+		}
 
-			ul li:hover {
-				background: var(--accent);
-				transform: translateX(2px);
-				color: #000000;
-			}
+		ul li a {
+			color: var(--text-primary);
+			transition: var(--transition);
+			font-weight: 700;
+			text-decoration: none;
+		}
 
-			body.dark-mode ul li:hover {
-				background: var(--accent-secondary-dark);
-				color: #000000;
-			}
-
-			ul li a {
-				color: #000000;
-				transition: var(--transition);
-				font-weight: 700;
-			}
-
-			body.dark-mode ul li a {
-				color: #000000;
-			}
-
-			ul li a:hover {
-				color: #000000;
-				text-decoration: underline;
-			}
-
-			body.dark-mode ul li a:hover {
-				color: #000000;
-			}
+		ul li a:hover {
+			color: var(--accent-1);
+			text-decoration: underline;
+			text-decoration-thickness: 2px;
+		}
 
 			@media (max-width: 900px) {
 				main {
@@ -357,29 +345,10 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 		<script src="/js/three.js" is:inline></script>
 		<script>
-			// Dark mode toggle functionality
+			// Three.js background animation
 			document.addEventListener('DOMContentLoaded', () => {
 				const body = document.body;
-				const toggle = document.querySelector('.dark-mode-toggle');
 				
-				// Check for saved user preference
-				if (localStorage.getItem('darkMode') === 'enabled') {
-					body.classList.add('dark-mode');
-				} else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-					body.classList.add('dark-mode');
-				}
-				
-				toggle.addEventListener('click', () => {
-					body.classList.toggle('dark-mode');
-					// Save user preference
-					if (body.classList.contains('dark-mode')) {
-						localStorage.setItem('darkMode', 'enabled');
-					} else {
-						localStorage.setItem('darkMode', 'disabled');
-					}
-				});
-				
-				// Three.js background animation - Retro grid
 				const initCanvas = () => {
 					const scene = new THREE.Scene();
 					const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -455,12 +424,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 						renderer.setSize(window.innerWidth, window.innerHeight);
 					});
 					
-					// Update particle color on dark mode toggle
-					toggle.addEventListener('click', () => {
-						material.color.setHex(body.classList.contains('dark-mode') ? 0x00b7b7 : 0x008080);
-						gridHelper.material.color.setHex(body.classList.contains('dark-mode') ? 0x00b7b7 : 0x008080);
-						gridHelper.material.color2.setHex(body.classList.contains('dark-mode') ? 0x00b7b7 : 0x008080);
-					});
 				};
 				
 				// Initialize canvas only if WebGL is supported
@@ -472,11 +435,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	</head>
 	<body>
 		<canvas id="background-canvas"></canvas>
-		<div class="dark-mode-toggle" aria-label="Toggle dark mode">
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-				<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-			</svg>
-		</div>
 		<Header />
 		<main>
 			<div class="sidebar">

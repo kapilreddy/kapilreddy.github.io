@@ -5,113 +5,110 @@ const today = new Date();
 <footer>
 	<div class="footer-content">
 		<div class="footer-inner">
-			<p class="copyright">© {today.getFullYear()} <strong>Kapil Reddy</strong></p>
+			<p class="ascii-divider">▰▱▰ ▰▱▰ ▰▱▰</p>
+			<p class="copyright">© {today.getFullYear()} <strong>KAPIL REDDY</strong></p>
 			<p class="license">
 				All content licensed 
-				<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>, 
-				except where noted otherwise.
+				<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>
 			</p>
 		</div>
 	</div>
 </footer>
 <style>
 	footer {
-		margin: 3rem 0 0 0;
+		margin: 4rem 0 0 0;
 		padding: 0;
-		background: var(--accent-secondary);
-		border-top: 6px solid var(--border-light);
-		box-shadow: 0px -5px 0px 0px rgba(26, 26, 26, 1);
+		background: var(--border);
+		border-top: 6px solid var(--border);
+		box-shadow: 0px -8px 0px 0px var(--border);
 		transition: var(--transition);
 		position: relative;
 	}
 
-	body.dark-mode footer {
-		background: var(--accent-dark);
-		border-top: 6px solid var(--border-dark);
-		box-shadow: 0px -5px 0px 0px rgba(246, 246, 246, 1);
-	}
-
 	.footer-content {
-		max-width: 1100px;
+		max-width: 1200px;
 		margin: 0 auto;
-		padding: 2.5rem 1.5rem;
+		padding: 3rem 2rem;
 	}
 
 	.footer-inner {
 		text-align: center;
-		padding: 1.5rem;
-		background: var(--card-bg-light);
-		border: 3px solid var(--border-light);
-		box-shadow: var(--box-shadow-light);
+		padding: 2rem;
+		background: var(--border);
+		border: 4px solid var(--primary);
+		box-shadow: 8px 8px 0px 0px var(--primary);
+		position: relative;
 	}
 
-	body.dark-mode .footer-inner {
-		background: var(--card-bg-dark);
-		border: 3px solid var(--border-dark);
-		box-shadow: var(--box-shadow-dark);
-	}
-
-	p {
-		margin: 0.5rem 0;
-		color: var(--text-light);
-		font-size: 0.95rem;
-		line-height: 1.8;
-	}
-
-	body.dark-mode p {
-		color: var(--text-dark);
-	}
-
-	.copyright {
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-		margin-bottom: 0.75rem;
-	}
-
-	.copyright strong {
-		color: var(--text-light);
+	.ascii-divider {
+		font-size: 1.5rem;
+		color: var(--primary);
+		margin-bottom: 1.5rem;
+		letter-spacing: 0.5rem;
 		font-weight: 900;
 	}
 
-	body.dark-mode .copyright strong {
-		color: var(--text-dark);
+	p {
+		margin: 0.8rem 0;
+		color: var(--bg);
+		font-size: 0.95rem;
+		line-height: 1.8;
+		font-family: var(--font-heading);
+	}
+
+	.copyright {
+		font-weight: 900;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin-bottom: 1rem;
+		font-size: 1.1rem;
+	}
+
+	.copyright strong {
+		color: var(--bg);
+		font-weight: 900;
 	}
 
 	.license {
 		font-size: 0.85rem;
+		font-family: var(--font-body);
+		font-weight: 600;
+	}
+
+	.motto {
+		margin-top: 1.5rem;
+		font-size: 0.85rem;
 		opacity: 0.9;
+		letter-spacing: 2px;
+		font-weight: 900;
 	}
 
 	a {
-		color: var(--accent);
+		color: var(--bg);
 		text-decoration: none;
 		transition: var(--transition);
 		font-weight: 900;
-		padding: 0.1em 0.3em;
-		border-bottom: 2px solid var(--accent);
+		padding: 0.3em 0.6em;
+		background: var(--primary);
+		border: 3px solid var(--primary);
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
-		font-size: 0.9em;
-	}
-
-	body.dark-mode a {
-		color: var(--text-dark);
-		background: var(--accent-secondary-dark);
-		border-bottom: 2px solid var(--border-dark);
+		font-size: 0.85em;
+		display: inline-block;
+		font-family: var(--font-heading);
 	}
 
 	a:hover {
-		background: var(--accent);
-		color: var(--text-light);
-		transform: translateY(-1px);
-		box-shadow: 2px 2px 0px 0px rgba(26, 26, 26, 1);
+		background: var(--accent-2);
+		border-color: var(--accent-2);
+		color: var(--border);
+		transform: translate(-2px, -2px);
+		box-shadow: 4px 4px 0px 0px var(--primary);
 	}
 
-	body.dark-mode a:hover {
-		background: var(--accent-dark);
-		color: #000000;
-		box-shadow: 2px 2px 0px 0px rgba(246, 246, 246, 1);
+	a:active {
+		transform: translate(1px, 1px);
+		box-shadow: 2px 2px 0px 0px var(--primary);
 	}
 
 	@media (max-width: 768px) {
@@ -120,11 +117,16 @@ const today = new Date();
 		}
 
 		.footer-content {
-			padding: 1.5rem 1rem;
+			padding: 2rem 1rem;
 		}
 
 		.footer-inner {
-			padding: 1rem;
+			padding: 1.5rem;
+		}
+
+		.ascii-divider {
+			font-size: 1.2rem;
+			letter-spacing: 0.3rem;
 		}
 
 		p {
@@ -133,6 +135,10 @@ const today = new Date();
 
 		.license {
 			font-size: 0.8rem;
+		}
+
+		.motto {
+			font-size: 0.75rem;
 		}
 	}
 </style>

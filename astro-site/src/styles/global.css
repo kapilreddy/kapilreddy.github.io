@@ -353,7 +353,7 @@ button:active, .btn:active {
 
 @media (max-width: 768px) {
 	body {
-		font-size: 16px;
+		font-size: 24px;
 	}
 	main {
 		padding: 1em 0.5em;

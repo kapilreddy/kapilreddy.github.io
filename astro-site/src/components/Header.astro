@@ -68,6 +68,21 @@ import HeaderLink from './HeaderLink.astro';
 		position: relative;
 	}
 
+	/* Mobile: Position header at bottom for thumb-friendly navigation */
+	@media (max-width: 768px) {
+		header {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			top: auto;
+			z-index: 1000;
+			border-bottom: none;
+			border-top: 6px solid var(--border);
+			box-shadow: 0px -8px 0px 0px var(--border);
+		}
+	}
+
 	nav {
 		display: flex;
 		align-items: center;
@@ -197,15 +212,24 @@ import HeaderLink from './HeaderLink.astro';
 
 	@media (max-width: 768px) {
 		nav {
-			padding: 1rem;
+			padding: 0.8rem 1rem;
 		}
 
 		h2 {
 			font-size: 1rem;
 		}
 
+		h2 a {
+			gap: 0.3rem;
+		}
+
 		.ascii-decoration {
 			font-size: 1.2rem;
+		}
+
+		.internal-links {
+			flex: 1;
+			justify-content: center;
 		}
 
 		.internal-links :global(a) {
@@ -215,31 +239,44 @@ import HeaderLink from './HeaderLink.astro';
 	}
 
 	@media (max-width: 500px) {
+		nav {
+			flex-wrap: nowrap;
+			padding: 0.6rem 0.5rem;
+		}
+
 		.logo {
-			height: 32px;
+			height: 28px;
 		}
 
 		.site-title {
-			font-size: 0.85rem;
-			margin-left: 0.5rem;
+			display: none; /* Hide site title on very small screens for space */
+		}
+
+		.nav-right {
+			flex: 1;
+			justify-content: space-between;
+			gap: 0.5rem;
 		}
 
 		.internal-links {
 			gap: 0;
+			flex: 1;
+			justify-content: center;
 		}
 
 		.internal-links :global(a) {
-			padding: 0.5rem 0.7rem;
-			font-size: 0.75rem;
+			padding: 0.5rem 0.6rem;
+			font-size: 0.7rem;
+			letter-spacing: 0;
 		}
 
 		.theme-toggle {
-			padding: 0.5rem;
+			padding: 0.4rem;
 		}
 
 		.theme-toggle svg {
-			width: 20px;
-			height: 20px;
+			width: 18px;
+			height: 18px;
 		}
 	}
 </style>

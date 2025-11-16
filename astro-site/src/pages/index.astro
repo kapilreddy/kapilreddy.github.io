@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ScrollProgress from '../components/ScrollProgress.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
@@ -382,7 +383,30 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				}
 			}
 
+			@media (max-width: 768px) {
+				/* Add padding to bottom to account for fixed bottom navbar */
+				body {
+					padding-bottom: 80px; /* Height of the bottom navbar + some spacing */
+				}
+
+				main {
+					padding: 1rem 1rem 2rem;
+				}
+
+				.sidebar {
+					margin-bottom: 1.5rem;
+				}
+			}
+
 			@media (max-width: 500px) {
+				body {
+					padding-bottom: 70px;
+				}
+
+				main {
+					padding: 0.5rem 0.5rem 1.5rem;
+				}
+
 				.hero h1 {
 					font-size: 2rem;
 				}
@@ -505,6 +529,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	</head>
 	<body>
 		<canvas id="background-canvas"></canvas>
+		<ScrollProgress />
 		<Header />
 		<main>
 			<div class="sidebar">

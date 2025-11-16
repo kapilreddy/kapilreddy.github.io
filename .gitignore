@@ -2,3 +2,4 @@ _site
 public/*
 node_modules/*
 resources/*public/
+package-lock.json

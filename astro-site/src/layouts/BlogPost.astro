@@ -36,15 +36,6 @@ const isFullPost = type === 'post';
 				box-shadow: var(--box-shadow-dark);
 			}
 
-			article::before {
-				content: "◑";
-				position: absolute;
-				top: -20px;
-				right: 2rem;
-				font-size: 4rem;
-				color: var(--primary);
-				z-index: 10;
-			}
 
 			.hero-image {
 				width: 100%;
@@ -76,16 +67,6 @@ const isFullPost = type === 'post';
 				position: relative;
 			}
 
-			.title::before {
-				content: "▰▱▰";
-				position: absolute;
-				bottom: -25px;
-				left: 50%;
-				transform: translateX(-50%);
-				font-size: 1.5rem;
-				color: var(--accent-2);
-				letter-spacing: 0.5rem;
-			}
 
 			.title h1 {
 				margin: 0 0 1rem 0;
@@ -260,7 +241,7 @@ const isFullPost = type === 'post';
 								))}
 							</div>
 						)}
-						<hr />
+
 					</div>
 					<slot />
 				</div>

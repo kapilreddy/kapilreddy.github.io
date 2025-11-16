@@ -1,11 +1,2 @@
 name = "kapilreddy-github-io"
 compatibility_date = "2024-11-16"
-pages_build_output_dir = "./dist"
-
-[site]
-bucket = "./dist"
-
-# KV Namespaces for sessions (required by @astrojs/cloudflare)
-[[kv_namespaces]]
-binding = "SESSION"
-id = "SESSION"

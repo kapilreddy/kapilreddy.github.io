@@ -5,7 +5,7 @@ This Astro site is configured for deployment on Cloudflare Pages with SSR (Serve
 ## Configuration Files
 
 - **astro.config.mjs**: Configured with `@astrojs/cloudflare` adapter and `output: 'server'`
-- **wrangler.toml**: Cloudflare configuration with KV namespace bindings
+- **wrangler.toml**: Minimal Cloudflare Pages configuration (project name and compatibility date only)
 
 ## Prerequisites
 
@@ -29,10 +29,18 @@ This Astro site is configured for deployment on Cloudflare Pages with SSR (Serve
    - **Build output directory**: `dist`
    - **Root directory**: `astro-site`
 
-3. **Add Environment Variables** (if needed)
+3. **Configure KV Namespace Binding** (Required for Sessions)
+   - After creating the project, go to **Settings** → **Functions**
+   - Scroll to **KV namespace bindings**
+   - Click **Add binding**
+   - **Variable name**: `SESSION`
+   - **KV namespace**: Create a new namespace or select an existing one
+   - Click **Save**
+
+4. **Add Environment Variables** (if needed)
    - Set any required environment variables in the Cloudflare dashboard
 
-4. **Deploy**
+5. **Deploy**
    - Click "Save and Deploy"
    - Cloudflare will build and deploy your site automatically
 
@@ -50,30 +58,37 @@ This Astro site is configured for deployment on Cloudflare Pages with SSR (Serve
    wrangler login
    ```
 
-3. **Create KV Namespace**
-   ```bash
-   wrangler kv:namespace create SESSION
-   ```
-   Update the `id` in `wrangler.toml` with the returned namespace ID.
-
-4. **Build the project**
+3. **Build the project**
    ```bash
    cd astro-site
    yarn build
    ```
 
-5. **Deploy**
+4. **Deploy**
    ```bash
    wrangler pages deploy dist
    ```
 
+   Note: When deploying via CLI, you'll still need to configure KV namespace bindings in the Cloudflare Dashboard as described in Option 1, step 3.
+
 ## KV Namespace for Sessions
 
-The project uses Cloudflare KV for session management. When deploying via the dashboard:
+The `@astrojs/cloudflare` adapter automatically enables session support using Cloudflare KV. To complete the setup:
 
-1. Go to Workers & Pages → KV
-2. Create a new namespace called `SESSION`
-3. In your Pages project settings, bind this KV namespace with the binding name `SESSION`
+1. **Create a KV Namespace**
+   - Go to **Workers & Pages** → **KV**
+   - Click **Create a namespace**
+   - Name it something like `astro-sessions` or `SESSION`
+
+2. **Bind the Namespace to Your Pages Project**
+   - Go to your Pages project
+   - Navigate to **Settings** → **Functions**
+   - Under **KV namespace bindings**, click **Add binding**
+   - **Variable name**: `SESSION` (this must match what the adapter expects)
+   - **KV namespace**: Select the namespace you created
+   - Click **Save**
+
+**Important**: The binding variable name must be `SESSION` as this is what the Cloudflare adapter uses by default.
 
 ## Environment Variables
 
@@ -110,9 +125,17 @@ If the build fails, check:
 ### KV Binding Errors
 
 If you see "Invalid binding `SESSION`" errors:
-- Ensure the KV namespace is created
-- Verify the binding name matches in wrangler.toml
-- Check that the binding is added in Cloudflare Dashboard
+- Ensure the KV namespace is created in Cloudflare Dashboard
+- Verify the binding name is exactly `SESSION` (case-sensitive)
+- Check that the binding is added in **Settings** → **Functions** → **KV namespace bindings**
+- For Pages deployments, KV bindings are configured in the Dashboard, not in wrangler.toml
+
+### Configuration File Errors
+
+If you see "Configuration file for Pages projects does not support 'site'" or similar errors:
+- Ensure wrangler.toml only contains basic configuration (name and compatibility_date)
+- For Pages deployments, advanced configuration (KV bindings, environment variables) is done via the Cloudflare Dashboard
+- Commit and push your updated wrangler.toml to trigger a fresh deployment
 
 ## Local Development
 

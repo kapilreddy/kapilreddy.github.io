@@ -4,6 +4,35 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ScrollProgress from '../components/ScrollProgress.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+// Fetch YouTube metadata using oEmbed API
+const talks = [
+	{ url: 'https://www.youtube.com/watch?v=PLOtpbdqDxY' },
+	{ url: 'https://www.youtube.com/watch?v=FGxjqxXucsM' },
+	{ url: 'https://www.youtube.com/watch?v=sxxcDNbvCNE' },
+	{ url: 'https://www.youtube.com/watch?v=uwEGj_OH1Xw' },
+	{ url: 'https://www.youtube.com/watch?v=1NkrY9FWsKc' },
+];
+
+async function fetchVideoData(url: string) {
+	try {
+		const response = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`);
+		if (!response.ok) return null;
+		const data = await response.json();
+		// Extract video ID from URL
+		const videoId = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([^&\n?#]+)/)?.[1];
+		return {
+			...data,
+			videoId,
+			thumbnailUrl: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+		};
+	} catch (error) {
+		console.error('Failed to fetch video data:', error);
+		return null;
+	}
+}
+
+const talkData = await Promise.all(talks.map(talk => fetchVideoData(talk.url)));
 ---
 
 <!doctype html>
@@ -360,13 +389,66 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 			text-decoration: none;
 		}
 
-		ul li a:hover {
-			color: var(--accent-1);
-			text-decoration: underline;
-			text-decoration-thickness: 2px;
-		}
+	ul li a:hover {
+		color: var(--accent-1);
+		text-decoration: underline;
+		text-decoration-thickness: 2px;
+	}
 
-			@media (max-width: 900px) {
+	/* Talk Cards */
+	.talks-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		gap: 1rem;
+		margin-top: 1rem;
+	}
+
+	.talk-card {
+		display: block;
+		background: var(--card-bg);
+		border: 3px solid var(--border);
+		text-decoration: none;
+		transition: var(--transition);
+		overflow: hidden;
+		box-shadow: 3px 3px 0px 0px var(--border);
+	}
+
+	.talk-card:hover {
+		transform: translate(-2px, -2px);
+		box-shadow: 5px 5px 0px 0px var(--border);
+	}
+
+	.talk-thumbnail {
+		width: 100%;
+		height: 120px;
+		object-fit: cover;
+		display: block;
+		border-bottom: 2px solid var(--border);
+	}
+
+	.talk-info {
+		padding: 0.75rem;
+	}
+
+	.talk-info h3 {
+		font-size: 0.9rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin: 0 0 0.35rem 0;
+		line-height: 1.3;
+		font-family: var(--font-heading);
+	}
+
+	.talk-author {
+		font-size: 0.75rem;
+		color: var(--accent-1);
+		margin: 0;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+		@media (max-width: 900px) {
 				main {
 					grid-template-columns: 1fr;
 					padding: 1.5rem 1rem;
@@ -581,44 +663,50 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				<section>
 					<h2>Things I Obsess Over</h2>
 					<ul>
-						<li>Clojure and functional programming</li>
-						<li>Search databases</li>
-						<li>Messaging systems</li>
+						<li>AI agents</li>
+                                                <li>Clojure and Functional Programming</li>
+						<li>Search systems</li>
+						<li>Real time messageing</li>
 						<li>Migrations of any flavours</li>
 						<li>Leading technical platform teams</li>
-						<li>Computer graphics and interactive techniques</li>
+						<li>Computer graphics and creative coding</li>
 					</ul>
 				</section>
 
 				<section>
-					<h2>Recent Tech Side Projects</h2>
+					<h2>Some Projects</h2>
 					<ul>
+                                                <li>
+							<a href="https://github.com/unravel/litellm-clj">Litellm-clj</a> - An unified Clojure API for all LLMs
+						</li>
+                                                <li>
+							<a href="https://github.com/unravel/litellm-clj">DSCloj</a> - Declarative prompt engineering in Clojure
+						</li>
 						<li><a href="https://unrealcards.net">Unrealcards</a> - A multiplayer card game written in Clojurescript</li>
 						<li><a href="https://github.com/kapilreddy/senju">Senju</a> - An ESP32 and Rust based humidity sensing setup</li>
+
 						<li>
 							<a href="https://github.com/kapilreddy/instructor-clj">Instructor-clj</a> - A Clojure implementation of
 							Instructor library. Get structured output and validations from LLMs.
 						</li>
-					</ul>
-				</section>
+			</ul>
+		</section>
 
-				<section>
-					<h2>Other Things</h2>
-					<p>I keep trying out new things. Here are some hobbies that have stuck with me for a while now.</p>
-					<p>I make short films. Here are a few that actually made it to final cut:</p>
-					<ul>
-						<li>
-							<a href="https://drive.google.com/file/d/1cOMoMH4JqMOEb-wNwA_rrkkhA0ZiC6jf/view?usp=drive_link">Last Move</a>
-						</li>
-						<li><a href="https://open.spotify.com/show/0MjrN8Oyh4PyS02fW5iH8A">Arranged Lock</a></li>
-						<li><a href="https://www.youtube.com/watch?v=fWBaYeTWvwk">Data Breach</a></li>
-					</ul>
-					<p>
-						I mostly write screenplays now. Best movies incept new ideas, thoughts and emotions in the audience. Incepting
-						an idea in someone's head is programming in hardest mode. :D
-					</p>
-				</section>
-			</div>
+	<section class="talks">
+		<h2>Talks</h2>
+		<div class="talks-grid">
+			{talkData.map((talk, index) => talk && (
+				<a href={talks[index].url} target="_blank" rel="noopener noreferrer" class="talk-card">
+					<img src={talk.thumbnailUrl} alt={talk.title} class="talk-thumbnail" />
+					<div class="talk-info">
+						<h3>{talk.title}</h3>
+						<p class="talk-author">{talk.author_name}</p>
+					</div>
+				</a>
+			))}
+		</div>
+	</section>
+	</div>
 		</main>
 		<Footer />
 	</body>

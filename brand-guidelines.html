@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neobrutalist Blog - Brand Guidelines</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Typography */
+            --font-heading: 'Space Grotesk', 'Courier New', monospace;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+            
+            /* Font Sizes - Responsive */
+            --font-base: clamp(16px, 1rem + 0.5vw, 18px);
+            --font-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+            --font-sm: clamp(0.875rem, 0.85rem + 0.25vw, 1rem);
+            --font-md: var(--font-base);
+            --font-lg: clamp(1.125rem, 1rem + 0.5vw, 1.25rem);
+            --font-xl: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+            --font-2xl: clamp(2rem, 1.5rem + 2vw, 3rem);
+            --font-3xl: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+
+            /* Light Theme Colors */
+            --light-bg: #FAFAF8;
+            --light-primary: #F4D03F;
+            --light-text-primary: #1A1A1A;
+            --light-text-secondary: #5A5A5A;
+            --light-accent-red: #991B1B;
+            --light-accent-green: #00D9A3;
+            --light-border: #000000;
+            --light-shadow: #E5E5E0;
+            --light-code-bg: #FFFACD;
+
+            /* Dark Theme Colors */
+            --dark-bg: #0A0A0A;
+            --dark-primary: #4A7FDB;
+            --dark-text-primary: #E8E8E6;
+            --dark-text-secondary: #B8B8B8;
+            --dark-accent-yellow: #F4D03F;
+            --dark-accent-cyan: #86EFAC;
+            --dark-border: #FFFFFF;
+            --dark-shadow: #1A1A1A;
+            --dark-code-bg: #1A2332;
+        }
+
+        /* Default to light theme */
+        body {
+            --bg: var(--light-bg);
+            --primary: var(--light-primary);
+            --text-primary: var(--light-text-primary);
+            --text-secondary: var(--light-text-secondary);
+            --accent-1: var(--light-accent-red);
+            --accent-2: var(--light-accent-green);
+            --border: var(--light-border);
+            --shadow: var(--light-shadow);
+            --code-bg: var(--light-code-bg);
+        }
+
+        body.dark-theme {
+            --bg: var(--dark-bg);
+            --primary: var(--dark-primary);
+            --text-primary: var(--dark-text-primary);
+            --text-secondary: var(--dark-text-secondary);
+            --accent-1: var(--dark-accent-cyan);
+            --accent-2: var(--dark-accent-yellow);
+            --border: var(--dark-border);
+            --shadow: var(--dark-shadow);
+            --code-bg: var(--dark-code-bg);
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: var(--font-base);
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            letter-spacing: -0.011em;
+            font-weight: 400;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: var(--primary);
+            border: 4px solid var(--border);
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            box-shadow: 8px 8px 0 var(--border);
+        }
+
+        .header h1 {
+            font-size: var(--font-3xl);
+            font-weight: 900;
+            letter-spacing: -2px;
+            color: var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            border: 3px solid var(--border);
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .theme-toggle:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 var(--border);
+        }
+
+        .theme-toggle:active {
+            transform: translate(0, 0);
+            box-shadow: none;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: var(--font-2xl);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: var(--primary);
+            display: inline-block;
+            border: 3px solid var(--border);
+            color: var(--border);
+            transform: rotate(-1deg);
+        }
+
+        /* Color Palette */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .color-card {
+            border: 3px solid var(--border);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .color-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 var(--border);
+        }
+
+        .color-display {
+            height: 100px;
+            width: 100%;
+        }
+
+        .color-info {
+            padding: 1rem;
+            background-color: var(--bg);
+            border-top: 3px solid var(--border);
+        }
+
+        .color-name {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .color-code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Typography Examples */
+        .typography-examples {
+            background-color: var(--bg);
+            border: 3px solid var(--border);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .h1-example {
+            font-size: var(--font-3xl);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+        }
+
+        .h2-example {
+            font-size: var(--font-2xl);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background-color: var(--primary);
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 3px solid var(--border);
+            color: var(--border);
+        }
+
+        .h3-example {
+            font-size: var(--font-xl);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+        }
+
+        .body-text {
+            margin-bottom: 1rem;
+            max-width: 600px;
+            font-size: var(--font-md);
+        }
+
+        .link-example {
+            color: var(--accent-1);
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            font-weight: bold;
+        }
+
+        .code-example {
+            background-color: var(--code-bg);
+            border: 3px solid var(--border);
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+            position: relative;
+            overflow-x: auto;
+            tab-size: 2;
+            color: var(--text-primary);
+        }
+
+        /* Inline code */
+        code {
+            font-family: var(--font-mono);
+            background-color: var(--code-bg);
+            padding: 0.2em 0.4em;
+            font-size: 0.875em;
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        /* Simplified syntax highlighting for better readability */
+        body.light-theme .code-keyword {
+            color: #991B1B;
+            font-weight: 600;
+        }
+
+        body.light-theme .code-string {
+            color: #059669;
+        }
+
+        body.light-theme .code-comment {
+            color: #6A737D;
+            font-style: italic;
+        }
+
+        body.light-theme .code-function {
+            color: #7C3AED;
+            font-weight: 500;
+        }
+
+        body.dark-theme .code-keyword {
+            color: #86EFAC;
+            font-weight: 600;
+        }
+
+        body.dark-theme .code-string {
+            color: #7DD3FC;
+        }
+
+        body.dark-theme .code-comment {
+            color: #8B949E;
+            font-style: italic;
+        }
+
+        body.dark-theme .code-function {
+            color: #F4D03F;
+            font-weight: 500;
+        }
+
+        /* Default for initial load */
+        .code-keyword {
+            color: #991B1B;
+            font-weight: 600;
+        }
+
+        .code-string {
+            color: #059669;
+        }
+
+        .code-comment {
+            color: #6A737D;
+            font-style: italic;
+        }
+
+        .code-function {
+            color: #7C3AED;
+            font-weight: 500;
+        }
+
+        /* UI Components */
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--border);
+            border: 3px solid var(--border);
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: all 0.2s;
+            box-shadow: 6px 6px 0 var(--border);
+        }
+
+        .btn-primary:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0 var(--border);
+        }
+
+        .btn-primary:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--border);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            border: 3px solid var(--border);
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--accent-2);
+            transform: rotate(-2deg);
+        }
+
+        .card-example {
+            background-color: var(--bg);
+            border: 3px solid var(--border);
+            padding: 1.5rem;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .card-example::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 8px;
+            right: -8px;
+            bottom: 8px;
+            background-color: var(--primary);
+            z-index: -1;
+        }
+
+        .quote-block {
+            background-color: var(--accent-1);
+            color: var(--bg);
+            border: 3px solid var(--border);
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transform: rotate(-1deg);
+        }
+
+        .quote-block::before {
+            content: "▰▱▰";
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .input-example {
+            width: 100%;
+            padding: 1rem;
+            border: 3px solid var(--border);
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-size: var(--font-md);
+            font-family: var(--font-body);
+        }
+
+        .input-example:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--primary);
+        }
+
+        /* Patterns Section */
+        .pattern-examples {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .hero-example {
+            background-color: var(--primary);
+            border: 4px solid var(--border);
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-example h2 {
+            font-size: 2.5rem;
+            color: var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .hero-example p {
+            color: var(--border);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .ascii-decoration {
+            font-size: 4rem;
+            color: var(--accent-2);
+            position: absolute;
+            right: 2rem;
+            bottom: 1rem;
+            opacity: 0.5;
+            transform: rotate(15deg);
+        }
+
+        /* Navigation Example */
+        .nav-example {
+            background-color: var(--border);
+            padding: 1rem 2rem;
+            margin: 2rem 0;
+            border: 3px solid var(--border);
+        }
+
+        .nav-example ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-example a {
+            color: var(--bg);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .nav-example a:hover {
+            background-color: var(--primary);
+            color: var(--border);
+            transform: skew(-5deg);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            background-color: var(--border);
+            color: var(--bg);
+            text-align: center;
+            font-weight: bold;
+            border: 4px solid var(--border);
+        }
+
+        /* Accessibility Info */
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .accessibility-item {
+            padding: 1rem;
+            border: 3px solid var(--border);
+            background-color: var(--bg);
+        }
+
+        .accessibility-item strong {
+            color: var(--accent-1);
+        }
+
+        /* Guidelines List */
+        .guidelines-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .guidelines-list li {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-left: 6px solid var(--primary);
+            background-color: var(--bg);
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .guidelines-list li::before {
+            content: "▶";
+            position: absolute;
+            left: 0.75rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="header">
+        <h1>◐◑◒◓ NEOBRUTALIST BLOG</h1>
+        <p style="font-size: 1.2rem; font-weight: bold; color: var(--border);">BRAND GUIDELINES v1.0</p>
+        <button class="theme-toggle" onclick="toggleTheme()">TOGGLE THEME</button>
+    </div>
+
+    <div class="container">
+        <!-- Color Palettes Section -->
+        <section class="section">
+            <h2 class="section-title">COLOR SYSTEM</h2>
+            
+            <h3 style="margin: 2rem 0 1rem; font-weight: 900;">LIGHT THEME PALETTE</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #FAFAF8;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Background</div>
+                        <div class="color-code">#FAFAF8</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #F4D03F;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Primary Yellow</div>
+                        <div class="color-code">#F4D03F</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #1A1A1A;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Text Primary</div>
+                        <div class="color-code">#1A1A1A</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #5A5A5A;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Text Secondary</div>
+                        <div class="color-code">#5A5A5A</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #991B1B;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Crimson</div>
+                        <div class="color-code">#991B1B</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #00D9A3;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Green</div>
+                        <div class="color-code">#00D9A3</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem; font-weight: 900;">DARK THEME PALETTE</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #0A0A0A;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Background</div>
+                        <div class="color-code">#0A0A0A</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #4A7FDB;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Primary Blue</div>
+                        <div class="color-code">#4A7FDB</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #E8E8E6;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Text Primary</div>
+                        <div class="color-code">#E8E8E6</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #B8B8B8;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Text Secondary</div>
+                        <div class="color-code">#B8B8B8</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #F4D03F;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Yellow</div>
+                        <div class="color-code">#F4D03F</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-display" style="background-color: #86EFAC;"></div>
+                    <div class="color-info">
+                        <div class="color-name">Electric Green</div>
+                        <div class="color-code">#86EFAC</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography System Section -->
+        <section class="section">
+            <h2 class="section-title">TYPOGRAPHY SYSTEM</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                <div class="card-example">
+                    <h3 style="font-weight: bold; margin-bottom: 1rem; font-family: var(--font-heading);">HEADING FONT</h3>
+                    <p style="font-family: 'Space Grotesk', monospace; font-size: 1.5rem; font-weight: 900; margin-bottom: 0.5rem;">Space Grotesk</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Headers & UI Elements</p>
+                    <p style="font-family: 'Space Grotesk', monospace; margin-top: 1rem;">
+                        <span style="font-weight: 400;">Regular</span><br>
+                        <span style="font-weight: 500;">Medium</span><br>
+                        <span style="font-weight: 700;">Bold</span><br>
+                        <span style="font-weight: 900;">BLACK</span>
+                    </p>
+                </div>
+
+                <div class="card-example">
+                    <h3 style="font-weight: bold; margin-bottom: 1rem; font-family: var(--font-heading);">BODY FONT</h3>
+                    <p style="font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem;">Inter</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Body Text & Content</p>
+                    <p style="font-family: 'Inter', sans-serif; margin-top: 1rem;">
+                        <span style="font-weight: 400;">Regular - Optimized for reading</span><br>
+                        <span style="font-weight: 500;">Medium - Secondary text</span><br>
+                        <span style="font-weight: 600;">Semibold - Emphasis</span><br>
+                        <span style="font-weight: 700;">Bold - Strong emphasis</span>
+                    </p>
+                </div>
+
+                <div class="card-example">
+                    <h3 style="font-weight: bold; margin-bottom: 1rem; font-family: var(--font-heading);">CODE FONT</h3>
+                    <p style="font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">JetBrains Mono</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Code & Technical Content</p>
+                    <p style="font-family: 'JetBrains Mono', monospace; margin-top: 1rem;">
+                        <span style="font-weight: 400;">if (code) { }</span><br>
+                        <span style="font-weight: 600;">const brutal = true;</span><br>
+                        <span>0O il1I (clarity)</span>
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem; font-weight: 900; font-family: var(--font-heading);">TYPE SCALE</h3>
+            <div class="typography-examples" style="background: none; border: none; padding: 0;">
+                <div style="margin-bottom: 2rem; padding: 1.5rem; border: 3px solid var(--border); background-color: var(--bg);">
+                    <p style="font-size: var(--font-3xl); font-family: var(--font-heading); font-weight: 900; margin-bottom: 0.5rem;">3XL - DISPLAY (2.5-4rem)</p>
+                    <p style="font-size: var(--font-2xl); font-family: var(--font-heading); font-weight: 900; margin-bottom: 0.5rem;">2XL - HEADLINE (2-3rem)</p>
+                    <p style="font-size: var(--font-xl); font-family: var(--font-heading); font-weight: 800; margin-bottom: 0.5rem;">XL - SECTION (1.5-2rem)</p>
+                    <p style="font-size: var(--font-lg); font-family: var(--font-body); font-weight: 600; margin-bottom: 0.5rem;">LG - Subsection (1.125-1.25rem)</p>
+                    <p style="font-size: var(--font-md); font-family: var(--font-body); font-weight: 400; margin-bottom: 0.5rem;">MD - Body text (16-18px)</p>
+                    <p style="font-size: var(--font-sm); font-family: var(--font-body); font-weight: 400; margin-bottom: 0.5rem;">SM - Secondary text (0.875-1rem)</p>
+                    <p style="font-size: var(--font-xs); font-family: var(--font-body); font-weight: 500;">XS - Captions (0.75-0.875rem)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography Section -->
+        <section class="section">
+            <h2 class="section-title">TYPOGRAPHY IN ACTION</h2>
+            <div class="typography-examples">
+                <h1 class="h1-example">Heading Level 1 - Bold & Brutal</h1>
+                <h2 class="h2-example">Heading Level 2 - Highlighted Block</h2>
+                <h3 class="h3-example">Heading Level 3 - Underlined Impact</h3>
+                <p class="body-text">
+                    Body text maintains excellent readability with high contrast ratios. 
+                    We use near-black on off-white for light theme and off-white on rich black for dark theme. 
+                    <a href="#" class="link-example">Links are bold and prominently underlined</a> to ensure 
+                    they stand out from regular text. The Inter font family provides optimal legibility at all sizes.
+                </p>
+                <p class="body-text" style="font-size: var(--font-sm); color: var(--text-secondary);">
+                    Secondary text uses a slightly smaller size and muted color for hierarchy. Perfect for captions, 
+                    metadata, and supporting information that shouldn't compete with primary content.
+                </p>
+            </div>
+
+            <h3 style="margin: 2rem 0 1rem; font-weight: 900; font-family: var(--font-heading);">CODE EXAMPLES</h3>
+            
+            <!-- JavaScript Example -->
+            <div class="code-example">
+                <span class="code-comment">// Neobrutalist theme configuration</span>
+                <br><span class="code-keyword">const</span> <span class="code-function">brutalistTheme</span> = {
+                <br>&nbsp;&nbsp;<span class="code-string">primary</span>: <span class="code-string">'#F4D03F'</span>,
+                <br>&nbsp;&nbsp;<span class="code-string">accent</span>: <span class="code-string">'#D94A6A'</span>,
+                <br>&nbsp;&nbsp;<span class="code-string">border</span>: <span class="code-string">'3px solid black'</span>,
+                <br>&nbsp;&nbsp;<span class="code-function">shadow</span>: (<span>offset</span>) => <span class="code-string">`${offset}px ${offset}px 0 black`</span>
+                <br>};
+                <br>
+                <br><span class="code-keyword">function</span> <span class="code-function">applyBrutalStyle</span>(<span>element</span>) {
+                <br>&nbsp;&nbsp;element.<span class="code-function">style</span>.border = brutalistTheme.border;
+                <br>&nbsp;&nbsp;element.<span class="code-function">style</span>.boxShadow = brutalistTheme.<span class="code-function">shadow</span>(<span class="code-string">8</span>);
+                <br>&nbsp;&nbsp;<span class="code-keyword">return</span> element;
+                <br>}
+            </div>
+
+            <!-- CSS Example -->
+            <div class="code-example">
+                <span class="code-comment">/* Brutalist button styles */</span>
+                <br><span class="code-keyword">.btn-brutal</span> {
+                <br>&nbsp;&nbsp;<span class="code-function">background-color</span>: <span class="code-string">var(--primary)</span>;
+                <br>&nbsp;&nbsp;<span class="code-function">border</span>: <span class="code-string">3px solid var(--border)</span>;
+                <br>&nbsp;&nbsp;<span class="code-function">padding</span>: <span class="code-string">1rem 2rem</span>;
+                <br>&nbsp;&nbsp;<span class="code-function">font-family</span>: <span class="code-string">'Space Grotesk', monospace</span>;
+                <br>&nbsp;&nbsp;<span class="code-function">font-weight</span>: <span class="code-string">900</span>;
+                <br>&nbsp;&nbsp;<span class="code-function">text-transform</span>: <span class="code-string">uppercase</span>;
+                <br>&nbsp;&nbsp;<span class="code-function">box-shadow</span>: <span class="code-string">6px 6px 0 black</span>;
+                <br>&nbsp;&nbsp;<span class="code-function">transition</span>: <span class="code-string">all 0.2s cubic-bezier(0.4, 0, 0.2, 1)</span>;
+                <br>}
+            </div>
+
+            <!-- HTML Example -->
+            <div class="code-example">
+                <span class="code-comment">&lt;!-- Article card component --&gt;</span>
+                <br>&lt;<span class="code-keyword">article</span> <span class="code-function">class</span>=<span class="code-string">"card-brutal"</span>&gt;
+                <br>&nbsp;&nbsp;&lt;<span class="code-keyword">header</span> <span class="code-function">class</span>=<span class="code-string">"card-header"</span>&gt;
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="code-keyword">h2</span>&gt;Brutalist Design Principles&lt;/<span class="code-keyword">h2</span>&gt;
+                <br>&nbsp;&nbsp;&lt;/<span class="code-keyword">header</span>&gt;
+                <br>&nbsp;&nbsp;&lt;<span class="code-keyword">p</span> <span class="code-function">class</span>=<span class="code-string">"card-body"</span>&gt;
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;Bold borders, stark contrasts, and unapologetic aesthetics.
+                <br>&nbsp;&nbsp;&lt;/<span class="code-keyword">p</span>&gt;
+                <br>&nbsp;&nbsp;&lt;<span class="code-keyword">button</span> <span class="code-function">class</span>=<span class="code-string">"btn-brutal"</span>&gt;READ MORE&lt;/<span class="code-keyword">button</span>&gt;
+                <br>&lt;/<span class="code-keyword">article</span>&gt;
+            </div>
+
+            <p style="margin-top: 1.5rem; padding: 1rem; background-color: var(--code-bg); border: 3px solid var(--border);">
+                <strong>Note:</strong> Code blocks use <code>JetBrains Mono</code> at 0.95rem with increased line-height for optimal readability. 
+                Syntax highlighting uses carefully chosen colors that maintain high contrast in both themes.
+            </p>
+        </section>
+
+        <!-- UI Components Section -->
+        <section class="section">
+            <h2 class="section-title">UI COMPONENTS</h2>
+            <div class="component-grid">
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-weight: bold;">BUTTONS</h3>
+                    <button class="btn-primary">PRIMARY ACTION</button>
+                    <div style="margin: 1rem 0;"></div>
+                    <button class="btn-secondary">SECONDARY</button>
+                </div>
+                
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-weight: bold;">CARDS</h3>
+                    <div class="card-example">
+                        <h4 style="font-weight: bold; margin-bottom: 0.5rem;">Article Card</h4>
+                        <p style="color: var(--text-secondary);">Cards feature offset shadows and bold borders for that signature brutal aesthetic.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 1rem; font-weight: bold;">INPUTS</h3>
+                    <input type="text" class="input-example" placeholder="Enter text here...">
+                </div>
+            </div>
+
+            <div class="quote-block">
+                "Neobrutalism isn't just a style, it's an attitude. Bold, unapologetic, and impossibly readable."
+            </div>
+        </section>
+
+        <!-- Pattern Examples Section -->
+        <section class="section">
+            <h2 class="section-title">PATTERN EXAMPLES</h2>
+            <div class="pattern-examples">
+                <div class="hero-example">
+                    <h2>HERO SECTION EXAMPLE</h2>
+                    <p>Big, bold statements with high contrast colors and geometric decorations.</p>
+                    <button class="btn-primary">CALL TO ACTION</button>
+                    <div class="ascii-decoration">◐◑◒◓</div>
+                </div>
+
+                <nav class="nav-example">
+                    <ul>
+                        <li><a href="#">HOME</a></li>
+                        <li><a href="#">ARTICLES</a></li>
+                        <li><a href="#">ABOUT</a></li>
+                        <li><a href="#">CONTACT</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Accessibility Guidelines Section -->
+        <section class="section">
+            <h2 class="section-title">ACCESSIBILITY STANDARDS</h2>
+            <div class="accessibility-grid">
+                <div class="accessibility-item">
+                    <strong>CONTRAST RATIOS</strong>
+                    <p>AAA (7:1) for body text</p>
+                    <p>AA (4.5:1) for large text</p>
+                </div>
+                <div class="accessibility-item">
+                    <strong>TOUCH TARGETS</strong>
+                    <p>Minimum 44x44px</p>
+                    <p>Clear hover states</p>
+                </div>
+                <div class="accessibility-item">
+                    <strong>FOCUS STATES</strong>
+                    <p>Double borders</p>
+                    <p>Color inversion</p>
+                </div>
+                <div class="accessibility-item">
+                    <strong>COLOR BLIND SAFE</strong>
+                    <p>Yellow-Blue scheme</p>
+                    <p>High contrast borders</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Design Principles Section -->
+        <section class="section">
+            <h2 class="section-title">NEOBRUTALIST PRINCIPLES</h2>
+            <ul class="guidelines-list">
+                <li>Use minimum 3px borders on all interactive elements</li>
+                <li>Apply 8-12px offset shadows for depth and dimension</li>
+                <li>Embrace asymmetry with intentional misalignment</li>
+                <li>Stack colored rectangles with visible borders between layers</li>
+                <li>No gradients - only flat, solid colors</li>
+                <li>Use only rectangles and perfect circles - no rounded corners</li>
+                <li>Let colored blocks overflow their containers for dynamic layouts</li>
+                <li>Incorporate ASCII decorations (▰▱▰ ◐◑◒◓) as design elements</li>
+                <li>Rotate elements slightly (-3deg to 3deg) for organic feel</li>
+                <li>Use monospace fonts for headers and UI elements</li>
+            </ul>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>▰▱▰ NEOBRUTALIST BLOG BRAND GUIDELINES ▰▱▰</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">EMBRACE THE BRUTAL · MAINTAIN THE READABLE</p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const button = document.querySelector('.theme-toggle');
+            
+            if (body.classList.contains('dark-theme')) {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                button.textContent = 'DARK MODE';
+            } else {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                button.textContent = 'LIGHT MODE';
+            }
+        }
+
+        // Add some interactive brutalist effects
+        document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (!this.classList.contains('theme-toggle')) {
+                    const originalText = this.textContent;
+                    this.textContent = 'CLICKED!';
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                    }, 500);
+                }
+            });
+        });
+
+        // Random rotation on hover for cards
+        document.querySelectorAll('.color-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const randomRotation = (Math.random() - 0.5) * 4;
+                this.style.transform = `translate(-4px, -4px) rotate(${randomRotation}deg)`;
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>

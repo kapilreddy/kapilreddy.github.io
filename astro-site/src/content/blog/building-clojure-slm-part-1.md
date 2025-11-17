@@ -5,7 +5,7 @@ time: "12:30 am"
 type: "note"
 tags: ["FP", "LLM"]
 description: "Notes about building a Clojure SLM for code autocompletes"
-draft: false
+draft: true
 ---
 
 Can we make a LLM focused only on generating Clojure code?

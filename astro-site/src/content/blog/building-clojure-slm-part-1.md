@@ -5,59 +5,47 @@ time: "12:30 am"
 type: "note"
 tags: ["FP", "LLM"]
 description: "Notes about building a Clojure SLM for code autocompletes"
-draft: true
+draft: false
 ---
 
-Can we make a LLM focused only on generating Clojure code?
+Biggest problem with AI assisted coding and Clojure is lack of quick feedback. Well, apart from dangling paranthesis. 
 
-Why? Because it let's me explore fine-tuning / pretraining Language model in an area I understand.
+I started wondering: what if I train small language model that actually understood Clojure?
 
-A particular problem I am trying to explore, Can we train Language Models to always generate valid s-expressions. In other words, can we get a Lanaguage Model to generate perfectly balanced parenthesis. This can prove to be a good foundation for auto-complete layer in AI-assisted coding.
+The insight is almost embarrassingly simple. Every valid Clojure snippet auto-complete must have balanced parens. An editor using this model could grab the topmost s-expression and autocomplete it. No dangling brackets.
 
-But before going ahead we need to ask what does it mean to auto-complete Clojure code.
-
-One assumption while building it, code is always perfectly balanced. 
-
-So this is completely ok
+In other words assume only balanced code to auto-completed. So this ok:
 
 ```clojure
-(defn)
-
-(defn sum)
-
-(defn sum [])
+(defn █)
+(defn sum █)
+(defn sum [█])
 ```
 
-But this is not
+But these are not:
 
 ```clojure
 (defn sum
-
 (defn
 ```
 
-This gives the editor the ability to select the top most s-expression to auto-complete or suggest
-Ideally the way it works should be
 
-```clojure
-(defn add) -> (defn add [x y] (+ x y))
-```
+I started mapping out what good autocompletion would actually look like. Name-to-value completions, where the model finishes your thought:
 
-Some more examples
-
-name-to-value
 ```clojure
 (let [total █])  ; Suggests: (+ x y), (reduce + numbers)
 (defn squared [x] (let [squared █]))  ; Suggests: (* x x)
 ```
 
-value-to-name
+The inverse—value-to-name—is equally useful:
+
 ```clojure
 (let [█ (filter even? numbers)]) ; Suggests: evens, even-numbers
 (defn █ [x] (+ x 1))  ; Suggests: increment, add-one
 ```
 
-complete a cond / case
+And then there are the structural completions, like finishing a cond:
+
 ```clojure
 (cond
   (< x 0) "negative"
@@ -65,27 +53,11 @@ complete a cond / case
   █)  ; Suggests: (> x 0) "positive"
 ```
 
-But, how do editors integrate with LLMs to do autocompletes?
+This is where I hit a real wall. I don't know anything about how editors use LLMs for autocomplete.
 
-Most standard to do this is FIM (Fill-In-the-Middle)
+The answer is something called Fill-In-the-Middle, or FIM. An editor sends your code split into three parts: what came before the cursor, what comes after, and a special token that says "fill this in."
 
-
-
-
-Now let's think about how an editor talks to LLM to get something autocompleted.
-
-```python
-def calculate_average(numbers):
-    """Calculate the average of a list of numbers."""
-    if not numbers:
-        return 0
-    
-    |  # <-- CURSOR HERE
-    
-    return total / len(numbers)
-```
-
-This is how the prompt looks like
+Here's how it looks with Python code:
 
 ```python
 <|fim_prefix|>def calculate_average(numbers):
@@ -97,21 +69,11 @@ This is how the prompt looks like
     
     return total / len(numbers)
 <|fim_middle|>
-
 ;; LLM output
 total = sum(numbers)
 ```
 
-Now looking at Clojure code block
-```clojure
-(defn calculate-average
-  "Calculate the average of a collection of numbers."
-  [numbers]
-  (if (empty? numbers)
-    0
-    |  # <-- CURSOR HERE
-    ))
-```
+Now imagine the same thing in Clojure:
 
 ```clojure
 <fim_prefix>(defn calculate-average
@@ -122,12 +84,11 @@ Now looking at Clojure code block
     <fim_suffix>
     ))
 <fim_middle>
-
 ;;; LLM Output
 (/ (reduce + numbers) (count numbers))
 ```
 
-An alternative to produce training data quickly
+Instead of the fancy FIM tokens, what if I just use `<CURSOR>`:
 
 ```clojure
 (defn calculate-average
@@ -137,16 +98,18 @@ An alternative to produce training data quickly
     0
     <CURSOR>
     ))
-
 ;;; LLM Output
 (/ (reduce + numbers) (count numbers))
 ```
 
-Next up is to figure out data sources and see if <CURSOR> approach actually makes the training better.
+Next up is curating a dataset to validating if <CURSOR> approach really works.
+
+---
 
 ## References
+
 - https://github.blog/ai-and-ml/github-copilot/the-road-to-better-completions-building-a-faster-smarter-github-copilot-with-a-new-custom-model/
-https://sourcegraph.com/blog/the-lifecycle-of-a-code-ai-completion
+- https://sourcegraph.com/blog/the-lifecycle-of-a-code-ai-completion
 - [Structure-Aware Fill-in-the-Middle Pretraining for Code](https://arxiv.org/html/2506.00204v1)
 - [Evaluation of LLMs on Syntax-Aware Code Fill-in-the-Middle Tasks](https://arxiv.org/html/2403.04814v1)
 - [Qwen2.5-Coder Technical Report](https://arxiv.org/pdf/2409.12186)

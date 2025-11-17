@@ -156,16 +156,16 @@ const talkData = await Promise.all(talks.map(talk => fetchVideoData(talk.url)));
 		font-weight: 900;
 	}
 
-		.hero .intro-text {
-			font-size: clamp(1.2rem, 2vw, 1.1rem);
-			margin-bottom: 1.5rem;
-			font-weight: 600;
-			color: var(--border);
-			max-width: 650px;
-			margin-left: auto;
-			margin-right: auto;
-			line-height: 1.5;
-		}
+	.hero .intro-text {
+		font-size: clamp(1rem, 2vw, 1.1rem);
+		margin-bottom: 1.5rem;
+		font-weight: 600;
+		color: var(--border);
+		max-width: 650px;
+		margin-left: auto;
+		margin-right: auto;
+		line-height: 1.5;
+	}
 
 		.hero a {
 			background: var(--border);
@@ -261,20 +261,21 @@ const talkData = await Promise.all(talks.map(talk => fetchVideoData(talk.url)));
 			box-shadow: 3px 3px 0px 0px var(--border);
 		}
 
-		.highlight-card h3 {
-			font-size: clamp(1.3rem, 2.5vw, 1.8rem);
-			font-family: var(--font-heading);
-			font-weight: 900;
-			text-transform: uppercase;
-			margin-bottom: 1rem;
-			color: var(--text-primary);
-		}
+.highlight-card h3 {
+	font-size: 1.05rem;
+	font-family: var(--font-body);
+	font-weight: 600;
+	text-transform: none;
+	margin-bottom: 1rem;
+	color: var(--text-primary);
+}
 
-		.highlight-card p {
-			margin-bottom: 1rem;
-			line-height: 1.7;
-			color: var(--text-primary);
-		}
+	.highlight-card p {
+		margin-bottom: 1rem;
+		line-height: 1.6;
+		color: var(--text-primary);
+		font-size: 1rem;
+	}
 
 		.highlight-card p strong {
 			color: var(--accent-1);
@@ -310,14 +311,15 @@ const talkData = await Promise.all(talks.map(talk => fetchVideoData(talk.url)));
 			margin: 0;
 		}
 
-		ul li {
-			padding: 0.8rem 1.2rem;
-			line-height: 1.6;
-			border-left: 4px solid var(--primary);
-			margin-bottom: 0.6rem;
-			transition: var(--transition);
-			background: transparent;
-		}
+	ul li {
+		padding: 0.8rem 1.2rem;
+		line-height: 1.6;
+		border-left: 4px solid var(--primary);
+		margin-bottom: 0.6rem;
+		transition: var(--transition);
+		background: transparent;
+		font-size: 1rem;
+	}
 
 		ul li:hover {
 			background: var(--card-bg);
@@ -463,10 +465,10 @@ const talkData = await Promise.all(talks.map(talk => fetchVideoData(talk.url)));
 					font-size: 1.8rem;
 				}
 
-				.hero .intro-text {
-					font-size: 1.2rem;
-					margin-bottom: 1.5rem;
-				}
+		.hero .intro-text {
+			font-size: 1rem;
+			margin-bottom: 1.5rem;
+		}
 
 				.hero a {
 					padding: 0.8rem 1.8rem;
@@ -514,9 +516,9 @@ const talkData = await Promise.all(talks.map(talk => fetchVideoData(talk.url)));
 					padding: 1.5rem;
 				}
 
-				.highlight-card h3 {
-					font-size: 1.2rem;
-				}
+	.highlight-card h3 {
+		font-size: 0.95rem;
+	}
 
 				.highlight-link {
 					padding: 0.7rem 1.2rem;

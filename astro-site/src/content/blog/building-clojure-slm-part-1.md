@@ -102,7 +102,7 @@ Instead of the fancy FIM tokens, what if I just use `<CURSOR>`:
 (/ (reduce + numbers) (count numbers))
 ```
 
-Next up is curating a dataset to validating if <CURSOR> approach really works.
+Next up is curating a dataset to validate if <CURSOR> approach really works.
 
 ---
 

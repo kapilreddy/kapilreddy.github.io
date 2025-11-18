@@ -10,11 +10,13 @@ draft: false
 
 Biggest problem with AI assisted coding and Clojure is lack of quick feedback. Well, apart from dangling paranthesis. 
 
-I started wondering: what if I train small language model that actually understood Clojure?
+I started wondering: what if I train small language model that actually understood Clojure? This has many benefits the biggest one being latency. So one of the goal is to have latencies below 300ms for each inference.
 
-The insight is almost embarrassingly simple. Every valid Clojure snippet auto-complete must have balanced parens. An editor using this model could grab the topmost s-expression and autocomplete it. No dangling brackets.
+A few assumption I am making while building the SLM. A Clojure snippet auto-complete must have balanced parens. An editor using this model could grab the topmost s-expression and autocomplete it. No dangling paranthesis.
 
-In other words assume only balanced code to auto-completed. So this ok:
+In other words assume only balanced code to auto-completed. 
+
+So this good:
 
 ```clojure
 (defn █)
@@ -22,7 +24,7 @@ In other words assume only balanced code to auto-completed. So this ok:
 (defn sum [█])
 ```
 
-But these are not:
+But these are not valid:
 
 ```clojure
 (defn sum

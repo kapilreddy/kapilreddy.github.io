@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import BlogEntry from '../../components/BlogEntry.astro';
+import { SITE_TITLE } from '../../consts';
+
+export async function getStaticPaths() {
+	const notes = await getCollection('blog', ({ data }) => {
+		return !data.draft && data.type === 'note';
+	});
+
+	// Group notes by year
+	const notesByYear = new Map<string, typeof notes>();
+	notes.forEach(note => {
+		const date = new Date(note.data.pubDate);
+		const year = date.getFullYear().toString();
+		if (!notesByYear.has(year)) {
+			notesByYear.set(year, []);
+		}
+		notesByYear.get(year)!.push(note);
+	});
+
+	return Array.from(notesByYear.entries()).map(([year, yearNotes]) => ({
+		params: { year },
+		props: { 
+			posts: yearNotes.sort((a, b) => 
+				new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+			),
+			year 
+		}
+	}));
+}
+
+const { posts, year } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${SITE_TITLE} - Notes from ${year}`} description={`Notes from ${year}`} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section>
+				<h1>Notes from {year}</h1>
+				<p class="archive-info">{posts.length} note{posts.length !== 1 ? 's' : ''}</p>
+				<ul>
+					{posts.map((post) => <BlogEntry post={post} />)}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	h1 {
+		margin: 2rem 0 1rem;
+	}
+	
+	.archive-info {
+		color: var(--text-secondary);
+		margin-bottom: 2rem;
+	}
+	
+	ul {
+		list-style-type: none;
+		padding: 0;
+	}
+</style>

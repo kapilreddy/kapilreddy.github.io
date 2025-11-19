@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linkblog Capture Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Linkblog Capture Settings</h1>
+    
+    <form id="settingsForm">
+      <div class="form-group">
+        <label for="defaultPath">Default Save Location:</label>
+        <input 
+          type="text" 
+          id="defaultPath" 
+          name="defaultPath" 
+          placeholder="e.g., linkblog-files/ or leave empty for downloads folder"
+        >
+        <p class="help-text">
+          Specify a relative path within your Downloads folder (e.g., "linkblog-files/"). 
+          Leave empty to save directly to Downloads. The path will be created if it doesn't exist.
+        </p>
+      </div>
+      
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="autoSave" name="autoSave">
+          Auto-save without prompting for location
+        </label>
+        <p class="help-text">
+          When enabled, files will be saved automatically to the default location without showing the "Save As" dialog.
+        </p>
+      </div>
+      
+      <button type="submit" class="btn-primary">Save Settings</button>
+    </form>
+    
+    <div id="status" class="status"></div>
+    
+    <div class="info-section">
+      <h2>Tips</h2>
+      <ul>
+        <li>The path is relative to your Downloads folder</li>
+        <li>Use forward slashes (/) in the path</li>
+        <li>End the path with a slash (/) for directories</li>
+        <li>Examples: "blog/links/", "markdown-files/", or leave empty</li>
+      </ul>
+    </div>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html>

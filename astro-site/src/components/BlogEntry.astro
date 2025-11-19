@@ -1,16 +1,18 @@
 ---
 import { Image } from 'astro:assets';
 import FormattedDate from './FormattedDate.astro';
+import { getContentUrl } from '../utils/url-utils';
 
 const { post } = Astro.props;
 const type = post.data.type || 'post';
 const isFullPost = type === 'post';
+const postUrl = getContentUrl(post);
 ---
 
 {isFullPost ? (
 	<!-- Full blog post - card layout -->
 	<li class="entry-post">
-		<a href={`/blog/${post.id}/`}>
+		<a href={postUrl}>
 			{post.data.heroImage && (
 				<Image width={720} height={360} src={post.data.heroImage} alt="" />
 			)}
@@ -25,7 +27,7 @@ const isFullPost = type === 'post';
 	<!-- Link entry - compact format -->
 	<li class="entry-link">
 		<div class="link-header">
-			<a href={`/blog/${post.id}/`} class="link-title">
+			<a href={postUrl} class="link-title">
 				{post.data.title}
 			</a>
 		</div>
@@ -46,20 +48,20 @@ const isFullPost = type === 'post';
 ) : type === 'note' ? (
 	<!-- Note entry - simple text block -->
 	<li class="entry-note">
-		<a href={`/blog/${post.id}/`} class="note-content">
+		<a href={postUrl} class="note-content">
 			<p class="note-title">{post.data.title}</p>
 			{post.data.description && <p class="note-description">{post.data.description}</p>}
 		</a>
 		<p class="meta">
 			<FormattedDate date={post.data.pubDate} />
 			{post.data.time && <span class="time"> / {post.data.time}</span>}
-			<a href={`/blog/${post.id}/`} class="permalink" aria-label="Permalink">#</a>
+			<a href={postUrl} class="permalink" aria-label="Permalink">#</a>
 		</p>
 	</li>
 ) : (
 	<!-- Quote entry -->
 	<li class="entry-quote">
-		<a href={`/blog/${post.id}/`}>
+		<a href={postUrl}>
 			<blockquote class="quote-content">
 				{post.data.title}
 			</blockquote>
@@ -68,7 +70,7 @@ const isFullPost = type === 'post';
 		<p class="meta">
 			<FormattedDate date={post.data.pubDate} />
 			{post.data.time && <span class="time"> / {post.data.time}</span>}
-			<a href={`/blog/${post.id}/`} class="permalink" aria-label="Permalink">#</a>
+			<a href={postUrl} class="permalink" aria-label="Permalink">#</a>
 		</p>
 	</li>
 )}

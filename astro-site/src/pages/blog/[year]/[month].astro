@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import BlogEntry from '../../../components/BlogEntry.astro';
+import { SITE_TITLE } from '../../../consts';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog', ({ data }) => {
+		const type = data.type || 'post';
+		return !data.draft && type === 'post';
+	});
+
+	// Group posts by year/month
+	const postsByMonth = new Map<string, typeof posts>();
+	posts.forEach(post => {
+		const date = new Date(post.data.pubDate);
+		const year = date.getFullYear().toString();
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const key = `${year}/${month}`;
+		if (!postsByMonth.has(key)) {
+			postsByMonth.set(key, []);
+		}
+		postsByMonth.get(key)!.push(post);
+	});
+
+	return Array.from(postsByMonth.entries()).map(([key, monthPosts]) => {
+		const [year, month] = key.split('/');
+		return {
+			params: { year, month },
+			props: { 
+				posts: monthPosts.sort((a, b) => 
+					new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+				),
+				year,
+				month
+			}
+		};
+	});
+}
+
+const { posts, year, month } = Astro.props;
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+	'July', 'August', 'September', 'October', 'November', 'December'];
+const monthName = monthNames[parseInt(month) - 1];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${SITE_TITLE} - Posts from ${monthName} ${year}`} description={`Blog posts from ${monthName} ${year}`} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section>
+				<h1>Posts from {monthName} {year}</h1>
+				<p class="archive-info">{posts.length} post{posts.length !== 1 ? 's' : ''}</p>
+				<ul>
+					{posts.map((post) => <BlogEntry post={post} />)}
+				</ul>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	h1 {
+		margin: 2rem 0 1rem;
+	}
+	
+	.archive-info {
+		color: var(--text-secondary);
+		margin-bottom: 2rem;
+	}
+	
+	ul {
+		list-style-type: none;
+		padding: 0;
+	}
+</style>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linkblog Capture</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Linkblog Capture</h1>
+      <a href="#" id="settingsLink" class="settings-link" title="Settings">⚙️</a>
+    </div>
+    
+    <form id="linkForm">
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="url">URL:</label>
+        <input type="url" id="url" name="url" required readonly>
+      </div>
+      
+      <div class="form-group">
+        <label for="source">Source (via):</label>
+        <input type="text" id="source" name="source" placeholder="e.g., via Hacker News">
+      </div>
+      
+      <div class="form-group">
+        <label for="tags">Tags (comma-separated):</label>
+        <input type="text" id="tags" name="tags" placeholder="e.g., ai, github, meta">
+      </div>
+      
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="3" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="content">Commentary (optional):</label>
+        <textarea id="content" name="content" rows="4" placeholder="Your thoughts about this link..."></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="draft" name="draft">
+          Save as draft
+        </label>
+      </div>
+      
+      <button type="submit" class="btn-primary">Save Markdown</button>
+    </form>
+    
+    <div id="status" class="status"></div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
